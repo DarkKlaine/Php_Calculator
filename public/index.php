@@ -1,10 +1,8 @@
 <?php
-require_once('../app/Controller.php');
-require_once('../app/Computations.php');
-require_once('../app/Addition.php');
-require_once('../app/Subtraction.php');
-require_once('../app/Multiply.php');
-require_once('../app/Divide.php');
+
+use App\Controller;
+
+require_once('../vendor/autoload.php');
 
 //$input = readline();
 $input = ["5", "*", "10"];

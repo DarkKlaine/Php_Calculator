@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 class Addition extends Computations
 {
     public function calculate(): void

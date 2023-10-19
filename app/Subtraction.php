@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 class Subtraction extends Computations
 {
     public function calculate(): void

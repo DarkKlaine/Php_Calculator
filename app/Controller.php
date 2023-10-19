@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 class Controller
 {
     static public function countIt($arg1, $arg2, $arg3): string|float

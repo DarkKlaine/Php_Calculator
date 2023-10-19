@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 class Divide extends Computations
 {
     public function calculate(): void
