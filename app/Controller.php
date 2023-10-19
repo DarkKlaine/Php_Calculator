@@ -5,6 +5,7 @@ class Controller
 {
     static public function countIt($value1, $operation, $value2): string|float
     {
+
         switch ($operation) {
             case "+":
                 $answer = new Addition($value1, $operation, $value2);

@@ -14,8 +14,8 @@ class CalculatorLogger
         $textFromFile = file($this->logPath);
 
         $file = fopen($this->logPath, 'w');
-        $text = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s');
 
+        $text = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s');
         fwrite($file, $this->checkLogLength($textFromFile) . "\n" . $text);
 
         fclose($file);
