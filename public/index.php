@@ -1,11 +1,15 @@
 <?php
 
-use App\Controller;
-
 require_once('../vendor/autoload.php');
 
-//$input = readline();
-$input = ["5", "*", "10"];
+do {
+print_r('User input: > ');
+$input = readline();
+if ($input == 'stop') break;
 
-$result = Controller::countIt($input[0], $input[1], $input[2]);
-print_r($result);
+$parsed_input = explode(' ', $input);
+$result = App\Controller::countIt($parsed_input[0], $parsed_input[1], $parsed_input[2]);
+print_r($result . "\n");
+
+(new App\CalculatorLogger)->doNewLog($input, $result);
+} while (true);
