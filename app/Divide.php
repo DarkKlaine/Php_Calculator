@@ -5,10 +5,10 @@ class Divide extends Computations
 {
     public function calculate(): void
     {
-        if ($this->arg2 == 0) {
+        if ($this->value2 === '0') {
             $this->result = "Error. You can't divide by zero.";
         } else {
-            $this->result = (float)$this->arg1 / (float)$this->arg2;
+            $this->result = (float)$this->value1 / (float)$this->value2;
         }
     }
 

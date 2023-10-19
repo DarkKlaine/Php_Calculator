@@ -16,12 +16,12 @@ class CalculatorLogger
         $file = fopen($this->logPath, 'w');
 
         $text = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s');
-        fwrite($file, $this->checkLogLength($textFromFile) . "\n" . $text);
+        fwrite($file, $this->normalizeLogLength($textFromFile) . "\n" . $text);
 
         fclose($file);
     }
 
-    protected function checkLogLength($textFromFile): string
+    protected function normalizeLogLength($textFromFile): string
     {
         $logLength = count($textFromFile);
         if ($logLength > ($this->maxLogLength - 1)) {
