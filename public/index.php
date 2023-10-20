@@ -6,7 +6,9 @@ do {
 
 print_r('User input: > ');
 $input = readline();
-if ($input == 'stop') break;
+if ($input == 'stop') {
+    break;
+}
 
 $parsed_input = explode(' ', $input);
 $result = App\Controller::countIt($parsed_input[0], $parsed_input[1], $parsed_input[2]);
