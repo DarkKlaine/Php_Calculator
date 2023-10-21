@@ -4,65 +4,60 @@ namespace App;
 
 class CalculatorLogger
 {
-    protected string $rawLogPath = '../log/rawLogData.log';
+
     protected string $logPath = '../log/calculations.log';
-    protected int $maxLogLength = 10;
+    protected int $maxLogSize = 10;
 
-    public function doNewLog($input, $result): void
+    public function addToLog(string $input, string $result): void
     {
-        if (str_contains($result, 'Error')) {
-            return;
+        if (str_contains($result, 'Error')) return;
+
+        $textForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . "\n";
+
+        if (file_exists($this->logPath)) {
+            $logArray = $this->parseLog();
+            $logArray[] = $textForLogging;
+        } else {
+            $logArray = array($textForLogging);
         }
 
-        $this->rawLogProcessing($input, $result);
-        $this->finalLogProcessing();
-    }
+        $logArray = $this->processLog($logArray);
 
-    protected function rawLogProcessing($input, $result): void
-    {
-        $existingLog = '';
-
-        if (file_exists($this->rawLogPath)) {
-            $existingLog = $this->trimLogLength(file($this->rawLogPath)) . "\n";
-        }
-
-        $file = fopen($this->rawLogPath, 'w');
-
-        $textToFile = $existingLog . $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s');
-
-        fwrite($file, $textToFile);
+        $file = fopen($this->logPath, 'w');
+        fwrite($file, implode("", $logArray));
         fclose($file);
     }
 
-    protected function trimLogLength(array $rawLog): string
+    protected function parseLog(): array
     {
-        $logLength = count($rawLog);
-        if ($logLength > ($this->maxLogLength - 1)) {
-            array_splice($rawLog, 0, $logLength - ($this->maxLogLength - 1));
+        $logArray = file($this->logPath);
+        $logSize = count($logArray);
+
+        if ($logSize > ($this->maxLogSize - 1)) {
+            array_splice($logArray, 0, $logSize - ($this->maxLogSize - 1));
         }
-        return implode("", $rawLog);
+
+        return preg_replace('/[ 1-9][0-9]: +/', '', $logArray);
     }
 
-    protected function finalLogProcessing(): void
+    protected function processLog(array $logArray): array
     {
-        $rawLog = file($this->rawLogPath);
-        $maxElementLength = 0;
-        for ($i = 0; $i < count($rawLog); $i++) {
-            $elementLength = strlen($rawLog[$i]);
-            if ($elementLength > $maxElementLength) {
-                $maxElementLength = $elementLength;
+        $longestStr = 0;
+        for ($i = 0; $i < count($logArray); $i++) {
+            $lengthStr = strlen($logArray[$i]);
+            if ($lengthStr > $longestStr) {
+                $longestStr = $lengthStr;
             }
         }
 
-        foreach ($rawLog as $key => &$value) {
-            $number = $key < 9 ? ' ' . ($key + 1) . ': ' : ($key + 1) . ':';
-            $value = $number . str_repeat(' ', $maxElementLength - strlen($value)) . $value;
+        foreach ($logArray as $key => &$value) {
+            $number = $key < 9 ? ' ' . ($key + 1) . ': ' : ($key + 1) . ': ';
+            $value = $number . str_pad($value, $longestStr, ' ', STR_PAD_LEFT);
+            //$value = $number . str_repeat(' ', $longestStr - strlen($value)) . $value;
         }
         unset($value);
 
-        $file = fopen($this->logPath, 'w');
-        fwrite($file, implode("", $rawLog));
-        fclose($file);
-
+        return $logArray;
     }
+
 }

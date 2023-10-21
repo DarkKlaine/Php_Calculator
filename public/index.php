@@ -14,6 +14,6 @@ $parsed_input = explode(' ', $input);
 $result = App\Controller::countIt($parsed_input[0], $parsed_input[1], $parsed_input[2]);
 print_r($result . "\n");
 
-(new App\CalculatorLogger)->doNewLog($input, $result);
+(new App\CalculatorLogger)->addToLog($input, $result);
 
 } while (true);
