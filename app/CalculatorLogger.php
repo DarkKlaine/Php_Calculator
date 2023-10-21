@@ -51,9 +51,8 @@ class CalculatorLogger
         }
 
         foreach ($logArray as $key => &$value) {
-            $number = $key < 9 ? ' ' . ($key + 1) . ': ' : ($key + 1) . ': ';
-            $value = $number . str_pad($value, $longestStr, ' ', STR_PAD_LEFT);
-            //$value = $number . str_repeat(' ', $longestStr - strlen($value)) . $value;
+            $number = $key < 9 ? ' ' . ($key + 1) : ($key + 1);
+            $value = $number . ': ' . str_pad($value, $longestStr, ' ', STR_PAD_LEFT);
         }
         unset($value);
 
