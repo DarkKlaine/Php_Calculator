@@ -4,8 +4,8 @@ namespace App;
 
 class CalculatorLogger
 {
-
-    protected string $logPath = '../log/calculations.log';
+    protected string $logDir = '../log';
+    protected string $logFile = '../log/calculations.log';
     protected int $maxLogSize = 10;
 
     public function addToLog(string $input, string $result): void
@@ -14,23 +14,24 @@ class CalculatorLogger
 
         $textForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . "\n";
 
-        if (file_exists($this->logPath)) {
+        if (file_exists($this->logFile)) {
             $logArray = $this->parseLog();
             $logArray[] = $textForLogging;
         } else {
+            mkdir($this->logDir);
             $logArray = array($textForLogging);
         }
 
         $logArray = $this->processLog($logArray);
 
-        $file = fopen($this->logPath, 'w');
+        $file = fopen($this->logFile, 'w');
         fwrite($file, implode("", $logArray));
         fclose($file);
     }
 
     protected function parseLog(): array
     {
-        $logArray = file($this->logPath);
+        $logArray = file($this->logFile);
         $logSize = count($logArray);
 
         if ($logSize > ($this->maxLogSize - 1)) {
