@@ -13,7 +13,8 @@ class Controller
             "*" => (new Multiply($inputData[0], $inputData[1], $inputData[2]))->getResult(),
             "/" => (new Divide($inputData[0], $inputData[1], $inputData[2]))->getResult(),
             "pow" => (new Exponentiation($inputData[0], $inputData[1], $inputData[2]))->getResult(),
-            default => "Error. Incorrect math.",
+            "sin", "cos", "tan" => (new SinCosTan($inputData[0], $inputData[1]))->getResult(),
+            default => "Error. Incorrect operator.",
         };
 
         (new CalculatorLogger)->addToLog($input, $result);

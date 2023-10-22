@@ -11,7 +11,7 @@ do {
         break;
     }
 
-    $pattern = '/\d+(\.?\d+)? ([+\-\/*]|pow) \d+(\.?\d+)?/';
+    $pattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
     if (!preg_match($pattern, $input)) {
         print_r("Error. Wrong input! Try again.\n");
     } else {

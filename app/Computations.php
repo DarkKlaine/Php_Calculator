@@ -8,11 +8,11 @@ abstract class Computations
     protected string $action;
     protected string|float $result;
 
-    public function __construct(string $arg1, string $action, string $arg2)
+    public function __construct(string $value1, string $action, string $value2 = '')
     {
-        $this->value1 = $arg1;
+        $this->value1 = $value1;
         $this->action = $action;
-        $this->value2 = $arg2;
+        $this->value2 = $value2;
     }
 
     abstract public function calculate(): void;
