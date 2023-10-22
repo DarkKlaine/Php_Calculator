@@ -10,13 +10,13 @@ do {
         print_r("Stopped. Bye.");
         break;
     }
-    if (!preg_match('/\d+(\.?\d+)? [+\-\/*] \d+(\.?\d+)?/', $input)) {
+
+    $pattern = '/\d+(\.?\d+)? ([+\-\/*]|pow) \d+(\.?\d+)?/';
+    if (!preg_match($pattern, $input)) {
         print_r("Error. Wrong input! Try again.\n");
     } else {
-        $parsed_input = explode(' ', $input);
-        $result = App\Controller::countIt($parsed_input[0], $parsed_input[1], $parsed_input[2]);
+        $result = App\Controller::countIt($input);
         print_r($result . "\n");
-
-        (new App\CalculatorLogger)->addToLog($input, $result);
     }
+
 } while (true);

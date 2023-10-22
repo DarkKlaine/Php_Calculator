@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 class Multiply extends Computations
 {
     public function calculate(): void

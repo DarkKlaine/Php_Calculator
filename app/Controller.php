@@ -3,24 +3,21 @@
 namespace App;
 class Controller
 {
-    static public function countIt($value1, $operation, $value2): string|float
+    static public function countIt($input): string|float
     {
+        $inputData = explode(' ', $input);
 
-        switch ($operation) {
-            case "+":
-                $answer = new Addition($value1, $operation, $value2);
-                return $answer->getResult();
-            case "-":
-                $answer = new Subtraction($value1, $operation, $value2);
-                return $answer->getResult();
-            case "*":
-                $answer = new Multiply($value1, $operation, $value2);
-                return $answer->getResult();
-            case "/":
-                $answer = new Divide($value1, $operation, $value2);
-                return $answer->getResult();
-            default:
-                return "Error. Incorrect math.";
-        }
+        $result = match ($inputData[1]) {
+            "+" => (new Addition($inputData[0], $inputData[1], $inputData[2]))->getResult(),
+            "-" => (new Subtraction($inputData[0], $inputData[1], $inputData[2]))->getResult(),
+            "*" => (new Multiply($inputData[0], $inputData[1], $inputData[2]))->getResult(),
+            "/" => (new Divide($inputData[0], $inputData[1], $inputData[2]))->getResult(),
+            "pow" => (new Exponentiation($inputData[0], $inputData[1], $inputData[2]))->getResult(),
+            default => "Error. Incorrect math.",
+        };
+
+        (new CalculatorLogger)->addToLog($input, $result);
+
+        return $result;
     }
 }
