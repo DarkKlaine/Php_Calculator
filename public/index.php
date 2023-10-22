@@ -11,12 +11,7 @@ do {
         break;
     }
 
-    $pattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
-    if (!preg_match($pattern, $input)) {
-        print_r("Error. Wrong input! Try again.\n");
-    } else {
-        $result = App\Controller::countIt($input);
-        print_r($result . "\n");
-    }
+    $result = (new App\Controller)->countIt($input);
+    print_r($result . "\n");
 
 } while (true);

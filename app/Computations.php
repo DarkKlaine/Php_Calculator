@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 abstract class Computations
 {
     protected string $value1;
