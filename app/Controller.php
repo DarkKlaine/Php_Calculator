@@ -2,15 +2,15 @@
 
 namespace App;
 
+use Psr\Log\LogLevel;
+
 class Controller
 {
     protected string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
 
     public function countIt(string $input): string|float
     {
-        if (!preg_match($this->inputPattern, $input)) {
-            $result = "Error. Wrong input! Try again.";
-        } else {
+        if (preg_match($this->inputPattern, $input)) {
             $inputData = explode(' ', $input);
 
             $result = match ($inputData[1]) {
@@ -23,7 +23,21 @@ class Controller
                 default => "Error. Incorrect operator.",
             };
 
+        } else {
+            $result = "Error. Wrong input! Try again.";
         }
+
+        if (str_contains($result, 'Error')) {
+            $level = LogLevel::ERROR;
+        } elseif (str_contains($result, 'Warning')) {
+            $level = LogLevel::WARNING;
+        } else {
+            $level = LogLevel::INFO;
+        }
+
+        $input = str_contains($result, 'Error') ? "Input: {$input}. " : $input . ' = ';
+
+        (new PSRLogger())->log($level, $input . $result);
 
         (new CalculatorLogger)->addToLog($input, $result);
 

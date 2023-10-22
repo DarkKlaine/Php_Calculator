@@ -7,7 +7,8 @@ do {
     print_r('User input: > ');
     $input = readline();
     if ($input == 'stop') {
-        print_r("Stopped. Bye.");
+        print_r('Stopped. Bye.');
+        (new App\PSRLogger())->log(Psr\Log\LogLevel::DEBUG, 'Stopped');
         break;
     }
 
