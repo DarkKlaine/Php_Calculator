@@ -12,7 +12,7 @@ class CalculatorLogger
     {
         if (str_contains($result, 'Error')) return;
 
-        $textForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . "\n";
+        $textForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . PHP_EOL;
 
         if (file_exists($this->logFile)) {
             $logArray = $this->parseLog();
