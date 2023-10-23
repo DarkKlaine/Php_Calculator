@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Exponentiation extends Computations
+class Exponentiation extends Computation
 {
     public function calculate(): void
     {

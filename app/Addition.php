@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Addition extends Computations
+class Addition extends Computation
 {
     public function calculate(): void
     {

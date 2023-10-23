@@ -2,7 +2,7 @@
 
 namespace App;
 
-abstract class Computations
+abstract class Computation
 {
     protected string $value1;
     protected string $value2;

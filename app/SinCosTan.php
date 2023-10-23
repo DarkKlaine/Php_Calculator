@@ -2,7 +2,7 @@
 
 namespace App;
 
-class SinCosTan extends Computations
+class SinCosTan extends Computation
 {
 
     public function calculate(): void

@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Multiply extends Computations
+class Multiply extends Computation
 {
     public function calculate(): void
     {

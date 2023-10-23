@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Subtraction extends Computations
+class Subtraction extends Computation
 {
     public function calculate(): void
     {

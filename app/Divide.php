@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Divide extends Computations
+class Divide extends Computation
 {
     public function calculate(): void
     {

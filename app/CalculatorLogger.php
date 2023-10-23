@@ -27,6 +27,8 @@ class CalculatorLogger
         $file = fopen($this->logFile, 'w');
         fwrite($file, implode("", $logArray));
         fclose($file);
+
+        (new PSRLogger())->info(implode("", $logArray));
     }
 
     protected function parseLog(): array

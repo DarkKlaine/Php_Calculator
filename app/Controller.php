@@ -27,19 +27,7 @@ class Controller
             $result = "Error. Wrong input! Try again.";
         }
 
-        if (str_contains($result, 'Error')) {
-            $level = LogLevel::ERROR;
-        } elseif (str_contains($result, 'Warning')) {
-            $level = LogLevel::WARNING;
-        } else {
-            $level = LogLevel::INFO;
-        }
-
-        $input = str_contains($result, 'Error') ? "Input: {$input}. " : $input . ' = ';
-
-        (new PSRLogger())->log($level, $input . $result);
-
-        (new CalculatorLogger)->addToLog($input, $result);
+        (new PSRLogger())->log(LogLevel::INFO ,'', [$input, $result]);
 
         return $result;
     }
