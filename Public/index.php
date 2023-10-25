@@ -1,30 +1,15 @@
-<span style="font-family: Courier; ">PHP Calculator</span><br/><br/>
-
-<form action="" method="post">
-    <input type="text" name="userInput"/>
-    <input type="submit" value="Вычислить"/>
-</form>
-
 <?php
 
 use App\CalculatorController;
+use App\CalculatorView;
+
 
 require_once('../vendor/autoload.php');
 
+$view = new CalculatorView();
+$controller = new CalculatorController();
 
-if ($_POST) {
+$controller->handleRequest();
 
-    $input = $_POST['userInput'];
-    print_r('<span style="font-family: Courier; ">Выражение: ' . $input);
-    print_r('<br/>Результат: ');
-    $result = (new CalculatorController)->countIt($input);
-    print_r($result);
+$view->render($controller->inputString, $controller->result);
 
-    print_r('<br/><br/>История: </span>');
-    $logArray = file('../Log/calculations.Log');
-    for ($i = 0; $i < count($logArray); $i++) {
-        print_r('<span style="font-family: Courier; "><br/>' . str_replace(' ', '&nbsp', $logArray[$i]) . '</span>');
-    }
-
-}
-?>
