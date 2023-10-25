@@ -7,22 +7,22 @@ use Psr\Log\LogLevel;
 class CalculatorController
 {
 
-    public string $inputString = '';
-    public string $result = '';
-    protected string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
+    private string $input = '';
+    private string $result = '';
+    private string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
 
     public function handleRequest(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->inputString = $_POST['userInput'];
+            $this->input = $_POST['userInput'];
             $this->countIt();
         }
     }
 
     private function countIt(): void
     {
-        if (preg_match($this->inputPattern, $this->inputString)) {
-            $inputData = explode(' ', $this->inputString);
+        if (preg_match($this->inputPattern, $this->input)) {
+            $inputData = explode(' ', $this->input);
 
             $this->result = match ($inputData[1]) {
                 "+" => (new Addition($inputData[0], $inputData[1], $inputData[2]))->getResult(),
@@ -38,8 +38,17 @@ class CalculatorController
             $this->result = "Error. Wrong input! Try again.";
         }
 
-        (new PSRLogger())->log(LogLevel::INFO ,'', [$this->inputString, $this->result]);
+        (new PSRLogger())->log(LogLevel::INFO ,'', [$this->input, $this->result]);
 
     }
-}
 
+    public function getInput(): string
+    {
+        return $this->input;
+    }
+
+    public function getResult(): string
+    {
+        return $this->result;
+    }
+}
