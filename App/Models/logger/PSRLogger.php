@@ -7,8 +7,8 @@ use Psr\Log\LoggerInterface;
 class PSRLogger implements LoggerInterface
 {
 
-    protected string $logDir = '../log';
-    protected string $logFile = '../log/calculations.log';
+    protected string $logDir = '../Log';
+    protected string $logFile = '../Log/calculations.Log';
     protected int $maxLogSize = 10;
 
     public function emergency(\Stringable|string $message, array $context = []): void

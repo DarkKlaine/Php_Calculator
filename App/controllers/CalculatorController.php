@@ -4,7 +4,7 @@ namespace App;
 
 use Psr\Log\LogLevel;
 
-class Controller
+class CalculatorController
 {
     protected string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
 

@@ -1,5 +1,8 @@
 <?php
 
+
+use App\CalculatorController;
+
 require_once('../vendor/autoload.php');
 
 do {
@@ -11,7 +14,7 @@ do {
         break;
     }
 
-    $result = (new App\Controller)->countIt($input);
+    $result = (new CalculatorController())->countIt($input);
     print_r($result . "\n");
 
 } while (true);

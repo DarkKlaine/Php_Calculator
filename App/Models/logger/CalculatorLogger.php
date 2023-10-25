@@ -4,8 +4,8 @@ namespace App;
 
 class CalculatorLogger
 {
-    protected string $logDir = '../log';
-    protected string $logFile = '../log/calculations.log';
+    protected string $logDir = '../Log';
+    protected string $logFile = '../Log/calculations.Log';
     protected int $maxLogSize = 10;
 
     public function addToLog(string $input, string $result): void

@@ -1,21 +1,21 @@
 <?php
 // index.php
-header("Location: public/index.php");
+header("Location: Public/index.php");
 exit( );
 
 /**
    calculator.loc (directory)
-    app (directory)
-        controller (directory)
-            Controller.php -
+    App (directory)
+        controllers (directory)
+            CalculatorController.php -
                 - Класс от которо будут экстендиться остальные контроллеры.
                 - Создать если контроллеров больше чем 1 и/или если это необходимо.
-            Calculator_Controller.php -
+            CalculatorController.php -
                 - Контроллер калькулятора принимает данные от пользователя,
                 - обрабатывает и определяет куда их отправить.
                 - Получает результат из модели, отправляет его в вид.
 
-        model (directory)
+        Models (directory)
             computations (directory)
                 Computation.php - главный абстрактный класс
                 Addition.php extends Computation - сложение и прочие математические функции
@@ -26,31 +26,31 @@ exit( );
                     LoggerInterface.php
                     LogLevel.php
                     ...
-                Calculator_Logger.php - Имплемент от ПСР логер интерфейса
+                CalculatorLogger.php - Имплемент от ПСР логер интерфейса
                     - обработка логов калькулятора
                     - принимает готовую строку для логирования, уровень логирования
                     - обрабатывает её согласно плана и записывает в лог
                     ??? кто её отправляет, контроллер или другой метод из модели?
 
-            Calculator_Error_Handler.php - получает и обрабатывает ошибки
+            CalculatorErrorHandler.php - получает и обрабатывает ошибки
                 - сюда контроллер будет отправлять неправильный ввод,
                 ??? другие классы будут отправлять ошибки
                 - отсюда
 
-        view (directory)
+        Views (directory)
             View.php -
                 - Класс от которо будут экстендиться остальные в view хранит общий шаблон
                 - Создать если страниц больше чем 1 и/или если это необходимо.
-            Calculator_View.php -
+            CalculatorView.php -
                 - Хранит в себе шаблон страницы
                 - Получает данные от контроллера, заполняет ими страницу
                 - Отображает страницу пользователю
 
-    public (directory)
+    Public (directory)
         index.php -
             - Точка входа в приложение. Содержит в себе только обращение к контроллеру.
             ??? Тут не совсем понятно как пользователь сразу увидит блок ввода данных из Вида
 
-    log (directory)
-        calculations.log и другие логи
+    Log (directory)
+        calculations.Log и другие логи
  */
