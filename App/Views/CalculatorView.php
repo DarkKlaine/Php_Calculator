@@ -4,8 +4,10 @@ namespace App;
 
 class CalculatorView
 {
+
     public function render($inputString, $outputString): void
     {
+
         echo '<!DOCTYPE html><html lang="ru">';
         $this->printHeader();
         echo '<body>';
@@ -14,8 +16,13 @@ class CalculatorView
         if (empty($outputString) === false) {
             echo 'Выражение: ' . $inputString . '<br>';
             echo 'Результат: ' . $outputString . '<br>';
+
+        } else {
+            echo 'Калькулятор поддерживает следующие функции:<br>';
+            echo '+, -, /, *, pow, sin, cos, tan <br>';
         }
 
+        echo '<br><a href="history.php">История</a>';
         echo '</body></html>';
     }
 
@@ -38,5 +45,15 @@ class CalculatorView
         echo "<input type='text' name='userInput' placeholder='Введите выражение' required>";
         echo "<button type='submit'>Вычислить</button>";
         echo "</form><br>";
+    }
+
+    public function renderHistory(string $history): void
+    {
+        echo '<!DOCTYPE html><html lang="ru">';
+        $this->printHeader();
+        echo '<body>';
+        echo '<a href="index.php">Назад</a>';
+        echo '<br>История:<br>' . $history;
+        echo '</body></html>';
     }
 }

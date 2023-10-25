@@ -9,6 +9,8 @@ class CalculatorController
 
     private string $input = '';
     private string $result = '';
+
+    private string $history = '';
     private string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
 
     public function handleRequest(): void
@@ -42,6 +44,14 @@ class CalculatorController
 
     }
 
+    protected function createHistoryString():void
+    {
+        $logArray = file('../log/calculations.log');
+        for ($i = 0; $i < count($logArray); $i++) {
+            $this->history .= str_replace(' ', '&nbsp', $logArray[$i]);
+        }
+    }
+
     public function getInput(): string
     {
         return $this->input;
@@ -50,5 +60,11 @@ class CalculatorController
     public function getResult(): string
     {
         return $this->result;
+    }
+
+    public function getHistory(): string
+    {
+        $this->createHistoryString();
+        return $this->history;
     }
 }
