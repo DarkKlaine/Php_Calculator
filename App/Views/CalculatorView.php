@@ -15,7 +15,7 @@ class CalculatorView
         echo "<button type='submit'>Вычислить</button>";
         echo "</form>";
 
-        if (!empty($outputString)) {
+        if (empty($outputString) === false) {
             echo 'Выражение: ' . $inputString . '<br>';
             echo 'Результат: ' . $outputString . '<br>';
         }
