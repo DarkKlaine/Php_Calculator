@@ -7,7 +7,6 @@ class HistoryMaker
     protected string $logDir = '../Log';
     protected string $logFile = '../Log/History.Log';
     protected int $maxLogSize = 10;
-    private string $history = '';
 
     public function addToHistory(string $input, string $result): void
     {
