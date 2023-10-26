@@ -7,6 +7,7 @@ class HistoryMaker
     protected string $logDir = '../Log';
     protected string $logFile = '../Log/History.Log';
     protected int $maxLogSize = 10;
+    private string $history = '';
 
     public function addToHistory(string $input, string $result): void
     {
@@ -59,6 +60,16 @@ class HistoryMaker
         unset($value);
 
         return $logArray;
+    }
+
+    public function createHistoryString():string
+    {
+        $historyString = '';
+        $logArray = file('../log/History.log');
+        for ($i = 0; $i < count($logArray); $i++) {
+            $historyString .= str_replace(' ', '&nbsp', $logArray[$i]) . '<br>';
+        }
+        return $historyString;
     }
 
 }
