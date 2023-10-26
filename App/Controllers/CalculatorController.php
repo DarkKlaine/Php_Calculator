@@ -23,21 +23,31 @@ class CalculatorController
 
     private function countIt(): void
     {
+        $logger = new CalculatorLogger();
         if (preg_match($this->inputPattern, $this->input)) {
             $inputData = explode(' ', $this->input);
 
-            $this->result = match ($inputData[1]) {
-                "+" => (new Addition($inputData[0], $inputData[1], $inputData[2]))->getResult(),
-                "-" => (new Subtraction($inputData[0], $inputData[1], $inputData[2]))->getResult(),
-                "*" => (new Multiply($inputData[0], $inputData[1], $inputData[2]))->getResult(),
-                "/" => (new Divide($inputData[0], $inputData[1], $inputData[2]))->getResult(),
-                "pow" => (new Exponentiation($inputData[0], $inputData[1], $inputData[2]))->getResult(),
-                "sin", "cos", "tan" => (new SinCosTan($inputData[0], $inputData[1]))->getResult(),
-                default => "Error. Incorrect operator.",
-            };
+            if ($inputData[1] == "+") {
+                $this->result = (new Addition($inputData[0], $inputData[1], $inputData[2]))->getResult();
+            } elseif ($inputData[1] == "-") {
+                $this->result = (new Subtraction($inputData[0], $inputData[1], $inputData[2]))->getResult();
+            } elseif ($inputData[1] == "*") {
+                $this->result = (new Multiply($inputData[0], $inputData[1], $inputData[2]))->getResult();
+            } elseif ($inputData[1] == "/") {
+                $this->result = (new Divide($inputData[0], $inputData[1], $inputData[2]))->getResult();
+            } elseif ($inputData[1] == "pow") {
+                $this->result = (new Exponentiation($inputData[0], $inputData[1], $inputData[2]))->getResult();
+            } elseif ($inputData[1] == "sin" || $inputData[1] == "cos" || $inputData[1] == "tan") {
+                $this->result = (new SinCosTan($inputData[0], $inputData[1]))->getResult();
+            } else {
+                $this->result = "Error. Incorrect operator.";
+                $logger->error('Ошибка. Неправильный математический оператор.');
+            }
 
         } else {
             $this->result = "Error. Wrong input! Try again.";
+            $logger->error("Неправильный ввод: $this->input");
+
         }
 
         (new HistoryMaker())->addToHistory($this->input, $this->result);
