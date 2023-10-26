@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Psr\Log\LogLevel;
-
 class CalculatorController
 {
 
