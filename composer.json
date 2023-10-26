@@ -3,7 +3,7 @@
     "psr-4": {
       "App\\": [
         "App/Controllers/",
-        "App/Models/Computations/",
+        "App/Computations/",
         "App/Models/Logger/",
         "App/Views/"
       ]
