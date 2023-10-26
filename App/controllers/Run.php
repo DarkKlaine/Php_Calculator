@@ -11,6 +11,7 @@ class Run
         $controller->handleRequest();
         $view->render($controller->getInput(), $controller->getResult());
     }
+
     public function runHistory(): void
     {
         $view = new CalculatorView();

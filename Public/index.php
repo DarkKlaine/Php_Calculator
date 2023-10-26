@@ -1,6 +1,10 @@
 <?php
 
+
+
 require_once('../vendor/autoload.php');
 
-$run = new App\Run();
+use App\Run;
+
+$run = new Run();
 $run->runIndex();
