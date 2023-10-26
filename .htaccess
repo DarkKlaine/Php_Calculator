@@ -1,19 +1,20 @@
 <IfModule dir_module>
     DirectoryIndex Public/index.php
+
     RewriteEngine On
 
-   # Перенаправление для index.php
-   RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/(Public/)?index\.php [NC]
-   RewriteRule ^ / [R=301,L]
+    # Перенаправление для index.php
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/(Public/)?index\.php [NC]
+    RewriteRule ^ / [R=301,L]
 
     # Перенаправление для history.php
     RewriteRule ^history\.php$ Public/history.php [L]
 
 </IfModule>
-AddDefaultCharset UTF-8
-AddCharset UTF-8 .html
+    AddDefaultCharset UTF-8
+    AddCharset UTF-8 .html
 <FilesMatch "\.(html)$">
-   Header set Cache-Control: "no-cache, no-store"
-   Header unset ETag
+    Header set Cache-Control: "no-cache, no-store"
+    Header unset ETag
 </FilesMatch>
-Header set X-Content-Type-Options nosniff
+    Header set X-Content-Type-Options nosniff
