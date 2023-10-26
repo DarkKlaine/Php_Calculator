@@ -51,7 +51,12 @@ class CalculatorLogger implements LoggerInterface
     public function log($level, \Stringable|string $message, array $context = []): void
     {
         date_default_timezone_set('Europe/Moscow');
-        $logEntry = date("Y-m-d H:i:s") . " | " . $level . " -> " . $message . "\n";
+        $date = date("Y-m-d H:i:s");
+        $arrow = match ($level) {
+            LogLevel::INFO => "  -> ",
+            LogLevel::ERROR => " -> ",
+        };
+        $logEntry = $date . " | " . $level . $arrow . $message . "\n";
         file_put_contents($this->logFile, $logEntry, FILE_APPEND);
     }
 
