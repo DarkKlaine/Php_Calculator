@@ -9,7 +9,6 @@ class CalculatorController
 
     private string $input = '';
     private string $result = '';
-
     private string $history = '';
     private string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
 
