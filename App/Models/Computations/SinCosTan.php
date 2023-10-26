@@ -22,6 +22,7 @@ class SinCosTan extends Computation
                 break;
             default:
                 $this->result = "Error. Incorrect math.";
+                $this->logger->error('Ошибка. Неправильный математический оператор.');
                 break;
         }
 
