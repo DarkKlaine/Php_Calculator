@@ -40,13 +40,13 @@ class CalculatorController
             $this->result = "Error. Wrong input! Try again.";
         }
 
-        (new PSRLogger())->log(LogLevel::INFO ,'', [$this->input, $this->result]);
+        (new HistoryMaker())->addToHistory($this->input, $this->result);
 
     }
 
     protected function createHistoryString():void
     {
-        $logArray = file('../log/calculations.log');
+        $logArray = file('../log/History.log');
         for ($i = 0; $i < count($logArray); $i++) {
             $this->history .= str_replace(' ', '&nbsp', $logArray[$i]);
         }
