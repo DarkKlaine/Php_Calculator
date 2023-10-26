@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Views;
 
 class CalculatorView
 {
@@ -26,7 +26,7 @@ class CalculatorView
         echo '</body></html>';
     }
 
-    private function printHeader():void
+    private function printHeader(): void
     {
         echo "<head>";
         echo "<title>PHP Calculator</title>";
@@ -38,7 +38,7 @@ class CalculatorView
         echo "</head>";
     }
 
-    private function printForm():void
+    private function printForm(): void
     {
         echo "<h1>PHP Calculator</h1>";
         echo "<form method='post'>";

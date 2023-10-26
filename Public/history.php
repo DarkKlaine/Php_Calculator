@@ -1,6 +1,8 @@
 <?php
 
+use App\Controllers\Run;
+
 require_once('../vendor/autoload.php');
 
-$run = new App\Run();
+$run = new Run();
 $run->runHistory();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\Logger;
 
 class HistoryMaker
 {
@@ -62,7 +62,7 @@ class HistoryMaker
         return $logArray;
     }
 
-    public function createHistoryString():string
+    public function createHistoryString(): string
     {
         $historyString = '';
         $logArray = file('../log/History.log');

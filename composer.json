@@ -1,12 +1,7 @@
 {
   "autoload": {
     "psr-4": {
-      "App\\": [
-        "App/Controllers/",
-        "App/Models/Computations/",
-        "App/Models/Logger/",
-        "App/Views/"
-      ]
+      "App\\": "App/"
     }
   },
   "require": {

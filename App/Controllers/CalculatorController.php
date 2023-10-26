@@ -1,6 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Controllers;
+
+use App\Models\Computations\Addition;
+use App\Models\Computations\Divide;
+use App\Models\Computations\Exponentiation;
+use App\Models\Computations\Multiply;
+use App\Models\Computations\SinCosTan;
+use App\Models\Computations\Subtraction;
+use App\Models\Logger\CalculatorLogger;
+use App\Models\Logger\HistoryMaker;
 
 class CalculatorController
 {
@@ -12,6 +21,8 @@ class CalculatorController
 
     public function handleRequest(): void
     {
+        //var_dump($_SERVER);
+        //die;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->input = $_POST['userInput'];
             $this->countIt();
@@ -51,16 +62,14 @@ class CalculatorController
 
     }
 
-
+    public function getResult(): string
+    {
+        return $this->result;
+    }
 
     public function getInput(): string
     {
         return $this->input;
-    }
-
-    public function getResult(): string
-    {
-        return $this->result;
     }
 
     public function getHistory(): string

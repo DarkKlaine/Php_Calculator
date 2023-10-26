@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models\Computations;
+
+use App\Models\Logger\CalculatorLogger;
 
 abstract class Computation
 {
@@ -18,12 +20,12 @@ abstract class Computation
         $this->logger = new CalculatorLogger();
     }
 
-    abstract public function calculate(): void;
-
     public function getResult(): string|float
     {
         $this->calculate();
         return $this->result;
     }
+
+    abstract public function calculate(): void;
 
 }
