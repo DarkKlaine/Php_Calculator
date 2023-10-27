@@ -5,7 +5,7 @@ namespace App\Views;
 class CalculatorView
 {
 
-    public function render($inputString, $outputString): void
+    public function render(string $inputString, string $outputString): void
     {
         echo '<!DOCTYPE html><html lang="ru">';
         $this->printHeader();

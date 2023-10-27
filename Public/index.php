@@ -4,15 +4,11 @@ use App\Router;
 
 require_once('../vendor/autoload.php');
 
-$run = new Router();
+$router = new Router();
 
 $requestUrl = $_SERVER['REQUEST_URI'];
 
-if ($requestUrl === '/favicon.ico') {
-    return;
-}
-
-$run->handleRequest($requestUrl);
+$router->handleRequest($requestUrl);
 
 
 /**

@@ -1,0 +1,6 @@
+<IfModule dir_module>
+
+    RewriteEngine On
+    RewriteRule ^(.*)$ index.php [L]
+
+</IfModule>

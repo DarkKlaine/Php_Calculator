@@ -28,8 +28,6 @@ class CalculatorController extends BaseController
 
     public function handleRequest(): void
     {
-        //var_dump($_SERVER);
-        //die;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->input = $_POST['userInput'];
             $this->countIt();

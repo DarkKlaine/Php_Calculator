@@ -2,19 +2,29 @@
 
 namespace App;
 
+use App\Controllers\CalculatorController;
+use App\Controllers\HistoryController;
 use App\Models\Logger\CalculatorLogger;
 
 class Router
 {
 
     private array $routes = [
-        '/' => 'App\Controllers\CalculatorController',
-        '/history' => 'App\Controllers\HistoryController',
-        ];
+        '/' => CalculatorController::class,
+        '/history' => HistoryController::class,
+    ];
+
+    private array $bannedRoutes = [
+        '/favicon.ico',
+    ];
 
     public function handleRequest($url): void
     {
-        if (array_key_exists($url, $this->routes)) {
+        if (in_array($url, $this->bannedRoutes)) {
+            return;
+        }
+
+        if (empty($this->routes[$url]) === false) {
             $controllerName = $this->routes[$url];
             $controller = new $controllerName();
             $controller->run();
