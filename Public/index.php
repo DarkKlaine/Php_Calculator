@@ -7,6 +7,11 @@ require_once('../vendor/autoload.php');
 $run = new Router();
 
 $requestUrl = $_SERVER['REQUEST_URI'];
+
+if ($requestUrl === '/favicon.ico') {
+    return;
+}
+
 $run->handleRequest($requestUrl);
 
 
