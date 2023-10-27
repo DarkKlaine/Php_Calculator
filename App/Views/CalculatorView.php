@@ -27,18 +27,19 @@ class CalculatorView
 
     private function printHeader(): void
     {
-        echo "<head>><title>PHP Calculator</title>";
+        echo "<head><title>PHP Calculator</title>";
         echo "<style>";
         echo "body {";
         echo "    font-family: \"Courier New\", monospace;";
         echo "}";
         echo "</style>";
         echo "</head>";
+        echo "<h1>PHP Calculator</h1>";
     }
 
     private function printForm(): void
     {
-        echo "<h1>PHP Calculator</h1>";
+
         echo "<form method='post'>";
         echo "<input type='text' name='userInput' placeholder='Введите выражение' required>";
         echo "<button type='submit'>Вычислить</button>";
@@ -50,8 +51,8 @@ class CalculatorView
         echo '<!DOCTYPE html><html lang="ru">';
         $this->printHeader();
         echo '<body>';
-        echo '<a href="/">Назад</a>';
-        echo '<br>История:<br>' . $history;
+        echo 'История:<br>' . $history;
+        echo '<br><a href="/">Назад</a>';
         echo '</body></html>';
     }
 }
