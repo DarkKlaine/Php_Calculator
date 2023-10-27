@@ -17,7 +17,7 @@ class CalculatorController extends BaseController
     private string $input = '';
     private string $result = '';
 
-    private string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
+    private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
 
     public function run(): void
     {

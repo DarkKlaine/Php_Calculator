@@ -7,13 +7,12 @@ class CalculatorView
 
     public function render($inputString, $outputString): void
     {
-
         echo '<!DOCTYPE html><html lang="ru">';
         $this->printHeader();
         echo '<body>';
         $this->printForm();
 
-        if (empty($outputString) === false) {
+        if (empty($outputString) === false || $outputString == '0') {
             echo 'Выражение: ' . $inputString . '<br>';
             echo 'Результат: ' . $outputString . '<br>';
 
