@@ -14,10 +14,6 @@ class Router
         '/history' => HistoryController::class,
     ];
 
-    private array $bannedRoutes = [
-        '/favicon.ico',
-    ];
-
     public function handleRequest($url): void
     {
         if (in_array($url, $this->bannedRoutes)) {
