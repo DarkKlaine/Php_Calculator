@@ -47,7 +47,7 @@ class CalculatorLogger implements LoggerInterface
 
     public function debug(Stringable|string $message, array $context = []): void
     {
-
+        $this->log(LogLevel::DEBUG, $message);
     }
 
     public function log($level, Stringable|string $message, array $context = []): void
@@ -56,7 +56,7 @@ class CalculatorLogger implements LoggerInterface
         $date = date("Y-m-d H:i:s");
         $arrow = match ($level) {
             LogLevel::INFO => "  -> ",
-            LogLevel::ERROR => " -> ",
+            LogLevel::ERROR, LogLevel::DEBUG => " -> ",
         };
         $logEntry = $date . " | " . $level . $arrow . $message . "\n";
         file_put_contents($this->logFile, $logEntry, FILE_APPEND);

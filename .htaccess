@@ -2,13 +2,7 @@
     DirectoryIndex Public/index.php
 
     RewriteEngine On
-
-    # Перенаправление для index.php
-    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/(Public/)?index\.php [NC]
-    RewriteRule ^ / [R=301,L]
-
-    # Перенаправление для history.php
-    RewriteRule ^history\.php$ Public/history.php [L]
+    RewriteRule ^(.*)$ Public/index.php [L]
 
 </IfModule>
     AddDefaultCharset UTF-8

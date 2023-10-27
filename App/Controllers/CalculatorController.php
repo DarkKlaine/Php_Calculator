@@ -10,14 +10,21 @@ use App\Models\Computations\SinCosTan;
 use App\Models\Computations\Subtraction;
 use App\Models\Logger\CalculatorLogger;
 use App\Models\Logger\HistoryMaker;
+use App\Views\CalculatorView;
 
-class CalculatorController
+class CalculatorController extends BaseController
 {
-
     private string $input = '';
     private string $result = '';
 
     private string $inputPattern = '/\d+(\.?\d+)? (([+\-\/*]|pow) \d+(\.?\d+)?|sin|cos|tan)/';
+
+    public function run(): void
+    {
+        $view = new CalculatorView();
+        $this->handleRequest();
+        $view->render($this->input, $this->result);
+    }
 
     public function handleRequest(): void
     {
@@ -58,22 +65,9 @@ class CalculatorController
 
         }
 
+        // Создаем или обновляем файл истории
         (new HistoryMaker())->addToHistory($this->input, $this->result);
 
     }
 
-    public function getResult(): string
-    {
-        return $this->result;
-    }
-
-    public function getInput(): string
-    {
-        return $this->input;
-    }
-
-    public function getHistory(): string
-    {
-        return (new HistoryMaker())->createHistoryString();
-    }
 }

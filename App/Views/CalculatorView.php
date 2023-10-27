@@ -22,7 +22,7 @@ class CalculatorView
             echo '+, -, /, *, pow, sin, cos, tan <br>';
         }
 
-        echo '<br><a href="history.php">История</a>';
+        echo '<br><a href="/history">История</a>';
         echo '</body></html>';
     }
 
@@ -52,7 +52,7 @@ class CalculatorView
         echo '<!DOCTYPE html><html lang="ru">';
         $this->printHeader();
         echo '<body>';
-        echo '<a href="index.php">Назад</a>';
+        echo '<a href="/">Назад</a>';
         echo '<br>История:<br>' . $history;
         echo '</body></html>';
     }
