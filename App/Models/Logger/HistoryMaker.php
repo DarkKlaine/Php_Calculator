@@ -61,7 +61,7 @@ class HistoryMaker
         return $logArray;
     }
 
-    public function createHistoryString(): string
+    public function getHistoryString(): string
     {
         $historyString = '';
         $logArray = file('../log/History.log');

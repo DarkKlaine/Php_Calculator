@@ -10,12 +10,8 @@ class HistoryController extends BaseController
     public function run(): void
     {
         $view = new CalculatorView();
-        $view->renderHistory($this->getHistory());
+        $historyMaker = new HistoryMaker();
+        $view->renderHistory($historyMaker->getHistoryString());
     }
 
-    public function getHistory(): string
-    {
-        $historyMaker = new HistoryMaker();
-        return $historyMaker->createHistoryString();
-    }
 }
