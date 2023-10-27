@@ -11,7 +11,6 @@ $requestUrl = $_SERVER['REQUEST_URI'];
 $router->handleRequest($requestUrl);
 
 // TODO
-// 1. DTO и передача параметров из Router в Controller
 // 2. Почитать про HTTP и понять https://habr.com/ru/articles/215117/
 // 4. Переработать View: https://habr.com/ru/articles/45259/
 // 5. Сделать разные обработчики в CalculatorController для вывода страницы и для обработки введенных
