@@ -27,8 +27,7 @@ class CalculatorView
 
     private function printHeader(): void
     {
-        echo "<head>";
-        echo "<title>PHP Calculator</title>";
+        echo "<head>><title>PHP Calculator</title>";
         echo "<style>";
         echo "body {";
         echo "    font-family: \"Courier New\", monospace;";
