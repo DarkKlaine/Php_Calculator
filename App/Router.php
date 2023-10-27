@@ -7,8 +7,8 @@ class Router
 {
 
     private array $routes = [
-        '/history' => 'App\Controllers\HistoryController',
         '/' => 'App\Controllers\CalculatorController',
+        '/history' => 'App\Controllers\HistoryController',
         ];
 
     public function handleRequest($url): void
