@@ -19,19 +19,15 @@ class CalculatorController extends BaseController
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
 
-    public function run(): void
+    public function run(object $serverGlobalDTO): void
     {
-        $view = new CalculatorView();
-        $this->handleRequest();
-        $view->render($this->input, $this->result);
-    }
-
-    public function handleRequest(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->input = $_POST['userInput'];
+        $post = $serverGlobalDTO->getPost();
+        if (isset($post['userInput'])) {
+            $this->input = $post['userInput'];
             $this->countIt();
         }
+        $view = new CalculatorView();
+        $view->render($this->input, $this->result);
     }
 
     private function countIt(): void

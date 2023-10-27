@@ -7,7 +7,7 @@ use App\Views\CalculatorView;
 
 class HistoryController extends BaseController
 {
-    public function run(): void
+    public function run(object $serverGlobalDTO): void
     {
         $view = new CalculatorView();
         $historyMaker = new HistoryMaker();

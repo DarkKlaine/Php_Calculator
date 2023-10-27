@@ -10,11 +10,17 @@ $requestUrl = $_SERVER['REQUEST_URI'];
 
 $router->handleRequest($requestUrl);
 
+// TODO
+// 1. DTO и передача параметров из Router в Controller
+// 2. Почитать про HTTP и понять https://habr.com/ru/articles/215117/
+// 4. Переработать View: https://habr.com/ru/articles/45259/
+// 5. Сделать разные обработчики в CalculatorController для вывода страницы и для обработки введенных
+//    для калькуляции данных. Переход между страницами сделать при помощи redirect средствами PHP.
+
 
 /**
- * Сделано: Apache redirect в index.php
- * Сделано: сделать BaseController и от него сделать 2 наследника CalculatorController и HistoryController
- * Сделано: В роутере в зависимости от адреса обращения запускать какой-то из них методом run
- * Cделано: Исправить вывод если ответ НОЛЬ
- * Сделано: Исправить обработку отрицательных значений ввода
+ * Сделано: DTO и передача параметров из Router в Controller
+ *
+ * Сделано: Написать в htaccess правило для favicon, чтобы правила не было в PHP и оно не моросило %)
+ * Сделано: Должен возвращаться код ответа HTTP 404 Not Found
  */
