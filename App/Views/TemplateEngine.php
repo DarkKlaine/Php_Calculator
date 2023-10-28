@@ -18,9 +18,9 @@ class TemplateEngine
         $this->injectFile = $this->templatesDirPath . $injectFile;
     }
 
-    public function display(string $indexTplFile): void
+    public function display(string $tplFile): void
     {
-        $template = $this->templatesDirPath . $indexTplFile;
+        $template = $this->templatesDirPath . $tplFile;
         require_once($template);
     }
 

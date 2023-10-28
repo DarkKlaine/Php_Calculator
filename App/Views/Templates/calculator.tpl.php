@@ -1,3 +1,9 @@
+<?php
+/**
+ * used in App\Views\CalculatorView.php
+ */
+?>
+
 <form method="post">
     <input type="text" name="userInput" placeholder="Введите выражение" required>
     <button type="submit">Вычислить</button>

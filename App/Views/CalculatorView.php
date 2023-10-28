@@ -1,4 +1,7 @@
 <?php
+/**
+ * uses App/Views/Templates/calculator.tpl.php
+ */
 
 namespace App\Views;
 
@@ -7,6 +10,7 @@ class CalculatorView
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
     private string $calculatorTplFile = 'calculator.tpl.php';
+
     public function render(string $input, string $result): void
     {
         $templateEngine = new TemplateEngine();
