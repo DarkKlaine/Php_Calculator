@@ -4,7 +4,7 @@
  */
 ?>
 
-<form method="post">
+<form method="post" action="/calculate">
     <input type="text" name="userInput" placeholder="Введите выражение" required>
     <button type="submit">Вычислить</button>
 </form>

@@ -26,8 +26,10 @@ class CalculatorController extends BaseController
             $this->input = $post['userInput'];
             $this->countIt();
         }
-        $view = new CalculatorView();
-        $view->render($this->input, $this->result);
+        $encodedInput = urlencode($this->input);
+        $encodedResult = urlencode($this->result);
+        header("Location: /?input=$encodedInput&result=$encodedResult");
+        exit;
     }
 
     private function countIt(): void
