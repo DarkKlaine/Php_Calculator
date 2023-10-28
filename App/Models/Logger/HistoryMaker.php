@@ -64,7 +64,7 @@ class HistoryMaker
     public function getHistoryString(): string
     {
         $historyString = '';
-        $logArray = file('../log/History.log');
+        $logArray = file($this->logFile);
         for ($i = 0; $i < count($logArray); $i++) {
             $historyString .= str_replace(' ', '&nbsp', $logArray[$i]) . '<br>';
         }
