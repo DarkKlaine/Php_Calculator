@@ -24,7 +24,7 @@ class TemplateEngine
         require_once($template);
     }
 
-    private function injectTplFile()
+    private function injectTplFile(): void
     {
         require_once($this->injectFile);
     }
