@@ -36,8 +36,8 @@ class Router
             $controller = new $controllerName();
             $controller->run($serverGlobalDTO);
         } else {
-            $logger->debug('Ошибка 404. Запрос:' . $url);
-            echo "404";
+            $logger->debug('Ошибка 404. Запрос: ' . $url);
+            echo 'Ошибка 404. Запрос: ' . $url;
         }
 
     }
