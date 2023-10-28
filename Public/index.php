@@ -1,13 +1,5 @@
 <?php
 
-//$requestUrl = $_SERVER['REQUEST_URI'];
-////var_dump($requestUrl);
-////die();
-//if ($requestUrl !== '/history') {
-//    header('Location: /history');
-//    exit;
-//}
-
 use App\Router;
 
 require_once('../vendor/autoload.php');
@@ -19,11 +11,25 @@ $router->handleRequest();
 // TODO
 // работа с сессиями
 // $_SESSION
-// 5. Сделать разные обработчики в CalculatorController для вывода страницы и для обработки введенных
-//    для калькуляции данных. Переход между страницами сделать при помощи redirect средствами PHP.
 
+// Начало сессии
+// session_start();
+//
+// Установка значения в $_SESSION
+// $_SESSION['username'] = 'John';
+//
+// Получение значения из $_SESSION
+// $username = $_SESSION['username'];
+//
+// Удаление значения из $_SESSION
+// unset($_SESSION['username']);
+//
+// Завершение сессии
+// session_destroy();
 
 /**
+ * Сделано: Сделать разные обработчики в CalculatorController для вывода страницы и для обработки введенных
+ *     для калькуляции данных. Переход между страницами сделать при помощи redirect средствами PHP.
  * Сделано: Переработать View: https://habr.com/ru/articles/45259/
  * Сделано: DTO и передача параметров из Router в Controller
  * Сделано: Почитать про HTTP и понять https://habr.com/ru/articles/215117/

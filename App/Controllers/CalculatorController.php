@@ -10,7 +10,7 @@ use App\Models\Computations\SinCosTan;
 use App\Models\Computations\Subtraction;
 use App\Models\Logger\CalculatorLogger;
 use App\Models\Logger\HistoryMaker;
-use App\Views\CalculatorView;
+use JetBrains\PhpStorm\NoReturn;
 
 class CalculatorController extends BaseController
 {
@@ -19,7 +19,7 @@ class CalculatorController extends BaseController
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
 
-    public function run(object $serverGlobalDTO): void
+    #[NoReturn] public function run(object $serverGlobalDTO): void
     {
         $post = $serverGlobalDTO->getPost();
         if (isset($post['userInput'])) {
@@ -61,7 +61,6 @@ class CalculatorController extends BaseController
 
         }
 
-        // Создаем или обновляем файл истории
         (new HistoryMaker())->addToHistory($this->input, $this->result);
 
     }
