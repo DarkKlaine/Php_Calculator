@@ -4,14 +4,15 @@ namespace App\Controllers;
 
 use App\Models\Logger\HistoryMaker;
 use App\Views\CalculatorView;
+use App\Views\HistoryView;
 
 class HistoryController extends BaseController
 {
     public function run(object $serverGlobalDTO): void
     {
-        $view = new CalculatorView();
+        $view = new HistoryView();
         $historyMaker = new HistoryMaker();
-        $view->renderHistory($historyMaker->getHistoryString());
+        $view->render($historyMaker->getHistoryString());
     }
 
 }

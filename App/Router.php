@@ -15,8 +15,10 @@ class Router
         '/history' => HistoryController::class,
     ];
 
-    public function handleRequest($url): void
+    public function handleRequest(): void
     {
+        $url = $_SERVER['REQUEST_URI'];
+
         $serverGlobalDTO = new ServerGlobalDTO($_POST);
 
         if (empty($this->routes[$url]) === false) {
