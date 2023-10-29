@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
+use App\DTO\Request;
+
 abstract class BaseController
 {
-    abstract public function run(object $serverGlobalDTO): void;
+    abstract public function run(Request $request): void;
 
 }

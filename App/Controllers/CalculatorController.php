@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\DTO\Request;
 use App\Models\Computations\Addition;
 use App\Models\Computations\Divide;
 use App\Models\Computations\Exponentiation;
@@ -19,9 +20,9 @@ class CalculatorController extends BaseController
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
 
-    #[NoReturn] public function run(object $serverGlobalDTO): void
+    #[NoReturn] public function run(Request $request): void
     {
-        $post = $serverGlobalDTO->getPost();
+        $post = $request->getPost();
         if (isset($post['userInput'])) {
             $this->input = $post['userInput'];
             $this->countIt();

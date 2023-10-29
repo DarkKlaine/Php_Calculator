@@ -5,7 +5,7 @@ namespace App\Views;
 class TemplateEngine
 {
     private string $templatesDirPath = '../App/Views/Templates/';
-    private array $vars = [];
+    protected array $vars = [];
     private string $injectFile;
 
     public function assignVar(string $name, mixed $value): void

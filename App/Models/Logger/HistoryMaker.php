@@ -4,49 +4,55 @@ namespace App\Models\Logger;
 
 class HistoryMaker
 {
-    protected string $logDir = '../Log';
-    protected string $logFile = '../Log/History.Log';
-    protected int $maxLogSize = 10;
+    private string $logDir = '../Log';
+    private string $logFile = '../Log/History.Log';
+    private int $maxLogSize = 10;
 
     public function addToHistory(string $input, string $result): void
     {
-        if (str_contains($result, 'Error')) return;
-
-        $textForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . PHP_EOL;
-
-        if (file_exists($this->logFile)) {
-            $logArray = $this->parseHistory();
-            $logArray[] = $textForLogging;
-        } else {
-            mkdir($this->logDir);
-            $logArray = array($textForLogging);
+        if (is_numeric($result) === false) {
+            return;
         }
 
-        $logArray = $this->processHistory($logArray);
+        $stringForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . PHP_EOL;
+
+        $this->addToGlobalHistory($stringForLogging);
+        $this->addToSessionHistory($stringForLogging);
+    }
+
+    private function addToGlobalHistory(string $stringForLogging): void
+    {
+        mkdir($this->logDir);
+        if (file_exists($this->logFile)) {
+            $logArray = file($this->logFile);
+            $logArray = $this->trimToMaxSize($logArray);
+        }
+
+        $logArray[] = $stringForLogging;
+        $logArray = $this->numberingAndPadding($logArray);
 
         $file = fopen($this->logFile, 'w');
         fwrite($file, implode("", $logArray));
         fclose($file);
-
     }
 
-    protected function parseHistory(): array
+    private function trimToMaxSize(array $logArray): array
     {
-        $logArray = file($this->logFile);
+        $maxLogSize = $this->maxLogSize - 1;
         $logSize = count($logArray);
 
-        if ($logSize > ($this->maxLogSize - 1)) {
-            array_splice($logArray, 0, $logSize - ($this->maxLogSize - 1));
+        if ($logSize > $maxLogSize) {
+            array_splice($logArray, 0, $logSize - $maxLogSize);
         }
 
         return preg_replace('/[ 1-9][0-9]: +/', '', $logArray);
     }
 
-    protected function processHistory(array $logArray): array
+    private function numberingAndPadding(array $logArray): array
     {
         $longestStr = 0;
-        for ($i = 0; $i < count($logArray); $i++) {
-            $lengthStr = strlen($logArray[$i]);
+        foreach ($logArray as $value) {
+            $lengthStr = strlen($value);
             if ($lengthStr > $longestStr) {
                 $longestStr = $lengthStr;
             }
@@ -61,12 +67,39 @@ class HistoryMaker
         return $logArray;
     }
 
-    public function getHistoryString(): string
+    private function addToSessionHistory(string $stringForLogging): void
+    {
+        if (isset($_SESSION['history'])) {
+            $logArray = $_SESSION['history'];
+            $logArray = $this->trimToMaxSize($logArray);
+        }
+
+        $logArray[] = $stringForLogging;
+        $logArray = $this->numberingAndPadding($logArray);
+
+        $_SESSION['history'] = $logArray;
+    }
+
+    public function getGeneralHistoryString(): string
     {
         $historyString = '';
-        $logArray = file($this->logFile);
-        for ($i = 0; $i < count($logArray); $i++) {
-            $historyString .= str_replace(' ', '&nbsp', $logArray[$i]) . '<br>';
+        if (file_exists($this->logFile)) {
+            $logArray = file($this->logFile);
+            for ($i = 0; $i < count($logArray); $i++) {
+                $historyString .= str_replace(' ', '&nbsp', $logArray[$i]) . '<br>';
+            }
+        }
+        return $historyString;
+    }
+
+    public function getSessionHistoryString(): string
+    {
+        $historyString = '';
+        if (isset($_SESSION['history'])) {
+            $logArray = $_SESSION['history'];
+            for ($i = 0; $i < count($logArray); $i++) {
+                $historyString .= str_replace(' ', '&nbsp', $logArray[$i]) . '<br>';
+            }
         }
         return $historyString;
     }

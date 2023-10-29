@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
+use App\DTO\Request;
 use App\Views\CalculatorView;
 
 class UIController extends BaseController
 {
 
-    public function run(object $serverGlobalDTO): void
+    public function run(Request $request): void
     {
-        $get = $serverGlobalDTO->getGet();
+        $get = $request->getGet();
 
         $input = $get['input'] ?? '';
         $result = $get['result'] ?? '';

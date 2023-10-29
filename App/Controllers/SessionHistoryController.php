@@ -2,17 +2,17 @@
 
 namespace App\Controllers;
 
+use App\DTO\Request;
 use App\Models\Logger\HistoryMaker;
-use App\Views\CalculatorView;
 use App\Views\HistoryView;
 
-class HistoryController extends BaseController
+class SessionHistoryController extends BaseController
 {
-    public function run(object $serverGlobalDTO): void
+    public function run(Request $request): void
     {
         $view = new HistoryView();
         $historyMaker = new HistoryMaker();
-        $view->render($historyMaker->getHistoryString());
+        $view->render($historyMaker->getSessionHistoryString());
     }
 
 }

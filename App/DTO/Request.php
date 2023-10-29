@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class ServerGlobalDTO
+class Request
 {
     private array $post;
     private array $get;

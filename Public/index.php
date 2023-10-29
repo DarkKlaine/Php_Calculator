@@ -1,39 +1,31 @@
 <?php
+session_start();
 
 use App\Router;
 
 require_once('../vendor/autoload.php');
+require_once('../Config/routes.php');
 
-$router = new Router();
+$router = new Router($routes);
 
 $router->handleRequest();
 
-// TODO
-// работа с сессиями
-// $_SESSION
+/** TO DO
+ * почистить код
+ *
+ * Создать в корне папку с конфигами "config".
+ * В эту папку поместить фал routes.php и поместить туда массив роутов, который сейчас лежит в классе Router.
+ * Этот файл должен использоваться в index.php, массив из него должен передаваться в конструктор Router.
+ * объеденить контроллеры калькулятор и УИ
+ */
 
-// Начало сессии
-// session_start();
-//
-// Установка значения в $_SESSION
-// $_SESSION['username'] = 'John';
-//
-// Получение значения из $_SESSION
-// $username = $_SESSION['username'];
-//
-// Удаление значения из $_SESSION
-// unset($_SESSION['username']);
-//
-// Завершение сессии
-// session_destroy();
 
-/**
- * Сделано: Сделать разные обработчики в CalculatorController для вывода страницы и для обработки введенных
- *     для калькуляции данных. Переход между страницами сделать при помощи redirect средствами PHP.
- * Сделано: Переработать View: https://habr.com/ru/articles/45259/
- * Сделано: DTO и передача параметров из Router в Controller
- * Сделано: Почитать про HTTP и понять https://habr.com/ru/articles/215117/
- * Сделано: Написать в htaccess правило для favicon, чтобы правила не было в PHP и оно не моросило %)
- * Сделано: Должен возвращаться код ответа HTTP 404 Not Found
+/** НЕ TO DO
+ * Сделано: работа с сессиями, персональная история пользователя
+ * Сделано: Починить отображение страницы истории, если файла нет, или он пустой.
+ * Сделано: #[NoReturn] прочитать про анотации https://habr.com/ru/companies/JetBrains/articles/531828/
+ * Сделано: прочитать про принцип DRY и phpdoc
+ * Сделано: Почитать про уровни абстракции: https://devsday.ru/blog/details/15810
+ * Сделано: stash unstash в phpstorm
  */
 

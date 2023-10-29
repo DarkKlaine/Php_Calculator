@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var TemplateEngine $this
+ */
+
+use App\Views\TemplateEngine;
+
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
