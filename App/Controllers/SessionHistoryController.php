@@ -8,7 +8,7 @@ use App\Views\HistoryView;
 
 class SessionHistoryController extends BaseController
 {
-    public function run(Request $request): void
+    public function run(Request $request, ?string $parameter = NULL): void
     {
         $view = new HistoryView();
         $historyMaker = new HistoryMaker();

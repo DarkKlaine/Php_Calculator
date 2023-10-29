@@ -8,7 +8,7 @@ use App\Views\CalculatorView;
 class UIController extends BaseController
 {
 
-    public function run(Request $request): void
+    public function run(Request $request, ?string $parameter = NULL): void
     {
         $get = $request->getGet();
 

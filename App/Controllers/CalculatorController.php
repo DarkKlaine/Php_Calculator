@@ -20,7 +20,7 @@ class CalculatorController extends BaseController
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
 
-    #[NoReturn] public function run(Request $request): void
+    #[NoReturn] public function run(Request $request, ?string $parameter = NULL): void
     {
         $post = $request->getPost();
         if (isset($post['userInput'])) {

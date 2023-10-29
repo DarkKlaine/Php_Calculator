@@ -6,6 +6,6 @@ use App\DTO\Request;
 
 abstract class BaseController
 {
-    abstract public function run(Request $request): void;
+    abstract public function run(Request $request, ?string $parameter = NULL): void;
 
 }

@@ -18,12 +18,12 @@ class Router
     {
         $url = strtok($_SERVER['REQUEST_URI'], '?');
 
-        $request = new Request($_POST, $_GET);
-
         if (empty($this->routes[$url]) === false) {
-            $controllerName = $this->routes[$url];
+            $request = new Request($_POST, $_GET);
+            $parameter = $this->routes[$url]['parameter'] ?? NULL;
+            $controllerName = $this->routes[$url]['controller'];
             $controller = new $controllerName();
-            $controller->run($request);
+            $controller->run($request, $parameter);
         } else {
             $message = 'Ошибка 404. Запрос: ' . $url;
             $logger = new CalculatorLogger();

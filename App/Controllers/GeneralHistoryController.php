@@ -8,11 +8,20 @@ use App\Views\HistoryView;
 
 class GeneralHistoryController extends BaseController
 {
-    public function run(Request $request): void
+    private array $parameters;
+
+    public function __construct()
+    {
+        $historyMaker = new HistoryMaker();
+        $this->parameters = [
+            'general' => $historyMaker->getGeneralHistoryString(),
+            'session' => $historyMaker->getSessionHistoryString(),
+        ];
+    }
+    public function run(Request $request, ?string $parameter = NULL): void
     {
         $view = new HistoryView();
-        $historyMaker = new HistoryMaker();
-        $view->render($historyMaker->getGeneralHistoryString());
+        $view->render($this->parameters[$parameter]);
     }
 
 }

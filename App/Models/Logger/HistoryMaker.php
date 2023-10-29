@@ -36,6 +36,19 @@ class HistoryMaker
         fclose($file);
     }
 
+    private function addToSessionHistory(string $stringForLogging): void
+    {
+        if (isset($_SESSION['history'])) {
+            $logArray = $_SESSION['history'];
+            $logArray = $this->trimToMaxSize($logArray);
+        }
+
+        $logArray[] = $stringForLogging;
+        $logArray = $this->numberingAndPadding($logArray);
+
+        $_SESSION['history'] = $logArray;
+    }
+
     private function trimToMaxSize(array $logArray): array
     {
         $maxLogSize = $this->maxLogSize - 1;
@@ -65,19 +78,6 @@ class HistoryMaker
         unset($value);
 
         return $logArray;
-    }
-
-    private function addToSessionHistory(string $stringForLogging): void
-    {
-        if (isset($_SESSION['history'])) {
-            $logArray = $_SESSION['history'];
-            $logArray = $this->trimToMaxSize($logArray);
-        }
-
-        $logArray[] = $stringForLogging;
-        $logArray = $this->numberingAndPadding($logArray);
-
-        $_SESSION['history'] = $logArray;
     }
 
     public function getGeneralHistoryString(): string
