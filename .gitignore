@@ -7,5 +7,5 @@ rawLogData
 
 # Загружать только два файла внутри composer
 /vendor/composer/*
-!/vendor/composer/file1.txt
-!/vendor/composer/file2.txt
+!/vendor/composer/autoload_psr4.php
+!/vendor/composer/autoload_static.php
