@@ -5,16 +5,15 @@ namespace App;
 class Application
 {
     public static string $homeUrl;
-    private array $routes;
+    private object $router;
 
     public function __construct($appConfig)
     {
         self::$homeUrl = $appConfig['homeUrl'];
-        $this->routes = $appConfig['routes'];
+        $this->router = new Router($appConfig['routes']);
     }
 
     public function run():void {
-        $router = new Router($this->routes);
-        $router->handleRequest();
+        $this->router->handleRequest();
     }
 }
