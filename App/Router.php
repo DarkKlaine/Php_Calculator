@@ -19,13 +19,16 @@ class Router
         $url = strtok($_SERVER['REQUEST_URI'], '?');
 
         if (empty($this->routes[$url]) === false) {
-            $request = new Request($_POST, $_GET);
-            $parameter = $this->routes[$url]['parameter'] ?? '';
+            $request = new Request(
+                $_POST,
+                $_GET
+            );
+            $action = $this->routes[$url]['action'] ?? '';
 
             $controllerName = $this->routes[$url]['controller'];
 
             $controller = new $controllerName();
-            $controller->run($request, $parameter);
+            $controller->run($request, $action);
         } else {
             $message = 'Ошибка 404. Запрос: ' . $url;
             $logger = new CalculatorLogger();

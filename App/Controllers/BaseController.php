@@ -3,18 +3,20 @@
 namespace App\Controllers;
 
 use App\DTO\Request;
+use App\Models\Logger\CalculatorLogger;
 
-class BaseController
+abstract class BaseController
 {
-    public function run(Request $request, string $parameter): void
+    public function run(Request $request, string $action): void
     {
-        match ($parameter) {
-            'session' => $this->showPersonal(),
-            'general' => $this->showGeneral(),
-            'ui' => $this->showForm($request),
-            'calculate' => $this->calculate($request),
-            default => exit(),
-        };
 
+        if (method_exists($this, $action)) {
+            $this->$action($request);
+        } else {
+            $logger = new CalculatorLogger();
+            $logger->error("Ошибка в BaseController. Неправильный 'action' в routes.php.");
+            header("Location: /");
+            exit;
+        }
     }
 }
