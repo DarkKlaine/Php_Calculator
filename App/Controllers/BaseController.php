@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Application;
 use App\DTO\Request;
 use App\Models\Logger\CalculatorLogger;
 
@@ -16,7 +17,7 @@ abstract class BaseController
         } else {
             $logger = new CalculatorLogger();
             $logger->error("Ошибка в BaseController. Неправильный 'action' в routes.php.");
-            header("Location: /");
+            header("Location: " . Application::$homeUrl);
             exit;
         }
     }
