@@ -61,5 +61,4 @@ class CalculatorLogger implements LoggerInterface
         $logEntry = $date . " | " . $level . $arrow . $message . "\n";
         file_put_contents($this->logFile, $logEntry, FILE_APPEND);
     }
-
 }

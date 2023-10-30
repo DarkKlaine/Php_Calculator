@@ -103,5 +103,4 @@ class HistoryMaker
         }
         return $historyString;
     }
-
 }

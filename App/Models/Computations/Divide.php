@@ -14,5 +14,4 @@ class Divide extends Computation
             $this->logger->info("Операция деления: $this->value1 / $this->value2 = $this->result");
         }
     }
-
 }

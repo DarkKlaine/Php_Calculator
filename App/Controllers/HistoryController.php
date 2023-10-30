@@ -20,5 +20,4 @@ class HistoryController extends BaseController
         $historyMaker = new HistoryMaker();
         $view->render($historyMaker->getSessionHistoryString());
     }
-
 }

@@ -9,5 +9,4 @@ class Subtraction extends Computation
         $this->result = (float)$this->value1 - (float)$this->value2;
         $this->logger->info("Операция вычитания: $this->value1 - $this->value2 = $this->result");
     }
-
 }

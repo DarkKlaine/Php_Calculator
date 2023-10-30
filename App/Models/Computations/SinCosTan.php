@@ -25,6 +25,5 @@ class SinCosTan extends Computation
                 $this->logger->error('Ошибка. Неправильный математический оператор.');
                 break;
         }
-
     }
 }

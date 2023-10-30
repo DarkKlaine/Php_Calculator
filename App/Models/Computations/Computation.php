@@ -27,5 +27,4 @@ abstract class Computation
     }
 
     abstract public function calculate(): void;
-
 }
