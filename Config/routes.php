@@ -1,13 +1,11 @@
 <?php
 
 use App\Controllers\CalculatorController;
-use App\Controllers\GeneralHistoryController;
-use App\Controllers\SessionHistoryController;
-use App\Controllers\UIController;
+use App\Controllers\HistoryController;
 
 return [
-    '/' => ['controller' => UIController::class,'parameter' => 'ui'],
-    '/history' => ['controller' => GeneralHistoryController::class,'parameter' => 'general'],
-    '/session' => ['controller' => GeneralHistoryController::class,'parameter' => 'session'],
+    '/' => ['controller' => CalculatorController::class,'parameter' => 'ui'],
+    '/history' => ['controller' => HistoryController::class,'parameter' => 'general'],
+    '/session' => ['controller' => HistoryController::class,'parameter' => 'session'],
     '/calculate' => ['controller' => CalculatorController::class,'parameter' => 'calculate'],
 ];

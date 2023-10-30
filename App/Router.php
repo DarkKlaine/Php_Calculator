@@ -20,8 +20,10 @@ class Router
 
         if (empty($this->routes[$url]) === false) {
             $request = new Request($_POST, $_GET);
-            $parameter = $this->routes[$url]['parameter'] ?? NULL;
+            $parameter = $this->routes[$url]['parameter'] ?? '';
+
             $controllerName = $this->routes[$url]['controller'];
+
             $controller = new $controllerName();
             $controller->run($request, $parameter);
         } else {

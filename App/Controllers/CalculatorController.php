@@ -11,6 +11,7 @@ use App\Models\Computations\SinCosTan;
 use App\Models\Computations\Subtraction;
 use App\Models\Logger\CalculatorLogger;
 use App\Models\Logger\HistoryMaker;
+use App\Views\CalculatorView;
 use JetBrains\PhpStorm\NoReturn;
 
 class CalculatorController extends BaseController
@@ -20,7 +21,18 @@ class CalculatorController extends BaseController
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
 
-    #[NoReturn] public function run(Request $request, ?string $parameter = NULL): void
+    public function showForm(Request $request): void
+    {
+        $get = $request->getGet();
+
+        $input = $get['input'] ?? '';
+        $result = $get['result'] ?? '';
+
+        $view = new CalculatorView();
+        $view->render($input, $result);
+    }
+
+    #[NoReturn] public function calculate(Request $request): void
     {
         $post = $request->getPost();
         if (isset($post['userInput'])) {
