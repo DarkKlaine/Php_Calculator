@@ -25,5 +25,4 @@ class CalculatorView
 
         $templateEngine->display($this->indexTplFile);
     }
-
 }
