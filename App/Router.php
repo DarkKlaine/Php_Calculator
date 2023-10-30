@@ -35,6 +35,5 @@ class Router
             $logger->debug($message);
             echo $message;
         }
-
     }
 }
