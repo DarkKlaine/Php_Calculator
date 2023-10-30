@@ -4,9 +4,9 @@ session_start();
 use App\Router;
 
 require_once('../vendor/autoload.php');
-$routes = require_once('../Config/routes.php');
+$configApp = require_once('../Config/app.php');
 
-$router = new Router($routes);
+$router = new Router($configApp['routes']);
 $router->handleRequest();
 
 
