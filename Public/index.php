@@ -14,10 +14,6 @@ $router->handleRequest();
  * Почистить код - это дейлик. :)
  * php code sniffer (phpcs для phpstorm)
  *
- * Убрать action в DTO
- *
- *
- *
  * 1. Добавить основной конфиг приложения app.php
  * В нем у тебя должны быть два параметра (читай "подмассива") с ключами
  * - routes - твои роуты, которые должны подключаться сюда из файла
@@ -48,5 +44,6 @@ $router->handleRequest();
 
 /** НЕ TO DO
  * Сделано: Заменить в BaseController try-catch на method_exists()
+ * Сделано: Убрать action в DTO
  */
 

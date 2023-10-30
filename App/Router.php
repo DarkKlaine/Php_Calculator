@@ -21,14 +21,14 @@ class Router
         if (empty($this->routes[$url]) === false) {
             $request = new Request(
                 $_POST,
-                $_GET
+                $_GET,
+                $this->routes[$url]['action'] ?? '',
             );
-            $action = $this->routes[$url]['action'] ?? '';
 
             $controllerName = $this->routes[$url]['controller'];
 
             $controller = new $controllerName();
-            $controller->run($request, $action);
+            $controller->run($request);
         } else {
             $message = 'Ошибка 404. Запрос: ' . $url;
             $logger = new CalculatorLogger();
