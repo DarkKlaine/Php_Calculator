@@ -4,7 +4,6 @@ namespace App;
 
 class Auth
 {
-    private bool $authEnabled;
     private array $whiteList;
     private string $uShellNotPassPage = '/ushellnotpass';
     private int $sessionLifeTime;
@@ -12,7 +11,6 @@ class Auth
 
     public function __construct($appConfig)
     {
-        //$this->authEnabled = $appConfig['authEnabled'];
         $this->whiteList = $appConfig['authWhitelist'];
         $this->sessionLifeTime = $appConfig['authSessionLifeTime'];
         $this->requestUrl = strtok($_SERVER['REQUEST_URI'], '?');
@@ -24,7 +22,7 @@ class Auth
         if (in_array($this->requestUrl, $this->whiteList)) {
             return;
         }
-        //проверка сесии на авторизованость ('autorized' => true), если нет, идет переадресация на /ushellnotpass.
+        //проверка сесии на авторизованость ('authorized' => true), если нет, идет переадресация на /ushellnotpass.
         if ($_SESSION['authorized'] !== true) {
             header("Location: $this->uShellNotPassPage");
             exit;

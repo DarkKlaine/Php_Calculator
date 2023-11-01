@@ -13,8 +13,12 @@ class AuthModel
         $this->users = require_once('../Config/users.php');
     }
 
-    public function verifyAuthentication(): void
+    public function auth(): void
     {
+        if ($_POST) {
+            $_SESSION['loginInfo'] = [$_POST['username'] => $_POST['password']];
+        }
+
         if (isset($_SESSION['loginInfo']) === false) {
             return;
         }
@@ -24,13 +28,6 @@ class AuthModel
             $_SESSION['loginTimestamp'] = time();
             header("Location: " . Application::$homeUrl);
             exit;
-        }
-    }
-
-    public function newAuthentication(): void
-    {
-        if ($_POST) {
-            $_SESSION['loginInfo'] = [$_POST['username'] => $_POST['password']];
         }
     }
 }
