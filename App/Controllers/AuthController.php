@@ -2,22 +2,19 @@
 
 namespace App\Controllers;
 
-use App\Models\AuthModel;
 use App\Views\LoginView;
-use App\Views\UShellNotPassView;
+use App\Views\AccessDeniedView;
 
 class AuthController extends BaseController
 {
-    public function uShellNotPass(): void
+    public function accessDenied(): void
     {
-        $view = new UShellNotPassView();
+        $view = new AccessDeniedView();
         $view->render();
     }
 
     public function login(): void
     {
-        $model = new AuthModel();
-        $model->auth();
         $view = new LoginView();
         $view->render();
     }

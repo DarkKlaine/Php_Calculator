@@ -2,11 +2,11 @@
 
 namespace App\Views;
 
-class UShellNotPassView
+class AccessDeniedView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
-    private string $ushellnotpassTplFile = 'ushellnotpass.tpl.php';
+    private string $accessDeniedTplFile = 'accessDenied.tpl.php';
 
     public function render(): void
     {
@@ -14,7 +14,7 @@ class UShellNotPassView
 
         $templateEngine->assignVar('title', $this->title);
 
-        $templateEngine->setInjectTplFile($this->ushellnotpassTplFile);
+        $templateEngine->setInjectTplFile($this->accessDeniedTplFile);
 
         $templateEngine->display($this->indexTplFile);
     }
