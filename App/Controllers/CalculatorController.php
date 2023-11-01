@@ -76,7 +76,5 @@ class CalculatorController extends BaseController
         }
 
         (new HistoryMaker())->addToHistory($this->input, $this->result);
-
     }
-
 }

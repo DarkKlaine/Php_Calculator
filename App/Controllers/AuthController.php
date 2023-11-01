@@ -17,10 +17,11 @@ class AuthController extends BaseController
     public function login(): void
     {
         $model = new AuthModel();
-        $model->authentificationVerify();
+        $model->newAuthentication();
+        $model->verifyAuthentication();
         $view = new LoginView();
         $view->render();
-        $model->newAuthentication();
+
     }
 }
 

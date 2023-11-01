@@ -7,9 +7,11 @@ class Application
     public static string $homeUrl;
     private static bool $authEnabled;
     private object $router;
+    private array $appConfig;
 
     public function __construct($appConfig)
     {
+        $this->appConfig = $appConfig;
         self::$homeUrl = $appConfig['homeUrl'];
         self::$authEnabled = $appConfig['authEnabled'];
         $this->router = new Router($appConfig['routes']);
@@ -17,8 +19,7 @@ class Application
 
     public function run():void {
         if (self::$authEnabled) {
-            echo 'TODO';
-            //TODO
+            (new Auth($this->appConfig))->verifyAuth();
         }
         $this->router->handleRequest();
     }
