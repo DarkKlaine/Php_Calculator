@@ -67,13 +67,11 @@ class CalculatorController extends BaseController
                 $this->result = "Error. Incorrect operator.";
                 $logger->error('Ошибка. Неправильный математический оператор.');
             }
-
         } else {
             $this->result = "Error. Wrong input! Try again.";
             $logger->error("Неправильный ввод: $this->input");
-
         }
-
-        (new HistoryMaker())->addToHistory($this->input, $this->result);
+        $historyMaker = new HistoryMaker();
+        $historyMaker->addToHistory($this->input, $this->result);
     }
 }
