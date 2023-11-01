@@ -5,12 +5,14 @@ namespace App;
 class Auth
 {
     private array $whiteList;
+    private array $users;
     private string $uShellNotPassPage = '/ushellnotpass';
     private int $sessionLifeTime;
     private string $requestUrl;
 
     public function __construct($appConfig)
     {
+        $this->users = require_once('../Config/users.php');
         $this->whiteList = $appConfig['authWhitelist'];
         $this->sessionLifeTime = $appConfig['authSessionLifeTime'];
         $this->requestUrl = strtok($_SERVER['REQUEST_URI'], '?');
@@ -34,5 +36,14 @@ class Auth
             header("Location: $this->uShellNotPassPage");
             exit;
         }
+
+        if ($_POST) {
+            $_SESSION['loginInfo'] = [$_POST['username'] => $_POST['password']];
+        }
+
+        if (isset($_SESSION['loginInfo']) === false) {
+            return;
+        }
+
     }
 }
