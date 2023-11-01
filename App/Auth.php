@@ -22,14 +22,11 @@ class Auth
             if ($_POST) {
                 $_SESSION['loginInfo'] = [$_POST['username'] => $_POST['password']];
             }
-
-            if (isset($_SESSION['loginInfo']) === false) {
-                return;
-            }
-
-            if (!empty(array_intersect_assoc($this->users, $_SESSION['loginInfo']))) {
+            //Проверяем совпадают ли введенные пользователем данные с сохраненными
+            $loginInfo = $_SESSION['loginInfo'] ?? [];
+            if (!empty(array_intersect_assoc($this->users, $loginInfo))) {
                 $_SESSION['authorized'] = true;
-                $_SESSION['loginTimestamp'] = time();
+                $_SESSION['loginTimestamp'] = time() + ConfigDTO::$authSessionLifeTime;
                 header("Location: " . ConfigDTO::$homeUrl);
                 exit;
             }
@@ -39,14 +36,13 @@ class Auth
         if (in_array($this->requestUrl, ConfigDTO::$authWhitelist)) {
             return;
         }
-        //проверка сесии на авторизованость ('authorized' => true), если нет, идет переадресация на /ushellnotpass.
+        //проверка сесии на авторизованость, если нет, идет переадресация на /ushellnotpass.
         if ($_SESSION['authorized'] !== true) {
             header("Location: " . ConfigDTO::$accessDeniedPage);
             exit;
         }
         //проверяется таймштамп и сравнивается с тем что сохранен в сессии
-        //если прошло более 5 минут, сессия рушится и идет переадресация на /ushellnotpass.
-        if (time() - $_SESSION['loginTimestamp'] > ConfigDTO::$authSessionLifeTime) {
+        if (time() > $_SESSION['loginTimestamp']) {
             session_destroy();
             header("Location: " . ConfigDTO::$accessDeniedPage);
             exit;
