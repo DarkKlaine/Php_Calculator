@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\DTO\ConfigDTO;
 use App\DTO\Request;
 use App\Models\Logger\CalculatorLogger;
 
@@ -9,9 +10,9 @@ class Router
 {
     private array $routes;
 
-    public function __construct($routes)
+    public function __construct()
     {
-        $this->routes = $routes;
+        $this->routes = ConfigDTO::$routes;
     }
 
     public function handleRequest(): void

@@ -2,24 +2,22 @@
 
 namespace App;
 
+use App\DTO\ConfigDTO;
+
 class Application
 {
-    public static string $homeUrl;
-    private static bool $authEnabled;
     private object $auth;
     private object $router;
 
-    public function __construct($appConfig)
+    public function __construct()
     {
-        self::$homeUrl = $appConfig['homeUrl'];
-        self::$authEnabled = $appConfig['authEnabled'];
-        $this->router = new Router($appConfig['routes']);
-        $this->auth = new Auth($appConfig);
+        $this->router = new Router();
+        $this->auth = new Auth();
     }
 
     public function run(): void
     {
-        if (self::$authEnabled) {
+        if (ConfigDTO::$authEnabled) {
             $this->auth->verifyAuth();
         }
         $this->router->handleRequest();

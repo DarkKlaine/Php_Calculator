@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Application;
 use App\DTO\Request;
 use App\Models\Computations\Addition;
 use App\Models\Computations\Divide;
@@ -42,7 +41,7 @@ class CalculatorController extends BaseController
         }
         $encodedInput = urlencode($this->input);
         $encodedResult = urlencode($this->result);
-        header(sprintf("Location: %s?input=%s&result=%s", Application::$homeUrl, $encodedInput, $encodedResult));
+        header(sprintf("Location: /?input=%s&result=%s", $encodedInput, $encodedResult));
         exit;
     }
 
