@@ -4,11 +4,6 @@ namespace App\Interfaces;
 
 class SessionHandlerTEST implements SessionInterfaceTEST
 {
-    public function __construct()
-    {
-        session_start();
-    }
-
     public function get(string $key):mixed
     {
         return $_SESSION[$key] ?? null;
@@ -16,6 +11,9 @@ class SessionHandlerTEST implements SessionInterfaceTEST
 
     public function set(string $key, mixed $value): void
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $_SESSION[$key] = $value;
     }
 }
