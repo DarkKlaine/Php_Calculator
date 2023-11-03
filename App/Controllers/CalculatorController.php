@@ -2,17 +2,19 @@
 
 namespace App\Controllers;
 
+use App\EngineLogger;
 use App\DTO\Request;
+use App\Interfaces\RedirectHandler;
 use App\Models\Computations\Addition;
 use App\Models\Computations\Divide;
 use App\Models\Computations\Exponentiation;
 use App\Models\Computations\Multiply;
 use App\Models\Computations\SinCosTan;
 use App\Models\Computations\Subtraction;
-use App\Models\Logger\CalculatorLogger;
 use App\Models\Logger\HistoryMaker;
 use App\Views\CalculatorView;
 use JetBrains\PhpStorm\NoReturn;
+
 
 class CalculatorController extends BaseController
 {
@@ -20,6 +22,12 @@ class CalculatorController extends BaseController
     private string $result = '';
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
+    private RedirectHandler $redirectHandler;
+
+    public function __construct()
+    {
+        $this->redirectHandler = new RedirectHandler();
+    }
 
     public function showForm(Request $request): void
     {
@@ -41,13 +49,12 @@ class CalculatorController extends BaseController
         }
         $encodedInput = urlencode($this->input);
         $encodedResult = urlencode($this->result);
-        header(sprintf("Location: /?input=%s&result=%s", $encodedInput, $encodedResult));
-        exit;
+        $this->redirectHandler->redirect(sprintf("/?input=%s&result=%s", $encodedInput, $encodedResult));
     }
 
     private function countIt(): void
     {
-        $logger = new CalculatorLogger();
+        $logger = new EngineLogger();
         if (preg_match($this->inputPattern, $this->input)) {
             $inputData = explode(' ', $this->input);
 

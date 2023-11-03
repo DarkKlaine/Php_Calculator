@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Logger;
+namespace App;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Stringable;
 
-class CalculatorLogger implements LoggerInterface
+class EngineLogger implements LoggerInterface
 {
     protected string $logFile = '../Log/Calculator.Log';
 

@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
+use App\EngineLogger;
 use App\DTO\ConfigDTO;
 use App\DTO\Request;
-use App\Models\Logger\CalculatorLogger;
 
 abstract class BaseController
 {
@@ -15,7 +15,7 @@ abstract class BaseController
         if (method_exists($this, $action)) {
             $this->$action($request);
         } else {
-            $logger = new CalculatorLogger();
+            $logger = new EngineLogger();
             $logger->error("Ошибка в BaseController. Неправильный 'action' в routes.php.");
             header("Location: " . ConfigDTO::$homeUrl);
             exit;

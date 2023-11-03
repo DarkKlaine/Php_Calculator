@@ -4,29 +4,36 @@ namespace App\DTO;
 
 class Request
 {
+    private string $requestURL;
     private array $post;
     private array $get;
     private string $action;
 
-    public function __construct(array $post, array $get, string $action)
+    public function __construct(array $post, array $get, string $action, string $requestURL)
     {
         $this->post = $post;
         $this->get = $get;
         $this->action = $action;
+        $this->requestURL = $requestURL;
     }
 
-    public function getPost(): array
+    public function getPost(): ?array
     {
-        return $this->post;
+        return $this->post ?? null;
     }
 
-    public function getGet(): array
+    public function getGet(): ?array
     {
-        return $this->get;
+        return $this->get ?? null;
     }
 
-    public function getAction(): string
+    public function getAction(): ?string
     {
-        return $this->action;
+        return $this->action ?? null;
+    }
+
+    public function getRequestURL(): ?string
+    {
+        return $this->requestURL ?? null;
     }
 }

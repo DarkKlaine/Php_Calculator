@@ -11,16 +11,6 @@ class SessionHandler implements SessionInterface
         }
     }
 
-    public function getLoginInfo(): array
-    {
-        return $_SESSION['loginInfo'] ?? [];
-    }
-
-    public function setLoginInfo(array $arr): void
-    {
-        $_SESSION['loginInfo'] = $arr;
-    }
-
     public function getIsAuthorized(): bool
     {
         return $_SESSION['isAuthorized'] ?? false;
@@ -31,13 +21,13 @@ class SessionHandler implements SessionInterface
         $_SESSION['isAuthorized'] = $bool;
     }
 
-    public function getLoginTime(): int
+    public function getDestroyTime(): int
     {
-        return $_SESSION['loginTime'] ?? 0;
+        return $_SESSION['destroyTime'] ?? 0;
     }
 
-    public function setLoginTime(int $time): void
+    public function setDestroyTime(int $time): void
     {
-        $_SESSION['loginTime'] = $time;
+        $_SESSION['destroyTime'] = $time;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models\Computations;
 
-use App\Models\Logger\CalculatorLogger;
+use App\EngineLogger;
 
 abstract class Computation
 {
@@ -17,7 +17,7 @@ abstract class Computation
         $this->value1 = $value1;
         $this->action = $action;
         $this->value2 = $value2;
-        $this->logger = new CalculatorLogger();
+        $this->logger = new EngineLogger();
     }
 
     public function getResult(): string|float
