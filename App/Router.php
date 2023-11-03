@@ -4,8 +4,6 @@ namespace App;
 
 use App\DTO\ConfigDTO;
 use App\DTO\Request;
-use App\Interfaces\RedirectHandler;
-use App\Interfaces\SessionHandler;
 use Psr\Log\LoggerInterface;
 
 class Router
