@@ -15,8 +15,6 @@ class Router
 
     public function __construct(LoggerInterface $logger)
     {
-        $this->redirectHandler = new RedirectHandler();
-        $this->sessionHandler = new SessionHandler();
         $this->logger = $logger;
         $this->routes = ConfigDTO::$routes;
     }
