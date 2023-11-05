@@ -2,12 +2,24 @@
 
 namespace Engine\Controllers;
 
+use Engine\Container\ContainerInterface;
 use Engine\DTO\ConfigDTO;
 use Engine\DTO\Request;
-use Engine\Models\Logger\EngineLogger;
+use Engine\Interfaces\RedirectHandler;
+use Psr\Log\LoggerInterface;
 
-abstract class BaseController
+class BaseController
 {
+    protected ContainerInterface $container;
+    protected object $redirectHandler;
+    protected object $logger;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+        $this->logger = $container->get('EngineLogger');
+        $this->redirectHandler = $container->get('RedirectHandler');
+    }
     public function run(Request $request): void
     {
         $action = $request->getAction();
@@ -15,8 +27,8 @@ abstract class BaseController
         if (method_exists($this, $action)) {
             $this->$action($request);
         } else {
-            $logger = new EngineLogger();
-            $logger->error("Ошибка в BaseController. Неправильный 'action' в routes.php.");
+
+            $this->logger->error("Ошибка в BaseController. Неправильный 'action' в routes.php.");
             header("Location: " . ConfigDTO::$homeUrl);
             exit;
         }

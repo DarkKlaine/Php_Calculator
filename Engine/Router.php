@@ -5,17 +5,20 @@ namespace Engine;
 use Engine\DTO\ConfigDTO;
 use Engine\DTO\Request;
 use Engine\Models\Auth;
+use Engine\Models\AuthInterface;
 use Psr\Log\LoggerInterface;
 
 class Router
 {
     private array $routes;
+    private AuthInterface $auth;
     private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger, array $routes)
+    public function __construct(LoggerInterface $logger, array $routes, AuthInterface $auth)
     {
         $this->logger = $logger;
         $this->routes = $routes;
+        $this->auth = $auth;
     }
 
     public function handleRequest(): void
@@ -31,12 +34,10 @@ class Router
             );
 
             if (ConfigDTO::$authEnabled) {
-                $auth = new Auth($url);
-                $auth->verifyAuth();
+                $this->auth->verifyAuth($url);
             }
 
             $controllerName = $this->routes[$url]['controller'];
-
             $controller = new $controllerName();
             $controller->run($request);
         } else {

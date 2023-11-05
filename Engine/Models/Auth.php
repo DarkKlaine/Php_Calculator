@@ -7,25 +7,23 @@ use Engine\DTO\Request;
 use Engine\Interfaces\AuthSessionHandler;
 use Engine\Interfaces\RedirectHandler;
 
-class Auth
+class Auth implements AuthInterface
 {
     private array $users;
-    private string $requestUrl;
     private AuthSessionHandler $authSessionHandler;
     private RedirectHandler $redirectHandler;
 
 
-    public function __construct($requestUrl)
+    public function __construct($redirectHandler, $authSessionHandler, array $users)
     {
-        $this->redirectHandler = new RedirectHandler();
-        $this->authSessionHandler = new AuthSessionHandler();
-        $this->users = require('../Config/users.php');
-        $this->requestUrl = $requestUrl;
+        $this->redirectHandler = $redirectHandler;
+        $this->authSessionHandler = $authSessionHandler;
+        $this->users = $users;
     }
 
-    public function verifyAuth(): void
+    public function verifyAuth(string $requestUrl): void
     {
-        if (in_array($this->requestUrl, ConfigDTO::$authWhitelist)) {
+        if (in_array($requestUrl, ConfigDTO::$authWhitelist)) {
             return;
         }
 

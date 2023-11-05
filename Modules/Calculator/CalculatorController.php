@@ -21,11 +21,11 @@ class CalculatorController extends BaseController
     private string $result = '';
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
-    private RedirectHandler $redirectHandler;
 
-    public function __construct()
+
+    public function __construct($container)
     {
-        $this->redirectHandler = new RedirectHandler();
+
     }
 
     public function showForm(Request $request): void
