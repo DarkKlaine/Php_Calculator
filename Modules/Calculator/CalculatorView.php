@@ -15,7 +15,7 @@ class CalculatorView
 
     public function render(string $input, string $result): void
     {
-        $templateEngine = new TemplateEngine();
+        $templateEngine = new TemplateEngine('../Config/Templates/');
 
         $templateEngine->assignVar('title', $this->title);
 

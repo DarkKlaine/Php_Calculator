@@ -6,7 +6,6 @@ class AuthSessionHandler extends SessionHandler
 {
     public function getIsAuthorized(): bool
     {
-
         return $this->get('isAuthorized') ?? false;
     }
 

@@ -15,7 +15,7 @@ class HistoryView
 
     public function render(string $history): void
     {
-        $templateEngine = new TemplateEngine();
+        $templateEngine = new TemplateEngine('../Config/Templates/');
 
         $templateEngine->assignVar('title', $this->title);
 

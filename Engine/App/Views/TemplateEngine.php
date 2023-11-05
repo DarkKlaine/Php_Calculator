@@ -4,9 +4,15 @@ namespace Engine\App\Views;
 
 class TemplateEngine
 {
-    private string $templatesDirPath = '../Config/Templates/';
     protected array $vars = [];
+    private string $engineTemplatesPath = '../Config/Templates/';
+    private string $moduleTemplatesPath;
     private string $injectFile;
+
+    public function __construct(string $moduleTemplatesPath)
+    {
+        $this->moduleTemplatesPath = $moduleTemplatesPath;
+    }
 
     public function assignVar(string $name, mixed $value): void
     {
@@ -15,12 +21,12 @@ class TemplateEngine
 
     public function setInjectTplFile(string $injectFile): void
     {
-        $this->injectFile = $this->templatesDirPath . $injectFile;
+        $this->injectFile = $this->moduleTemplatesPath . $injectFile;
     }
 
     public function display(string $tplFile): void
     {
-        $template = $this->templatesDirPath . $tplFile;
+        $template = $this->engineTemplatesPath . $tplFile;
         require_once($template);
     }
 

@@ -10,7 +10,7 @@ class LoginView
 
     public function render(): void
     {
-        $templateEngine = new TemplateEngine();
+        $templateEngine = new TemplateEngine('../Config/Templates/');
 
         $templateEngine->assignVar('title', $this->title);
 

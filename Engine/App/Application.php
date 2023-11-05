@@ -2,15 +2,13 @@
 
 namespace Engine\App;
 
-use Engine\App\Models\Logger\EngineLogger;
-
 class Application
 {
     private object $router;
 
-    public function __construct()
+    public function __construct(Router $router)
     {
-        $this->router = new Router(new EngineLogger());
+        $this->router = $router;
     }
 
     public function run(): void

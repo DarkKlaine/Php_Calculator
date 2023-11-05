@@ -5,6 +5,7 @@ namespace Engine\App;
 use Engine\App\DTO\ConfigDTO;
 use Engine\App\DTO\Request;
 use Engine\App\Models\Auth;
+use Engine\App\Models\Logger\EngineLogger;
 use Psr\Log\LoggerInterface;
 
 class Router
@@ -12,10 +13,10 @@ class Router
     private array $routes;
     private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, array $routes)
     {
         $this->logger = $logger;
-        $this->routes = ConfigDTO::$routes;
+        $this->routes = $routes;
     }
 
     public function handleRequest(): void
@@ -45,15 +46,4 @@ class Router
             echo $message;
         }
     }
-
-//    private function verifyAuth():void {
-//        if ($this->sessionHandler->getIsAuthorized() !== true) {
-//            $this->redirectHandler->redirect(ConfigDTO::$accessDeniedPage);
-//        }
-//
-//        if (time() > $this->sessionHandler->getDestroyTime()) {
-//            session_destroy();
-//            $this->redirectHandler->redirect(ConfigDTO::$accessDeniedPage);
-//        }
-//    }
 }
