@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\App\DTO;
+namespace Engine\DTO;
 
 class Request
 {

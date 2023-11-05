@@ -1,12 +1,12 @@
 <?php
 
-namespace Engine\App\Views;
+namespace Engine\Views;
 
-class LoginView
+class AccessDeniedView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
-    private string $loginTplFile = 'login.tpl.php';
+    private string $accessDeniedTplFile = 'accessDenied.tpl.php';
 
     public function render(): void
     {
@@ -14,7 +14,7 @@ class LoginView
 
         $templateEngine->assignVar('title', $this->title);
 
-        $templateEngine->setInjectTplFile($this->loginTplFile);
+        $templateEngine->setInjectTplFile($this->accessDeniedTplFile);
 
         $templateEngine->display($this->indexTplFile);
     }

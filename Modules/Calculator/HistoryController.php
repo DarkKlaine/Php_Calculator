@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator;
 
-use Engine\App\Controllers\BaseController;
+use Engine\Controllers\BaseController;
 
 class HistoryController extends BaseController
 {

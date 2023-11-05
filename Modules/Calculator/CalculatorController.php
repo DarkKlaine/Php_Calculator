@@ -2,10 +2,10 @@
 
 namespace Modules\Calculator;
 
-use Engine\App\Controllers\BaseController;
-use Engine\App\DTO\Request;
-use Engine\App\Interfaces\RedirectHandler;
-use Engine\App\Models\Logger\EngineLogger;
+use Engine\Controllers\BaseController;
+use Engine\DTO\Request;
+use Engine\Interfaces\RedirectHandler;
+use Engine\Models\Logger\EngineLogger;
 use JetBrains\PhpStorm\NoReturn;
 use Modules\Calculator\Computations\Addition;
 use Modules\Calculator\Computations\Divide;

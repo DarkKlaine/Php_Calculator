@@ -1,11 +1,10 @@
 <?php
 
-namespace Engine\App;
+namespace Engine;
 
-use Engine\App\DTO\ConfigDTO;
-use Engine\App\DTO\Request;
-use Engine\App\Models\Auth;
-use Engine\App\Models\Logger\EngineLogger;
+use Engine\DTO\ConfigDTO;
+use Engine\DTO\Request;
+use Engine\Models\Auth;
 use Psr\Log\LoggerInterface;
 
 class Router

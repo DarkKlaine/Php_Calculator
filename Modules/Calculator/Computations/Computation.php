@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Computations;
 
-use Engine\App\Models\Logger\EngineLogger;
+use Engine\Models\Logger\EngineLogger;
 
 abstract class Computation
 {

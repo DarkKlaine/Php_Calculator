@@ -1,11 +1,11 @@
 <?php
 
-namespace Engine\App\Models;
+namespace Engine\Models;
 
-use Engine\App\DTO\ConfigDTO;
-use Engine\App\DTO\Request;
-use Engine\App\Interfaces\AuthSessionHandler;
-use Engine\App\Interfaces\RedirectHandler;
+use Engine\DTO\ConfigDTO;
+use Engine\DTO\Request;
+use Engine\Interfaces\AuthSessionHandler;
+use Engine\Interfaces\RedirectHandler;
 
 class Auth
 {

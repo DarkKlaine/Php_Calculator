@@ -1,10 +1,10 @@
 <?php
 
-namespace Engine\App\Controllers;
+namespace Engine\Controllers;
 
-use Engine\App\DTO\ConfigDTO;
-use Engine\App\DTO\Request;
-use Engine\App\Models\Logger\EngineLogger;
+use Engine\DTO\ConfigDTO;
+use Engine\DTO\Request;
+use Engine\Models\Logger\EngineLogger;
 
 abstract class BaseController
 {

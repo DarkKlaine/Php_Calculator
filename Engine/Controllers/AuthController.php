@@ -1,11 +1,11 @@
 <?php
 
-namespace Engine\App\Controllers;
+namespace Engine\Controllers;
 
-use Engine\App\DTO\Request;
-use Engine\App\Models\Auth;
-use Engine\App\Views\AccessDeniedView;
-use Engine\App\Views\LoginView;
+use Engine\DTO\Request;
+use Engine\Models\Auth;
+use Engine\Views\AccessDeniedView;
+use Engine\Views\LoginView;
 
 class AuthController extends BaseController
 {

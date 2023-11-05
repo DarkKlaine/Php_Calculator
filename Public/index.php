@@ -1,12 +1,12 @@
 <?php
 
-use Engine\App\Application;
-use Engine\App\Container\Container;
-use Engine\App\DTO\ConfigDTO;
-use Engine\App\Interfaces\AuthSessionHandler;
-use Engine\App\Interfaces\RedirectHandler;
-use Engine\App\Models\Logger\EngineLogger;
-use Engine\App\Router;
+use Engine\Application;
+use Engine\Container\Container;
+use Engine\DTO\ConfigDTO;
+use Engine\Interfaces\AuthSessionHandler;
+use Engine\Interfaces\RedirectHandler;
+use Engine\Models\Logger\EngineLogger;
+use Engine\Router;
 
 require_once('../vendor/autoload.php');
 $configDTO = new ConfigDTO(require_once('../Config/app.php'));

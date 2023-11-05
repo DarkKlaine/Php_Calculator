@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\App\Interfaces;
+namespace Engine\Interfaces;
 
 use JetBrains\PhpStorm\NoReturn;
 

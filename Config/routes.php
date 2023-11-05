@@ -1,6 +1,6 @@
 <?php
 
-use Engine\App\Controllers\AuthController;
+use Engine\Controllers\AuthController;
 use Modules\Calculator\CalculatorController;
 use Modules\Calculator\HistoryController;
 

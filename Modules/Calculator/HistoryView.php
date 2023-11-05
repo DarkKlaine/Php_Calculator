@@ -5,7 +5,7 @@
 
 namespace Modules\Calculator;
 
-use Engine\App\Views\TemplateEngine;
+use Engine\Views\TemplateEngine;
 
 class HistoryView
 {
