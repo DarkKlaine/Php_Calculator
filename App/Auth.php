@@ -48,6 +48,5 @@ class Auth
             $this->sessionHandler->setDestroyTime(time() + ConfigDTO::$authSessionLifeTime);
             $this->redirectHandler->redirect(ConfigDTO::$homeUrl);
         }
-
     }
 }
