@@ -11,10 +11,14 @@ class ComposerStaticInitd751713988987e9331980363e24189ce
         array (
             'Psr\\Log\\' => 8,
         ),
-        'A' => 
-        array (
-            'App\\' => 4,
-        ),
+        'E' =>
+            array (
+                'Engine\\' => 7,
+            ),
+        'M' =>
+            array (
+                'Modules\\' => 8,
+            ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -22,10 +26,14 @@ class ComposerStaticInitd751713988987e9331980363e24189ce
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
-        'App\\' => 
+        'Engine\\' =>
         array (
-            0 => __DIR__ . '/../..' . '/App',
+            0 => __DIR__ . '/../..' . '/Engine',
         ),
+        'Modules\\' =>
+            array (
+                0 => __DIR__ . '/../..' . '/Modules',
+            ),
     );
 
     public static $classMap = array (

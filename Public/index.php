@@ -1,7 +1,7 @@
 <?php
 
-use App\Application;
-use App\DTO\ConfigDTO;
+use Engine\App\Application;
+use Engine\App\DTO\ConfigDTO;
 
 require_once('../vendor/autoload.php');
 new ConfigDTO(require_once('../Config/app.php'));

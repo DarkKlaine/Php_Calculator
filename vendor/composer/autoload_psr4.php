@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
-    'App\\' => array($baseDir . '/App'),
+    'Engine\\' => array($baseDir . '/Engine'),
+    'Modules\\' => array($baseDir . '/Modules'),
 );

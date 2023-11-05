@@ -1,8 +1,8 @@
 <?php
 
-use App\Controllers\AuthController;
-use App\Controllers\CalculatorController;
-use App\Controllers\HistoryController;
+use Engine\App\Controllers\AuthController;
+use Modules\Calculator\CalculatorController;
+use Modules\Calculator\HistoryController;
 
 return [
     '/' => ['controller' => CalculatorController::class, 'action' => 'showForm'],
