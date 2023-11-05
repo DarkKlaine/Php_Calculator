@@ -11,23 +11,13 @@ class SessionHandler implements SessionInterface
         }
     }
 
-    public function getIsAuthorized(): bool
+    public function get(string $key):mixed
     {
-        return $_SESSION['isAuthorized'] ?? false;
+        return $_SESSION[$key] ?? null;
     }
 
-    public function setIsAuthorized(bool $bool): void
+    public function set(string $key, mixed $value):void
     {
-        $_SESSION['isAuthorized'] = $bool;
-    }
-
-    public function getDestroyTime(): int
-    {
-        return $_SESSION['destroyTime'] ?? 0;
-    }
-
-    public function setDestroyTime(int $time): void
-    {
-        $_SESSION['destroyTime'] = $time;
+        $_SESSION[$key] = $value;
     }
 }

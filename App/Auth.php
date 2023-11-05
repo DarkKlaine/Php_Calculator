@@ -5,20 +5,20 @@ namespace App;
 use App\DTO\ConfigDTO;
 use App\DTO\Request;
 use App\Interfaces\RedirectHandler;
-use App\Interfaces\SessionHandler;
+use App\Interfaces\AuthSessionHandler;
 
 class Auth
 {
     private array $users;
     private string $requestUrl;
-    private SessionHandler $sessionHandler;
+    private AuthSessionHandler $sessionHandler;
     private RedirectHandler $redirectHandler;
 
 
     public function __construct($requestUrl)
     {
         $this->redirectHandler = new RedirectHandler();
-        $this->sessionHandler = new SessionHandler();
+        $this->sessionHandler = new AuthSessionHandler();
         $this->users = require('../Config/users.php');
         $this->requestUrl = $requestUrl;
     }

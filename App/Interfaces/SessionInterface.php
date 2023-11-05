@@ -2,10 +2,7 @@
 
 namespace App\Interfaces;
 
-interface SessionInterface
-{
-    public function getIsAuthorized(): bool;
-    public function setIsAuthorized(bool $bool): void;
-    public function getDestroyTime(): int;
-    public function setDestroyTime(int $time): void;
+interface SessionInterface {
+    public function get(string $key);
+    public function set(string $key, $value);
 }
