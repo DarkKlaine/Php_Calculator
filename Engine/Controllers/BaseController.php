@@ -2,23 +2,25 @@
 
 namespace Engine\Controllers;
 
-use Engine\Container\ContainerInterface;
+use Engine\Container\Container;
+use Engine\Container\IContainer;
 use Engine\DTO\ConfigDTO;
 use Engine\DTO\Request;
 use Engine\Interfaces\RedirectHandler;
+use Engine\Models\Logger\EngineLogger;
 use Psr\Log\LoggerInterface;
 
 class BaseController
 {
-    protected ContainerInterface $container;
-    protected object $redirectHandler;
-    protected object $logger;
+    protected IContainer $container;
+    protected RedirectHandler $redirectHandler;
+    protected EngineLogger $logger;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->logger = $container->get('EngineLogger');
-        $this->redirectHandler = $container->get('RedirectHandler');
+        $this->logger = $container->get(EngineLogger::class);
+        $this->redirectHandler = $container->get(RedirectHandler::class);
     }
     public function run(Request $request): void
     {

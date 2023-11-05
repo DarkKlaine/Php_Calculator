@@ -4,7 +4,7 @@ namespace Engine\Container;
 
 use Exception;
 
-class Container implements ContainerInterface
+class Container implements IContainer
 {
     private array $dependencies = [];
 

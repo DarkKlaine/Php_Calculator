@@ -2,6 +2,7 @@
 
 namespace Engine;
 
+use Engine\Container\Container;
 use Engine\DTO\ConfigDTO;
 use Engine\DTO\Request;
 use Engine\Models\Auth;
@@ -13,12 +14,14 @@ class Router
     private array $routes;
     private AuthInterface $auth;
     private LoggerInterface $logger;
+    private Container $container;
 
-    public function __construct(LoggerInterface $logger, array $routes, AuthInterface $auth)
+    public function __construct(LoggerInterface $logger, array $routes, AuthInterface $auth, Container $container)
     {
         $this->logger = $logger;
         $this->routes = $routes;
         $this->auth = $auth;
+        $this->container = $container;
     }
 
     public function handleRequest(): void
@@ -38,7 +41,7 @@ class Router
             }
 
             $controllerName = $this->routes[$url]['controller'];
-            $controller = new $controllerName();
+            $controller = $this->container->get($controllerName);
             $controller->run($request);
         } else {
             $message = 'Ошибка 404. Запрос: ' . $url;

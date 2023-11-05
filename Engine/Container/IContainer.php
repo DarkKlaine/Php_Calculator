@@ -2,7 +2,7 @@
 
 namespace Engine\Container;
 
-interface ContainerInterface
+interface IContainer
 {
     /**
      * Записывает в контейнер пару ключ-значение.

@@ -22,12 +22,6 @@ class CalculatorController extends BaseController
 
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
 
-
-    public function __construct($container)
-    {
-
-    }
-
     public function showForm(Request $request): void
     {
         $get = $request->getGet();

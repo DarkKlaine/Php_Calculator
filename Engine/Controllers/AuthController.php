@@ -17,7 +17,7 @@ class AuthController extends BaseController
 
     public function login(Request $request): void
     {
-        $this->container->get('Auth')->login($request);
+        $this->container->get(Auth::class)->login($request);
         $view = new LoginView();
         $view->render();
     }
