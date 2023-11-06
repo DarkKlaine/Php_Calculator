@@ -5,6 +5,7 @@
 
 namespace Modules\Calculator;
 
+use Engine\Container\Container;
 use Engine\Views\TemplateEngine;
 
 class HistoryView
@@ -12,17 +13,23 @@ class HistoryView
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
     private string $historyTplFile = 'history.tpl.php';
+    private TemplateEngine $templateEngine;
 
-    public function render(string $history): void
+    public function __construct(Container $container)
     {
-        $templateEngine = new TemplateEngine('../Config/Templates/');
+        $this->templateEngine = $container->get(TemplateEngine::class);
+    }
 
-        $templateEngine->assignVar('title', $this->title);
+    public function render($history): void
+    {
+        $this->templateEngine->setModuleTemplatesPath('../Config/Templates/');
 
-        $templateEngine->assignVar('history', $history);
+        $this->templateEngine->assignVar('title', $this->title);
 
-        $templateEngine->setInjectTplFile($this->historyTplFile);
+        $this->templateEngine->assignVar('history', $history);
 
-        $templateEngine->display($this->indexTplFile);
+        $this->templateEngine->setInjectTplFile($this->historyTplFile);
+
+        $this->templateEngine->display($this->indexTplFile);
     }
 }

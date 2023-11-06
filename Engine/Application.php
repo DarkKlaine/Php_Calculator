@@ -2,17 +2,19 @@
 
 namespace Engine;
 
+use Engine\Container\Container;
+
 class Application
 {
-    private object $router;
-
-    public function __construct(Router $router)
-    {
-        $this->router = $router;
-    }
-
     public function run(): void
     {
-        $this->router->handleRequest();
+        $container = new Container();
+        $dependencies = require ("../Config/containerConfig.php");
+        foreach ($dependencies as $className => $closure) {
+            $container->set($className, $closure);
+        }
+
+        $router = $container->get(Router::class);
+        $router->handleRequest();
     }
 }

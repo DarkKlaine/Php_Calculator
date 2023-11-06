@@ -29,7 +29,7 @@ class CalculatorController extends BaseController
         $input = $get['input'] ?? '';
         $result = $get['result'] ?? '';
 
-        $view = new CalculatorView();
+        $view = $this->container->get(CalculatorView::class);
         $view->render($input, $result);
     }
 
@@ -47,31 +47,34 @@ class CalculatorController extends BaseController
 
     private function countIt(): void
     {
-        $logger = new EngineLogger();
+        $logger = $this->container->get(EngineLogger::class);
         if (preg_match($this->inputPattern, $this->input)) {
-            $inputData = explode(' ', $this->input);
+            [$value1, $operator, $value2] = explode(' ', $this->input);
 
-            if ($inputData[1] == "+") {
-                $this->result = (new Addition($inputData[0], $inputData[1], $inputData[2]))->getResult();
-            } elseif ($inputData[1] == "-") {
-                $this->result = (new Subtraction($inputData[0], $inputData[1], $inputData[2]))->getResult();
-            } elseif ($inputData[1] == "*") {
-                $this->result = (new Multiply($inputData[0], $inputData[1], $inputData[2]))->getResult();
-            } elseif ($inputData[1] == "/") {
-                $this->result = (new Divide($inputData[0], $inputData[1], $inputData[2]))->getResult();
-            } elseif ($inputData[1] == "pow") {
-                $this->result = (new Exponentiation($inputData[0], $inputData[1], $inputData[2]))->getResult();
-            } elseif ($inputData[1] == "sin" || $inputData[1] == "cos" || $inputData[1] == "tan") {
-                $this->result = (new SinCosTan($inputData[0], $inputData[1]))->getResult();
-            } else {
+            $operations = [
+                '+' => Addition::class,
+                '-' => Subtraction::class,
+                '*' => Multiply::class,
+                '/' => Divide::class,
+                'pow' => Exponentiation::class,
+                'sin' => SinCosTan::class,
+                'cos' => SinCosTan::class,
+                'tan' => SinCosTan::class,
+            ];
+
+            if (empty($operations[$operator])) {
                 $this->result = "Error. Incorrect operator.";
                 $logger->error('Ошибка. Неправильный математический оператор.');
+            } else {
+                $className = $operations[$operator];
+                $operation = $this->container->get($className);
+                $this->result = $operation->getResult($value1, $operator, $value2 ?? '');
             }
         } else {
             $this->result = "Error. Wrong input! Try again.";
             $logger->error("Неправильный ввод: $this->input");
         }
-        $historyMaker = new HistoryModel();
+        $historyMaker = $this->container->get(HistoryModel::class);
         $historyMaker->addToHistory($this->input, $this->result);
     }
 }

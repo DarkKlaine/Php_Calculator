@@ -2,8 +2,8 @@
 
 return [
     'homeUrl' => '/',
-    'routes' => require_once('../Config/routes.php'),
+    'routes' => require('../Config/routes.php'),
     'authEnabled' => true,
     'authSessionLifeTime' => 300,
-    'authWhitelist' => require_once('../Config/authWhitelist.php'),
+    'authWhitelist' => require('../Config/authWhitelist.php'),
 ];

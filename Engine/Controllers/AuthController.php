@@ -11,14 +11,14 @@ class AuthController extends BaseController
 {
     public function accessDenied(): void
     {
-        $view = new AccessDeniedView();
+        $view = $this->container->get(AccessDeniedView::class);
         $view->render();
     }
 
     public function login(Request $request): void
     {
         $this->container->get(Auth::class)->login($request);
-        $view = new LoginView();
+        $view = $this->container->get(LoginView::class);
         $view->render();
     }
 }

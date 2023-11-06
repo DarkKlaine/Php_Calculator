@@ -8,19 +8,19 @@ class Container implements IContainer
 {
     private array $dependencies = [];
 
-    public function set(string $key, \Closure $getter): void
+    public function set(string $className, \Closure $closure): void
     {
-        $this->dependencies[$key] = $getter;
+        $this->dependencies[$className] = $closure;
     }
 
     /**
      * @throws Exception
      */
-    public function get(string $key): object
+    public function get(string $className): object
     {
-        if (isset($this->dependencies[$key])) {
-            return $this->dependencies[$key]($this);
+        if (isset($this->dependencies[$className])) {
+            return $this->dependencies[$className]($this);
         }
-        throw new Exception("Зависимость '$key' не найдена в контейнере.");
+        throw new Exception("Зависимость '$className' не найдена в контейнере.");
     }
 }

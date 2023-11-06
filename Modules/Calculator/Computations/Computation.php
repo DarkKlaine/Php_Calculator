@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Computations;
 
+use Engine\Container\Container;
 use Engine\Models\Logger\EngineLogger;
+use Psr\Log\LoggerInterface;
 
 abstract class Computation
 {
@@ -10,18 +12,18 @@ abstract class Computation
     protected string $value2;
     protected string $action;
     protected string|float $result;
-    protected object $logger;
+    protected LoggerInterface $logger;
 
-    public function __construct(string $value1, string $action, string $value2 = '')
+    public function __construct(Container $container)
+    {
+        $this->logger = $container->get(EngineLogger::class);
+    }
+
+    public function getResult(string $value1, string $action, string $value2 = ''): string|float
     {
         $this->value1 = $value1;
         $this->action = $action;
         $this->value2 = $value2;
-        $this->logger = new EngineLogger();
-    }
-
-    public function getResult(): string|float
-    {
         $this->calculate();
         return $this->result;
     }

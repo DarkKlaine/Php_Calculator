@@ -6,13 +6,8 @@ class TemplateEngine
 {
     protected array $vars = [];
     private string $engineTemplatesPath = '../Config/Templates/';
-    private string $moduleTemplatesPath;
+    private string $moduleTemplatesPath = '';
     private string $injectFile;
-
-    public function __construct(string $moduleTemplatesPath)
-    {
-        $this->moduleTemplatesPath = $moduleTemplatesPath;
-    }
 
     public function assignVar(string $name, mixed $value): void
     {
@@ -28,6 +23,16 @@ class TemplateEngine
     {
         $template = $this->engineTemplatesPath . $tplFile;
         require_once($template);
+    }
+
+    public function setModuleTemplatesPath(string $moduleTemplatesPath): void
+    {
+        $this->moduleTemplatesPath = $moduleTemplatesPath;
+    }
+
+    public function setEngineTemplatesPath(string $engineTemplatesPath): void
+    {
+        $this->engineTemplatesPath = $engineTemplatesPath;
     }
 
     private function injectTplFile(): void

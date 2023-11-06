@@ -1,6 +1,6 @@
 <?php
 /**
- * @see \Modules\Calculator\CalculatorView
+ * @see CalculatorView
  */
 ?>
 
