@@ -3,12 +3,16 @@
 use Engine\Container\Container;
 use Engine\Controllers\AuthController;
 use Engine\DTO\ConfigManager;
-use Engine\Interfaces\AuthSessionHandler;
-use Engine\Interfaces\RedirectHandler;
 use Engine\Models\Auth;
+use Engine\Models\IAuthSessionHandler;
 use Engine\Models\Logger\EngineLogger;
-use Engine\Router;
+use Engine\Router\IAuth;
+use Engine\Router\IRedirectHandler;
+use Engine\Router\RedirectHandler;
+use Engine\Router\Router;
+use Engine\Services\AuthSessionHandler;
 use Engine\Views\AccessDeniedView;
+use Engine\Views\ITemplateEngine;
 use Engine\Views\LoginView;
 use Engine\Views\TemplateEngine;
 use Modules\Calculator\CalculatorController;
@@ -22,24 +26,26 @@ use Modules\Calculator\Computations\Subtraction;
 use Modules\Calculator\HistoryController;
 use Modules\Calculator\HistoryModel;
 use Modules\Calculator\HistoryView;
+use Modules\Calculator\IHistoryModel;
+use Psr\Log\LoggerInterface;
 
 return [
-    RedirectHandler::class => function () {
+    IRedirectHandler::class => function () {
         return new RedirectHandler();
     },
-    TemplateEngine::class => function () {
+    ITemplateEngine::class => function () {
         return new TemplateEngine();
     },
-    AuthSessionHandler::class => function () {
+    IAuthSessionHandler::class => function () {
         return new AuthSessionHandler();
     },
-    EngineLogger::class => function () {
+    LoggerInterface::class => function () {
         return new EngineLogger();
     },
-    HistoryModel::class => function () {
+    IHistoryModel::class => function () {
         return new HistoryModel();
     },
-    Auth::class => function (Container $container) {
+    IAuth::class => function (Container $container) {
         $users = require('../Config/users.php');
         return new Auth($users, $container);
     },

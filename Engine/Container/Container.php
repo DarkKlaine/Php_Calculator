@@ -2,6 +2,7 @@
 
 namespace Engine\Container;
 
+use Engine\IContainer;
 use Exception;
 
 class Container implements IContainer

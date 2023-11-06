@@ -6,7 +6,7 @@
 namespace Modules\Calculator;
 
 use Engine\Container\Container;
-use Engine\Views\TemplateEngine;
+use Engine\Views\ITemplateEngine;
 
 class CalculatorView
 {
@@ -14,11 +14,11 @@ class CalculatorView
     private string $indexTplFile = 'index.tpl.php';
     private string $calculatorTplFile = 'calculator.tpl.php';
 
-    private TemplateEngine $templateEngine;
+    private ITemplateEngine $templateEngine;
 
     public function __construct(Container $container)
     {
-        $this->templateEngine = $container->get(TemplateEngine::class);
+        $this->templateEngine = $container->get(ITemplateEngine::class);
     }
     public function render(string $input, string $result): void
     {

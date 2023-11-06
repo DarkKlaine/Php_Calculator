@@ -3,6 +3,7 @@
 namespace Engine;
 
 use Engine\Container\Container;
+use Engine\Router\Router;
 
 class Application
 {

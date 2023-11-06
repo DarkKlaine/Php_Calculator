@@ -1,8 +1,10 @@
 <?php
 
-namespace Engine\Interfaces;
+namespace Engine\Services;
 
-class AuthSessionHandler extends SessionHandler
+use Engine\Models\IAuthSessionHandler;
+
+class AuthSessionHandler extends SessionHandler implements IAuthSessionHandler
 {
     public function getIsAuthorized(): bool
     {

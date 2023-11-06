@@ -16,7 +16,7 @@ abstract class Computation
 
     public function __construct(Container $container)
     {
-        $this->logger = $container->get(EngineLogger::class);
+        $this->logger = $container->get(LoggerInterface::class);
     }
 
     public function getResult(string $value1, string $action, string $value2 = ''): string|float

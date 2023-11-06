@@ -1,8 +1,8 @@
 <?php
 
-namespace Engine\Interfaces;
+namespace Engine\Services;
 
-interface SessionInterface {
+interface ISessionHandler {
     public function get(string $key);
     public function set(string $key, $value);
 }

@@ -9,11 +9,11 @@ class LoginView
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
     private string $loginTplFile = 'login.tpl.php';
-    private TemplateEngine $templateEngine;
+    private ITemplateEngine $templateEngine;
 
     public function __construct(Container $container)
     {
-        $this->templateEngine = $container->get(TemplateEngine::class);
+        $this->templateEngine = $container->get(ITemplateEngine::class);
     }
 
     public function render(): void

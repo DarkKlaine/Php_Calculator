@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator;
 
-class HistoryModel
+class HistoryModel implements IHistoryModel
 {
     private string $logDir = '../Log';
     private string $logFile = '../Log/History.Log';

@@ -2,7 +2,7 @@
 
 namespace Engine\Views;
 
-class TemplateEngine
+class TemplateEngine implements ITemplateEngine
 {
     protected array $vars = [];
     private string $engineTemplatesPath = '../Config/Templates/';

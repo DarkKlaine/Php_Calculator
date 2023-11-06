@@ -4,8 +4,6 @@ namespace Modules\Calculator;
 
 use Engine\Controllers\BaseController;
 use Engine\DTO\Request;
-use Engine\Interfaces\RedirectHandler;
-use Engine\Models\Logger\EngineLogger;
 use JetBrains\PhpStorm\NoReturn;
 use Modules\Calculator\Computations\Addition;
 use Modules\Calculator\Computations\Divide;
@@ -47,7 +45,6 @@ class CalculatorController extends BaseController
 
     private function countIt(): void
     {
-        $logger = $this->container->get(EngineLogger::class);
         if (preg_match($this->inputPattern, $this->input)) {
             [$value1, $operator, $value2] = explode(' ', $this->input);
 
@@ -64,7 +61,7 @@ class CalculatorController extends BaseController
 
             if (empty($operations[$operator])) {
                 $this->result = "Error. Incorrect operator.";
-                $logger->error('Ошибка. Неправильный математический оператор.');
+                $this->logger->error('Ошибка. Неправильный математический оператор.');
             } else {
                 $className = $operations[$operator];
                 $operation = $this->container->get($className);
@@ -72,9 +69,9 @@ class CalculatorController extends BaseController
             }
         } else {
             $this->result = "Error. Wrong input! Try again.";
-            $logger->error("Неправильный ввод: $this->input");
+            $this->logger->error("Неправильный ввод: $this->input");
         }
-        $historyMaker = $this->container->get(HistoryModel::class);
+        $historyMaker = $this->container->get(IHistoryModel::class);
         $historyMaker->addToHistory($this->input, $this->result);
     }
 }

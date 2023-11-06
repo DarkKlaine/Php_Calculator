@@ -1,10 +1,11 @@
 <?php
 
-namespace Engine\Interfaces;
+namespace Engine\Router;
 
 use JetBrains\PhpStorm\NoReturn;
 
-class RedirectHandler {
+class RedirectHandler implements IRedirectHandler
+{
     #[NoReturn] public static function redirect($url): void
     {
         header("Location: " . $url);

@@ -1,10 +1,10 @@
 <?php
 
-namespace Engine\Models;
+namespace Engine\Router;
 
 use Engine\DTO\Request;
 
-interface AuthInterface
+interface IAuth
 {
     public function verifyAuth(string $requestUrl): void;
 

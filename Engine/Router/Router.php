@@ -1,29 +1,26 @@
 <?php
 
-namespace Engine;
+namespace Engine\Router;
 
 use Engine\Container\Container;
 use Engine\DTO\ConfigManager;
 use Engine\DTO\Request;
-use Engine\Models\Auth;
-use Engine\Models\AuthInterface;
-use Engine\Models\Logger\EngineLogger;
 use Psr\Log\LoggerInterface;
 
 class Router
 {
     private array $routes;
-    private AuthInterface $auth;
+    private IAuth $auth;
     private LoggerInterface $logger;
     private Container $container;
     private ConfigManager $configManager;
 
     public function __construct(Container $container)
     {
-        $this->logger = $container->get(EngineLogger::class);
+        $this->logger = $container->get(LoggerInterface::class);
         $this->configManager = $container->get(ConfigManager::class);
         $this->routes = $this->configManager->getRoutes();
-        $this->auth = $container->get(Auth::class);
+        $this->auth = $container->get(IAuth::class);
         $this->container = $container;
     }
 

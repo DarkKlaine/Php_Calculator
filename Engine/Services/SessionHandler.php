@@ -1,8 +1,8 @@
 <?php
 
-namespace Engine\Interfaces;
+namespace Engine\Services;
 
-class SessionHandler implements SessionInterface
+class SessionHandler implements ISessionHandler
 {
     public function __construct()
     {
