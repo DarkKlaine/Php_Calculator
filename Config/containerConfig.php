@@ -26,7 +26,9 @@ use Modules\Calculator\Computations\Subtraction;
 use Modules\Calculator\HistoryController;
 use Modules\Calculator\HistoryModel;
 use Modules\Calculator\HistoryView;
+use Modules\Calculator\IAddition;
 use Modules\Calculator\IHistoryModel;
+use Modules\Calculator\ISubtraction;
 use Psr\Log\LoggerInterface;
 
 return [
@@ -77,10 +79,10 @@ return [
     CalculatorView::class => function ($container) {
         return new CalculatorView($container);
     },
-    Addition::class => function ($container) {
+    IAddition::class => function ($container) {
         return new Addition($container);
     },
-    Subtraction::class => function ($container) {
+    ISubtraction::class => function ($container) {
         return new Subtraction($container);
     },
     Multiply::class => function ($container) {

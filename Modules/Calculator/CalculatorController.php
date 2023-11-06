@@ -5,13 +5,10 @@ namespace Modules\Calculator;
 use Engine\Controllers\BaseController;
 use Engine\DTO\Request;
 use JetBrains\PhpStorm\NoReturn;
-use Modules\Calculator\Computations\Addition;
 use Modules\Calculator\Computations\Divide;
 use Modules\Calculator\Computations\Exponentiation;
 use Modules\Calculator\Computations\Multiply;
 use Modules\Calculator\Computations\SinCosTan;
-use Modules\Calculator\Computations\Subtraction;
-
 
 class CalculatorController extends BaseController
 {
@@ -49,8 +46,8 @@ class CalculatorController extends BaseController
             [$value1, $operator, $value2] = explode(' ', $this->input);
 
             $operations = [
-                '+' => Addition::class,
-                '-' => Subtraction::class,
+                '+' => IAddition::class,
+                '-' => ISubtraction::class,
                 '*' => Multiply::class,
                 '/' => Divide::class,
                 'pow' => Exponentiation::class,

@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Computations;
 
-class Addition extends Computation implements AdditionInterface
+use Modules\Calculator\IAddition;
+
+class Addition extends Computation implements IAddition
 {
     public function calculate(): void
     {

@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Computations;
 
-class Subtraction extends Computation
+use Modules\Calculator\ISubtraction;
+
+class Subtraction extends Computation implements ISubtraction
 {
     public function calculate(): void
     {
