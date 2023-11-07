@@ -8,7 +8,7 @@ namespace Modules\Calculator;
 use Engine\Container\Container;
 use Engine\Views\ITemplateEngine;
 
-class HistoryView
+class HistoryView implements IHistoryView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';

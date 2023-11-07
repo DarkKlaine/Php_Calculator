@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Computations;
 
-class Multiply extends Computation
+use Modules\Calculator\IMultiply;
+
+class Multiply extends Computation implements IMultiply
 {
     public function calculate(): void
     {

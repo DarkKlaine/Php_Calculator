@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Computations;
 
-class Divide extends Computation
+use Modules\Calculator\IDivide;
+
+class Divide extends Computation implements IDivide
 {
     public function calculate(): void
     {

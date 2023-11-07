@@ -3,8 +3,9 @@
 namespace Engine\Views;
 
 use Engine\Container\Container;
+use Engine\Controllers\ILoginView;
 
-class LoginView
+class LoginView implements ILoginView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';

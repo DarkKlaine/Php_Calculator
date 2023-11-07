@@ -3,22 +3,23 @@
 namespace Engine\Router;
 
 use Engine\Container\Container;
-use Engine\DTO\ConfigManager;
+use Engine\DTO\IConfigManager;
 use Engine\DTO\Request;
+use Engine\IRouter;
 use Psr\Log\LoggerInterface;
 
-class Router
+class Router implements IRouter
 {
     private array $routes;
     private IAuth $auth;
     private LoggerInterface $logger;
     private Container $container;
-    private ConfigManager $configManager;
+    private IConfigManager $configManager;
 
     public function __construct(Container $container)
     {
         $this->logger = $container->get(LoggerInterface::class);
-        $this->configManager = $container->get(ConfigManager::class);
+        $this->configManager = $container->get(IConfigManager::class);
         $this->routes = $this->configManager->getRoutes();
         $this->auth = $container->get(IAuth::class);
         $this->container = $container;

@@ -1,14 +1,14 @@
 <?php
 
-use Engine\Controllers\AuthController;
-use Modules\Calculator\CalculatorController;
-use Modules\Calculator\HistoryController;
+use Engine\Router\IAuthController;
+use Modules\Calculator\IHistoryController;
+use Modules\Calculator\ICalculatorController;
 
 return [
-    '/' => ['controller' => CalculatorController::class, 'action' => 'showForm'],
-    '/calculate' => ['controller' => CalculatorController::class, 'action' => 'calculate'],
-    '/history' => ['controller' => HistoryController::class, 'action' => 'showGeneral'],
-    '/session' => ['controller' => HistoryController::class, 'action' => 'showPersonal'],
-    '/ushellnotpass' => ['controller' => AuthController::class, 'action' => 'accessDenied'],
-    '/login' => ['controller' => AuthController::class, 'action' => 'login'],
+    '/' => ['controller' => ICalculatorController::class, 'action' => 'showForm'],
+    '/calculate' => ['controller' => ICalculatorController::class, 'action' => 'calculate'],
+    '/history' => ['controller' => IHistoryController::class, 'action' => 'showGeneral'],
+    '/session' => ['controller' => IHistoryController::class, 'action' => 'showPersonal'],
+    '/ushellnotpass' => ['controller' => IAuthController::class, 'action' => 'accessDenied'],
+    '/login' => ['controller' => IAuthController::class, 'action' => 'login'],
 ];

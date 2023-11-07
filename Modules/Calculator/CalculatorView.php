@@ -8,7 +8,7 @@ namespace Modules\Calculator;
 use Engine\Container\Container;
 use Engine\Views\ITemplateEngine;
 
-class CalculatorView
+class CalculatorView implements ICalculatorView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';

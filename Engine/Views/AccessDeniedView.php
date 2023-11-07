@@ -3,8 +3,9 @@
 namespace Engine\Views;
 
 use Engine\Container\Container;
+use Engine\Controllers\IAccessDeniedView;
 
-class AccessDeniedView
+class AccessDeniedView implements IAccessDeniedView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';

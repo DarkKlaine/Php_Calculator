@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Computations;
 
-class SinCosTan extends Computation
+use Modules\Calculator\ISinCosTan;
+
+class SinCosTan extends Computation implements ISinCosTan
 {
 
     public function calculate(): void

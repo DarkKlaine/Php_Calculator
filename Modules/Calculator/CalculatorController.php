@@ -5,12 +5,8 @@ namespace Modules\Calculator;
 use Engine\Controllers\BaseController;
 use Engine\DTO\Request;
 use JetBrains\PhpStorm\NoReturn;
-use Modules\Calculator\Computations\Divide;
-use Modules\Calculator\Computations\Exponentiation;
-use Modules\Calculator\Computations\Multiply;
-use Modules\Calculator\Computations\SinCosTan;
 
-class CalculatorController extends BaseController
+class CalculatorController extends BaseController implements ICalculatorController
 {
     private string $input = '';
     private string $result = '';
@@ -24,7 +20,7 @@ class CalculatorController extends BaseController
         $input = $get['input'] ?? '';
         $result = $get['result'] ?? '';
 
-        $view = $this->container->get(CalculatorView::class);
+        $view = $this->container->get(ICalculatorView::class);
         $view->render($input, $result);
     }
 
@@ -48,12 +44,12 @@ class CalculatorController extends BaseController
             $operations = [
                 '+' => IAddition::class,
                 '-' => ISubtraction::class,
-                '*' => Multiply::class,
-                '/' => Divide::class,
-                'pow' => Exponentiation::class,
-                'sin' => SinCosTan::class,
-                'cos' => SinCosTan::class,
-                'tan' => SinCosTan::class,
+                '*' => IMultiply::class,
+                '/' => IDivide::class,
+                'pow' => IExponentiation::class,
+                'sin' => ISinCosTan::class,
+                'cos' => ISinCosTan::class,
+                'tan' => ISinCosTan::class,
             ];
 
             if (empty($operations[$operator])) {

@@ -3,7 +3,7 @@
 namespace Engine\Controllers;
 
 use Engine\Container\Container;
-use Engine\DTO\ConfigManager;
+use Engine\DTO\IConfigManager;
 use Engine\DTO\Request;
 use Engine\IContainer;
 use Engine\Router\IRedirectHandler;
@@ -14,14 +14,14 @@ class BaseController
     protected IContainer $container;
     protected IRedirectHandler $redirectHandler;
     protected LoggerInterface $logger;
-    protected ConfigManager $configManager;
+    protected IConfigManager $configManager;
 
     public function __construct(Container $container)
     {
         $this->container = $container;
         $this->logger = $container->get(LoggerInterface::class);
         $this->redirectHandler = $container->get(IRedirectHandler::class);
-        $this->configManager = $container->get(ConfigManager::class);
+        $this->configManager = $container->get(IConfigManager::class);
     }
     public function run(Request $request): void
     {

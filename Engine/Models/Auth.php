@@ -3,7 +3,7 @@
 namespace Engine\Models;
 
 use Engine\Container\Container;
-use Engine\DTO\ConfigManager;
+use Engine\DTO\IConfigManager;
 use Engine\DTO\Request;
 use Engine\Router\IAuth;
 use Engine\Router\IRedirectHandler;
@@ -13,14 +13,14 @@ class Auth implements IAuth
     private array $users;
     private IAuthSessionHandler $authSessionHandler;
     private IRedirectHandler $redirectHandler;
-    private ConfigManager $configManager;
+    private IConfigManager $configManager;
 
 
     public function __construct(array $users, Container $container)
     {
         $this->redirectHandler = $container->get(IRedirectHandler::class);
         $this->authSessionHandler = $container->get(IAuthSessionHandler::class);
-        $this->configManager = $container->get(ConfigManager::class);
+        $this->configManager = $container->get(IConfigManager::class);
         $this->users = $users;
     }
 

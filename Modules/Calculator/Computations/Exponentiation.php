@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Computations;
 
-class Exponentiation extends Computation
+use Modules\Calculator\IExponentiation;
+
+class Exponentiation extends Computation implements IExponentiation
 {
     public function calculate(): void
     {

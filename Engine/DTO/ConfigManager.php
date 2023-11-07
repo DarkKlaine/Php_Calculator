@@ -2,7 +2,7 @@
 
 namespace Engine\DTO;
 
-class ConfigManager
+class ConfigManager implements IConfigManager
 {
     private static string $homeUrl;
     private static string $accessDeniedPage;

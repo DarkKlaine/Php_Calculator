@@ -3,19 +3,18 @@
 namespace Engine;
 
 use Engine\Container\Container;
-use Engine\Router\Router;
 
 class Application
 {
     public function run(): void
     {
         $container = new Container();
-        $dependencies = require ("../Config/containerConfig.php");
+        $dependencies = require("../Config/ContainerCfg/containerCfg.php");
         foreach ($dependencies as $className => $closure) {
             $container->set($className, $closure);
         }
 
-        $router = $container->get(Router::class);
+        $router = $container->get(IRouter::class);
         $router->handleRequest();
     }
 }
