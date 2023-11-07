@@ -18,7 +18,8 @@ class Router implements IRouter
         LoggerInterface $logger,
         IConfigManager  $configManager,
         IAuth           $auth,
-        Container       $container)
+        Container       $container,
+    )
     {
         $this->logger = $logger;
         $this->configManager = $configManager;

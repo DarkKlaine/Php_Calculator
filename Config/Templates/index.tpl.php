@@ -15,6 +15,7 @@ use Engine\Views\TemplateEngine;
             background-color: #3E2723;
             color: #FFF8E7;
             font-family: "Courier New", monospace;
+            text-align: center;
         }
 
         a {
@@ -22,8 +23,8 @@ use Engine\Views\TemplateEngine;
         }
     </style>
 </head>
-<body><center>
+<body>
 <h1><?php echo $this->vars['title'] ?></h1>
 <?php $this->injectTplFile() ?>
-    </center></body>
+</body>
 </html>

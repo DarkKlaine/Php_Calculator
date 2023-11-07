@@ -33,7 +33,7 @@ class BaseController
         } else {
 
             $this->logger->error("Ошибка в BaseController. Неправильный 'action' в routes.php.");
-            $this->redirectHandler->redirect($this->configManager->getHomeURL());
+            $this->redirectHandler->redirect($this->configManager->getHomeUrl());
         }
     }
 }

@@ -51,7 +51,7 @@ class Auth implements IAuth
         if (!empty(array_intersect_assoc($this->users, $loginInfo))) {
             $this->authSessionHandler->setIsAuthorized(true);
             $this->authSessionHandler->setDestroyTime(time() + $this->configManager->getAuthSessionLifeTime());
-            $this->redirectHandler->redirect($this->configManager->getHomeURL());
+            $this->redirectHandler->redirect($this->configManager->getHomeUrl());
         }
     }
 }

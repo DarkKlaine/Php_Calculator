@@ -3,6 +3,16 @@
 
 - php code sniffer (phpcs для phpstorm)
 
+- Переделать Template Engine
+
+- Добавить возможность работать из консоли
+- php dk calculate $value1 $operation $value2
+- результат должен быть красным
+
+*Не сейчас*
+- phpUnit почитать
+- Работа с базами данных (пользователи и авторизация)
+
 
 -------- УЖЕ DO --------
 - Переделать ConfigDTO

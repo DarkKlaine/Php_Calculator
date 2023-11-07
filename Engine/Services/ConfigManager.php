@@ -6,57 +6,57 @@ use Engine\Router\IConfigManager;
 
 class ConfigManager implements IConfigManager
 {
-    private static string $homeUrl;
-    private static string $accessDeniedPage;
-    private static string $loginPage;
-    private static array $authWhitelist;
-    private static bool $authEnabled;
-    private static int $authSessionLifeTime;
-    private static array $routes;
+    private string $homeUrl;
+    private string $accessDeniedPage;
+    private string $loginPage;
+    private array $authWhitelist;
+    private bool $authEnabled;
+    private int $authSessionLifeTime;
+    private array $routes;
 
     public function __construct($appConfig)
     {
-        self::$homeUrl = $appConfig['homeUrl'];
-        self::$authEnabled = $appConfig['authEnabled'];
-        self::$authSessionLifeTime = $appConfig['authSessionLifeTime'];
-        self::$accessDeniedPage = $appConfig['authWhitelist']['accessDenied'];
-        self::$loginPage = $appConfig['authWhitelist']['login'];
-        self::$authWhitelist = $appConfig['authWhitelist'];
-        self::$routes = $appConfig['routes'];
+        $this->homeUrl = $appConfig['homeUrl'];
+        $this->authEnabled = $appConfig['authEnabled'];
+        $this->authSessionLifeTime = $appConfig['authSessionLifeTime'];
+        $this->accessDeniedPage = $appConfig['authWhitelist']['accessDenied'];
+        $this->loginPage = $appConfig['authWhitelist']['login'];
+        $this->authWhitelist = $appConfig['authWhitelist'];
+        $this->routes = $appConfig['routes'];
     }
 
-    public static function getAccessDeniedPage(): string
+    public function getAccessDeniedPage(): string
     {
-        return self::$accessDeniedPage;
+        return $this->accessDeniedPage;
     }
 
-    public static function getRoutes(): array
+    public function getRoutes(): array
     {
-        return self::$routes;
+        return $this->routes;
     }
 
-    public static function getAuthSessionLifeTime(): int
+    public function getAuthSessionLifeTime(): int
     {
-        return self::$authSessionLifeTime;
+        return $this->authSessionLifeTime;
     }
 
-    public static function isAuthEnabled(): bool
+    public function isAuthEnabled(): bool
     {
-        return self::$authEnabled;
+        return $this->authEnabled;
     }
 
-    public static function getAuthWhitelist(): array
+    public function getAuthWhitelist(): array
     {
-        return self::$authWhitelist;
+        return $this->authWhitelist;
     }
 
-    public static function getLoginPage(): string
+    public function getLoginPage(): string
     {
-        return self::$loginPage;
+        return $this->loginPage;
     }
 
-    public static function getHomeUrl(): string
+    public function getHomeUrl(): string
     {
-        return self::$homeUrl;
+        return $this->homeUrl;
     }
 }
