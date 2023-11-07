@@ -9,7 +9,7 @@ class Application
     public function run(): void
     {
         $container = new Container();
-        $dependencies = require("../Config/ContainerCfg/containerCfg.php");
+        $dependencies = require_once '../Config/ContainerCfg/containerCfg.php';
         foreach ($dependencies as $className => $closure) {
             $container->set($className, $closure);
         }

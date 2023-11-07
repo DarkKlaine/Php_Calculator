@@ -36,7 +36,7 @@ return [
         return new EngineLogger();
     },
     IAuth::class => function (Container $container) {
-        $users = require('../Config/users.php');
+        $users = require(__DIR__ . '/../users.php');
         return new Auth($users, $container);
     },
     IAuthController::class => function (Container $container) {
@@ -46,7 +46,7 @@ return [
         return new Router($container);
     },
     IConfigManager::class => function () {
-        $appConfig = require('../Config/app.php');
+        $appConfig = require(__DIR__ . '/../app.php');
         return new ConfigManager($appConfig);
     },
     IAccessDeniedView::class => function ($container) {

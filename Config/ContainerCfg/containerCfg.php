@@ -1,6 +1,6 @@
 <?php
 
 return array_merge(
-    require '../Config/containerCfg/engineDependencies.php',
-    require '../Modules/Calculator/Config/calculatorDependencies.php',
+    require_once __DIR__ . '/engineDependencies.php',
+    require_once __DIR__ . '/../../Modules/Calculator/Config/calculatorDependencies.php',
 );
