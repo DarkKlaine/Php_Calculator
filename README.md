@@ -1,6 +1,10 @@
 # Php_Calculator
-Мой путь - страдания, а Вова - мой палач.  
-Но вдалеке виден свет.  
-Смотря на этот свет, я верю что придет светлое будущее.  
-И тогда каждому воздастся по заслугам его.  
-\t Альберт Эйнштейн.
+<blockquote>
+    <p>Мой путь - страдания, а Вова - мой палач.<br>
+Но вдалеке виден свет.<br>
+Смотря на этот свет, я верю что придет светлое будущее.<br>
+И тогда каждому воздастся по заслугам его.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Альберт Эйнштейн.</p>
+</blockquote>
