@@ -1,9 +1,8 @@
 <?php
 
-namespace Modules\Calculator\Computations;
+namespace Modules\Calculator\Models;
 
 use Engine\Container\Container;
-use Engine\Models\Logger\EngineLogger;
 use Psr\Log\LoggerInterface;
 
 abstract class Computation
@@ -14,9 +13,9 @@ abstract class Computation
     protected string|float $result;
     protected LoggerInterface $logger;
 
-    public function __construct(Container $container)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->logger = $container->get(LoggerInterface::class);
+        $this->logger = $logger;
     }
 
     public function getResult(string $value1, string $action, string $value2 = ''): string|float

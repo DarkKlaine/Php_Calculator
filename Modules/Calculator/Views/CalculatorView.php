@@ -3,10 +3,11 @@
  * uses App/Views/Templates/calculator.tpl.php
  */
 
-namespace Modules\Calculator;
+namespace Modules\Calculator\Views;
 
 use Engine\Container\Container;
 use Engine\Views\ITemplateEngine;
+use Modules\Calculator\Controllers\ICalculatorView;
 
 class CalculatorView implements ICalculatorView
 {
@@ -16,9 +17,9 @@ class CalculatorView implements ICalculatorView
 
     private ITemplateEngine $templateEngine;
 
-    public function __construct(Container $container)
+    public function __construct(ITemplateEngine $templateEngine)
     {
-        $this->templateEngine = $container->get(ITemplateEngine::class);
+        $this->templateEngine = $templateEngine;
     }
     public function render(string $input, string $result): void
     {

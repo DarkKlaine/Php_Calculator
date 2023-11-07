@@ -1,8 +1,9 @@
 <?php
 
-namespace Modules\Calculator\Computations;
+namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\IExponentiation;
+use Modules\Calculator\Controllers\IExponentiation;
+use Modules\Calculator\Models\Computation;
 
 class Exponentiation extends Computation implements IExponentiation
 {

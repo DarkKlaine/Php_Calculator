@@ -1,8 +1,9 @@
 <?php
 
-namespace Modules\Calculator\Computations;
+namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\IMultiply;
+use Modules\Calculator\Controllers\IMultiply;
+use Modules\Calculator\Models\Computation;
 
 class Multiply extends Computation implements IMultiply
 {

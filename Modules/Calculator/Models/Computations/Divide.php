@@ -1,8 +1,9 @@
 <?php
 
-namespace Modules\Calculator\Computations;
+namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\IDivide;
+use Modules\Calculator\Controllers\IDivide;
+use Modules\Calculator\Models\Computation;
 
 class Divide extends Computation implements IDivide
 {

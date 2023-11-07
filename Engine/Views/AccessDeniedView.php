@@ -2,7 +2,6 @@
 
 namespace Engine\Views;
 
-use Engine\Container\Container;
 use Engine\Controllers\IAccessDeniedView;
 
 class AccessDeniedView implements IAccessDeniedView
@@ -12,9 +11,9 @@ class AccessDeniedView implements IAccessDeniedView
     private string $accessDeniedTplFile = 'accessDenied.tpl.php';
     private ITemplateEngine $templateEngine;
 
-    public function __construct(Container $container)
+    public function __construct(ITemplateEngine $templateEngine)
     {
-        $this->templateEngine = $container->get(ITemplateEngine::class);
+        $this->templateEngine = $templateEngine;
     }
 
     public function render(): void

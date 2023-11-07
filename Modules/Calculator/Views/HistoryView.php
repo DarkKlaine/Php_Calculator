@@ -3,10 +3,11 @@
  * uses App/Views/Templates/history.tpl.php
  */
 
-namespace Modules\Calculator;
+namespace Modules\Calculator\Views;
 
 use Engine\Container\Container;
 use Engine\Views\ITemplateEngine;
+use Modules\Calculator\Controllers\IHistoryView;
 
 class HistoryView implements IHistoryView
 {
@@ -15,9 +16,9 @@ class HistoryView implements IHistoryView
     private string $historyTplFile = 'history.tpl.php';
     private ITemplateEngine $templateEngine;
 
-    public function __construct(Container $container)
+    public function __construct(ITemplateEngine $templateEngine)
     {
-        $this->templateEngine = $container->get(ITemplateEngine::class);
+        $this->templateEngine = $templateEngine;
     }
 
     public function render($history): void

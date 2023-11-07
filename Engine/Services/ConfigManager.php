@@ -1,6 +1,8 @@
 <?php
 
-namespace Engine\DTO;
+namespace Engine\Services;
+
+use Engine\Router\IConfigManager;
 
 class ConfigManager implements IConfigManager
 {

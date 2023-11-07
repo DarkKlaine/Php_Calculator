@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Calculator;
+namespace Modules\Calculator\Controllers;
 
 interface IDivide
 {

@@ -1,17 +1,35 @@
 <?php
 
-namespace Modules\Calculator;
+namespace Modules\Calculator\Controllers;
 
+use Engine\Container\Container;
 use Engine\Controllers\BaseController;
 use Engine\DTO\Request;
+use Engine\Router\IConfigManager;
+use Engine\Router\IRedirectHandler;
 use JetBrains\PhpStorm\NoReturn;
+use Psr\Log\LoggerInterface;
 
 class CalculatorController extends BaseController implements ICalculatorController
 {
     private string $input = '';
     private string $result = '';
-
     private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
+    private Container $container;
+    private IHistoryModel $historyModel;
+
+    public function __construct(
+        IRedirectHandler $redirectHandler,
+        LoggerInterface  $logger,
+        IConfigManager   $configManager,
+        Container        $container,
+        IHistoryModel    $historyModel
+    )
+    {
+        parent::__construct($redirectHandler, $logger, $configManager);
+        $this->container = $container;
+        $this->historyModel = $historyModel;
+    }
 
     public function showForm(Request $request): void
     {
@@ -64,7 +82,6 @@ class CalculatorController extends BaseController implements ICalculatorControll
             $this->result = "Error. Wrong input! Try again.";
             $this->logger->error("Неправильный ввод: $this->input");
         }
-        $historyMaker = $this->container->get(IHistoryModel::class);
-        $historyMaker->addToHistory($this->input, $this->result);
+        $this->historyModel->addToHistory($this->input, $this->result);
     }
 }

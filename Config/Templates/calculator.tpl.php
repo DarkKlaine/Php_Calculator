@@ -2,6 +2,9 @@
 /**
  * @see CalculatorView
  */
+
+use Modules\Calculator\Views\CalculatorView;
+
 ?>
 
 <form method="post" action="/calculate">

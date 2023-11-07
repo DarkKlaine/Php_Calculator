@@ -1,6 +1,8 @@
 <?php
 
-namespace Modules\Calculator;
+namespace Modules\Calculator\Models;
+
+use Modules\Calculator\Controllers\IHistoryModel;
 
 class HistoryModel implements IHistoryModel
 {

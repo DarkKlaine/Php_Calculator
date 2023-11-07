@@ -1,8 +1,9 @@
 <?php
 
-namespace Modules\Calculator\Computations;
+namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\ISinCosTan;
+use Modules\Calculator\Controllers\ISinCosTan;
+use Modules\Calculator\Models\Computation;
 
 class SinCosTan extends Computation implements ISinCosTan
 {

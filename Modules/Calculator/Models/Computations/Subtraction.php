@@ -1,8 +1,9 @@
 <?php
 
-namespace Modules\Calculator\Computations;
+namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\ISubtraction;
+use Modules\Calculator\Controllers\ISubtraction;
+use Modules\Calculator\Models\Computation;
 
 class Subtraction extends Computation implements ISubtraction
 {
