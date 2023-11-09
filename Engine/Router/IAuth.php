@@ -2,11 +2,11 @@
 
 namespace Engine\Router;
 
-use Engine\DTO\Request;
+use Engine\DTO\WebRequestDTO;
 
 interface IAuth
 {
     public function verifyAuth(string $requestUrl): void;
 
-    public function login(Request $request): void;
+    public function login(WebRequestDTO $request): void;
 }

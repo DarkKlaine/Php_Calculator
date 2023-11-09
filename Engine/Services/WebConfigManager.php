@@ -2,13 +2,12 @@
 
 namespace Engine\Services;
 
-use Engine\Router\IConfigManager;
+use Engine\Router\IWebConfigManager;
 
-class ConfigManager implements IConfigManager
+class WebConfigManager implements IWebConfigManager
 {
     private string $homeUrl;
     private string $accessDeniedPage;
-    private string $loginPage;
     private array $authWhitelist;
     private bool $authEnabled;
     private int $authSessionLifeTime;
@@ -20,7 +19,6 @@ class ConfigManager implements IConfigManager
         $this->authEnabled = $appConfig['authEnabled'];
         $this->authSessionLifeTime = $appConfig['authSessionLifeTime'];
         $this->accessDeniedPage = $appConfig['authWhitelist']['accessDenied'];
-        $this->loginPage = $appConfig['authWhitelist']['login'];
         $this->authWhitelist = $appConfig['authWhitelist'];
         $this->routes = $appConfig['routes'];
     }
@@ -48,11 +46,6 @@ class ConfigManager implements IConfigManager
     public function getAuthWhitelist(): array
     {
         return $this->authWhitelist;
-    }
-
-    public function getLoginPage(): string
-    {
-        return $this->loginPage;
     }
 
     public function getHomeUrl(): string

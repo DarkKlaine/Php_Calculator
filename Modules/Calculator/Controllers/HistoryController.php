@@ -4,7 +4,7 @@ namespace Modules\Calculator\Controllers;
 
 use Engine\Container\Container;
 use Engine\Controllers\BaseController;
-use Engine\Router\IConfigManager;
+use Engine\Router\IWebConfigManager;
 use Engine\Router\IRedirectHandler;
 use Psr\Log\LoggerInterface;
 
@@ -14,11 +14,11 @@ class HistoryController extends BaseController implements IHistoryController
     private IHistoryModel $historyModel;
 
     public function __construct(
-        IRedirectHandler $redirectHandler,
-        LoggerInterface  $logger,
-        IConfigManager   $configManager,
-        IHistoryView     $historyView,
-        IHistoryModel    $historyModel,
+        IRedirectHandler  $redirectHandler,
+        LoggerInterface   $logger,
+        IWebConfigManager $configManager,
+        IHistoryView      $historyView,
+        IHistoryModel     $historyModel,
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);

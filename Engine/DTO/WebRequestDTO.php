@@ -2,7 +2,7 @@
 
 namespace Engine\DTO;
 
-class Request
+class WebRequestDTO
 {
     private string $requestURL;
     private array $post;

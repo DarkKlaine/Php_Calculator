@@ -2,7 +2,7 @@
 
 namespace Engine;
 
-interface IRouter
+interface IConsoleRouter
 {
     public function handleRequest(): void;
 }

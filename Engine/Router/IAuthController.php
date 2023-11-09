@@ -2,11 +2,11 @@
 
 namespace Engine\Router;
 
-use Engine\DTO\Request;
+use Engine\DTO\WebRequestDTO;
 
 interface IAuthController
 {
     public function accessDenied(): void;
 
-    public function login(Request $request): void;
+    public function login(WebRequestDTO $request): void;
 }

@@ -2,7 +2,9 @@
 
 namespace Engine\Services;
 
-interface ISessionHandler {
-    public function get(string $key);
-    public function set(string $key, $value);
+interface ISessionHandler
+{
+    public function get(string $key): mixed;
+
+    public function set(string $key, $value): void;
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Engine\Application;
+use Engine\WebApp;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-$app = new Application();
+$app = new WebApp();
 $app->run();

@@ -2,9 +2,9 @@
 
 namespace Engine\Models;
 
-use Engine\DTO\Request;
+use Engine\DTO\WebRequestDTO;
 use Engine\Router\IAuth;
-use Engine\Router\IConfigManager;
+use Engine\Router\IWebConfigManager;
 use Engine\Router\IRedirectHandler;
 
 class Auth implements IAuth
@@ -12,14 +12,14 @@ class Auth implements IAuth
     private array $users;
     private IAuthSessionHandler $authSessionHandler;
     private IRedirectHandler $redirectHandler;
-    private IConfigManager $configManager;
+    private IWebConfigManager $configManager;
 
 
     public function __construct(
         array               $users,
         IRedirectHandler    $redirectHandler,
         IAuthSessionHandler $authSessionHandler,
-        IConfigManager      $configManager,
+        IWebConfigManager   $configManager,
     )
     {
         $this->users = $users;
@@ -44,7 +44,7 @@ class Auth implements IAuth
         }
     }
 
-    public function login(Request $request): void
+    public function login(WebRequestDTO $request): void
     {
         $loginInfo = $request->getPost() ? [$request->getPost()['username'] => $request->getPost()['password']] : [];
 

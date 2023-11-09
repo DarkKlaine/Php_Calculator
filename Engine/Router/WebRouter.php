@@ -3,22 +3,23 @@
 namespace Engine\Router;
 
 use Engine\Container\Container;
-use Engine\DTO\Request;
-use Engine\IRouter;
+use Engine\Controllers\BaseController;
+use Engine\DTO\WebRequestDTO;
+use Engine\IWebRouter;
 use Psr\Log\LoggerInterface;
 
-class Router implements IRouter
+class WebRouter implements IWebRouter
 {
     private IAuth $auth;
     private LoggerInterface $logger;
     private Container $container;
-    private IConfigManager $configManager;
+    private IWebConfigManager $configManager;
 
     public function __construct(
-        LoggerInterface $logger,
-        IConfigManager  $configManager,
-        IAuth           $auth,
-        Container       $container,
+        LoggerInterface   $logger,
+        IWebConfigManager $configManager,
+        IAuth             $auth,
+        Container         $container,
     )
     {
         $this->logger = $logger;
@@ -34,7 +35,7 @@ class Router implements IRouter
         $route = $routes[$url];
 
         if (empty($route) === false) {
-            $request = new Request(
+            $request = new WebRequestDTO(
                 $_POST,
                 $_GET,
                 $route['action'] ?? '',
@@ -46,6 +47,7 @@ class Router implements IRouter
             }
 
             $controllerName = $route['controller'];
+            /** @var BaseController $controller */
             $controller = $this->container->get($controllerName);
             $controller->run($request);
         } else {

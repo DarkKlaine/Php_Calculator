@@ -4,8 +4,8 @@ namespace Modules\Calculator\Controllers;
 
 use Engine\Container\Container;
 use Engine\Controllers\BaseController;
-use Engine\DTO\Request;
-use Engine\Router\IConfigManager;
+use Engine\DTO\WebRequestDTO;
+use Engine\Router\IWebConfigManager;
 use Engine\Router\IRedirectHandler;
 use JetBrains\PhpStorm\NoReturn;
 use Psr\Log\LoggerInterface;
@@ -19,11 +19,11 @@ class CalculatorController extends BaseController implements ICalculatorControll
     private IHistoryModel $historyModel;
 
     public function __construct(
-        IRedirectHandler $redirectHandler,
-        LoggerInterface  $logger,
-        IConfigManager   $configManager,
-        Container        $container,
-        IHistoryModel    $historyModel
+        IRedirectHandler  $redirectHandler,
+        LoggerInterface   $logger,
+        IWebConfigManager $configManager,
+        Container         $container,
+        IHistoryModel     $historyModel
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);
@@ -31,7 +31,7 @@ class CalculatorController extends BaseController implements ICalculatorControll
         $this->historyModel = $historyModel;
     }
 
-    public function showForm(Request $request): void
+    public function showForm(WebRequestDTO $request): void
     {
         $get = $request->getGet();
 
@@ -42,7 +42,7 @@ class CalculatorController extends BaseController implements ICalculatorControll
         $view->render($input, $result);
     }
 
-    #[NoReturn] public function calculate(Request $request): void
+    #[NoReturn] public function calculate(WebRequestDTO $request): void
     {
         $post = $request->getPost();
         if (isset($post['userInput'])) {
@@ -82,6 +82,6 @@ class CalculatorController extends BaseController implements ICalculatorControll
             $this->result = "Error. Wrong input! Try again.";
             $this->logger->error("Неправильный ввод: $this->input");
         }
-        $this->historyModel->addToHistory($this->input, $this->result);
+        $this->historyModel->addToHistory($this->input, $this->result, true);
     }
 }

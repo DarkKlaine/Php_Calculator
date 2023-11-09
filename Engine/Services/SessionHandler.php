@@ -11,12 +11,12 @@ class SessionHandler implements ISessionHandler
         }
     }
 
-    public function get(string $key):mixed
+    public function get(string $key): mixed
     {
         return $_SESSION[$key] ?? null;
     }
 
-    public function set(string $key, mixed $value):void
+    public function set(string $key, mixed $value): void
     {
         $_SESSION[$key] = $value;
     }

@@ -6,15 +6,15 @@ use Engine\Container\Container;
 
 class Application
 {
-    public function run(): void
-    {
-        $container = new Container();
-        $dependencies = require_once '../Config/ContainerCfg/containerCfg.php';
+    protected Container $container;
+    public function __construct() {
+        $this->container = new Container();
+        $dependencies = require_once __DIR__ . '/../Config/ContainerCfg/containerCfg.php';
         foreach ($dependencies as $className => $closure) {
-            $container->set($className, $closure);
+            $this->container->set($className, $closure);
         }
-
-        $router = $container->get(IRouter::class);
-        $router->handleRequest();
     }
+
+
+
 }

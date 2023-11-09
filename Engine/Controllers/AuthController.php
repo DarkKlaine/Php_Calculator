@@ -2,10 +2,10 @@
 
 namespace Engine\Controllers;
 
-use Engine\DTO\Request;
+use Engine\DTO\WebRequestDTO;
 use Engine\Router\IAuth;
 use Engine\Router\IAuthController;
-use Engine\Router\IConfigManager;
+use Engine\Router\IWebConfigManager;
 use Engine\Router\IRedirectHandler;
 use Psr\Log\LoggerInterface;
 
@@ -18,7 +18,7 @@ class AuthController extends BaseController implements IAuthController
     public function __construct(
         IRedirectHandler  $redirectHandler,
         LoggerInterface   $logger,
-        IConfigManager    $configManager,
+        IWebConfigManager $configManager,
         IAccessDeniedView $accessDeniedView,
         IAuth             $auth,
         ILoginView        $loginView,
@@ -35,7 +35,7 @@ class AuthController extends BaseController implements IAuthController
         $this->accessDeniedView->render();
     }
 
-    public function login(Request $request): void
+    public function login(WebRequestDTO $request): void
     {
         $this->auth->login($request);
         $this->loginView->render();

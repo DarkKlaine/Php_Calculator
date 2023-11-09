@@ -10,7 +10,7 @@ class HistoryModel implements IHistoryModel
     private string $logFile = '../Log/History.Log';
     private int $maxLogSize = 10;
 
-    public function addToHistory(string $input, string $result): void
+    public function addToHistory(string $input, string $result, bool $needSessionHistory): void
     {
         if (is_numeric($result) === false) {
             return;
@@ -19,7 +19,9 @@ class HistoryModel implements IHistoryModel
         $stringForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . PHP_EOL;
 
         $this->addToGlobalHistory($stringForLogging);
-        $this->addToSessionHistory($stringForLogging);
+        if ($needSessionHistory) {
+            $this->addToSessionHistory($stringForLogging);
+        }
     }
 
     private function addToGlobalHistory(string $stringForLogging): void
@@ -36,19 +38,6 @@ class HistoryModel implements IHistoryModel
         $file = fopen($this->logFile, 'w');
         fwrite($file, implode("", $logArray));
         fclose($file);
-    }
-
-    private function addToSessionHistory(string $stringForLogging): void
-    {
-        if (isset($_SESSION['history'])) {
-            $logArray = $_SESSION['history'];
-            $logArray = $this->trimToMaxSize($logArray);
-        }
-
-        $logArray[] = $stringForLogging;
-        $logArray = $this->numberingAndPadding($logArray);
-
-        $_SESSION['history'] = $logArray;
     }
 
     private function trimToMaxSize(array $logArray): array
@@ -80,6 +69,19 @@ class HistoryModel implements IHistoryModel
         unset($value);
 
         return $logArray;
+    }
+
+    private function addToSessionHistory(string $stringForLogging): void
+    {
+        if (isset($_SESSION['history'])) {
+            $logArray = $_SESSION['history'];
+            $logArray = $this->trimToMaxSize($logArray);
+        }
+
+        $logArray[] = $stringForLogging;
+        $logArray = $this->numberingAndPadding($logArray);
+
+        $_SESSION['history'] = $logArray;
     }
 
     public function getGeneralHistoryString(): string

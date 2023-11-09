@@ -2,11 +2,11 @@
 
 namespace Modules\Calculator\Controllers;
 
-use Engine\DTO\Request;
+use Engine\DTO\WebRequestDTO;
 
 interface ICalculatorController
 {
-    public function showForm(Request $request): void;
+    public function showForm(WebRequestDTO $request): void;
 
-    public function calculate(Request $request): void;
+    public function calculate(WebRequestDTO $request): void;
 }

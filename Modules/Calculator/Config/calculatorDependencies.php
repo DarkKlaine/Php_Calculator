@@ -1,7 +1,7 @@
 <?php
 
 use Engine\Container\Container;
-use Engine\Router\IConfigManager;
+use Engine\Router\IWebConfigManager;
 use Engine\Router\IRedirectHandler;
 use Engine\Views\ITemplateEngine;
 use Modules\Calculator\Controllers\CalculatorController;
@@ -35,14 +35,14 @@ return [
     ICalculatorController::class => function (Container $container) {
         $redirectHandler = $container->get(IRedirectHandler::class);
         $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IConfigManager::class);
+        $configManager = $container->get(IWebConfigManager::class);
         $historyModel = $container->get(IHistoryModel::class);
         return new CalculatorController($redirectHandler, $logger, $configManager, $container, $historyModel,);
     },
     IHistoryController::class => function (Container $container) {
         $redirectHandler = $container->get(IRedirectHandler::class);
         $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IConfigManager::class);
+        $configManager = $container->get(IWebConfigManager::class);
         $historyView = $container->get(IHistoryView::class);
         $historyModel = $container->get(IHistoryModel::class);
         return new HistoryController($redirectHandler, $logger, $configManager, $historyView, $historyModel,);

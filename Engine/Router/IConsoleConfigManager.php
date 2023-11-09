@@ -2,6 +2,7 @@
 
 namespace Engine\Router;
 
-interface IConfigManager
+interface IConsoleConfigManager
 {
+
 }
