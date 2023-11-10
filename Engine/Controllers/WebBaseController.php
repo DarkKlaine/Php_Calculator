@@ -7,7 +7,7 @@ use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
 use Psr\Log\LoggerInterface;
 
-class BaseController
+class WebBaseController
 {
     protected IWebRedirectHandler $redirectHandler;
     protected LoggerInterface $logger;
@@ -32,7 +32,7 @@ class BaseController
             $this->$action($request);
         } else {
 
-            $this->logger->error("Ошибка в BaseController. Неправильный 'action' в webRoutes.php.");
+            $this->logger->error("Ошибка в WebBaseController. Неправильный 'action' в webRoutes.php.");
             $this->redirectHandler->redirect($this->configManager->getHomeUrl());
         }
     }

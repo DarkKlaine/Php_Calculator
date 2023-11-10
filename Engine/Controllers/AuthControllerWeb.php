@@ -9,7 +9,7 @@ use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
 use Psr\Log\LoggerInterface;
 
-class AuthController extends BaseController implements IAuthController
+class AuthControllerWeb extends WebBaseController implements IAuthController
 {
     private IAccessDeniedView $accessDeniedView;
     private IAuth $auth;

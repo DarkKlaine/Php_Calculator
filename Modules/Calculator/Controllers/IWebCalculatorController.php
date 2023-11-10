@@ -4,7 +4,7 @@ namespace Modules\Calculator\Controllers;
 
 use Engine\DTO\WebRequestDTO;
 
-interface ICalculatorController
+interface IWebCalculatorController
 {
     public function showForm(WebRequestDTO $request): void;
 

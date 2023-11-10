@@ -4,10 +4,12 @@ use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
 use Engine\Services\Container\Container;
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\CalculatorController;
-use Modules\Calculator\Controllers\HistoryController;
+use Modules\Calculator\Controllers\ConsoleCalculatorController;
+use Modules\Calculator\Controllers\IConsoleCalculatorController;
+use Modules\Calculator\Controllers\WebCalculatorController;
+use Modules\Calculator\Controllers\HistoryControllerWeb;
 use Modules\Calculator\Controllers\IAddition;
-use Modules\Calculator\Controllers\ICalculatorController;
+use Modules\Calculator\Controllers\IWebCalculatorController;
 use Modules\Calculator\Controllers\ICalculatorView;
 use Modules\Calculator\Controllers\IDivide;
 use Modules\Calculator\Controllers\IExponentiation;
@@ -29,32 +31,7 @@ use Modules\Calculator\Views\HistoryView;
 use Psr\Log\LoggerInterface;
 
 return [
-    IHistoryModel::class => function () {
-        return new HistoryModel();
-    },
-    ICalculatorController::class => function (Container $container) {
-        $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
-        $historyModel = $container->get(IHistoryModel::class);
-        return new CalculatorController($redirectHandler, $logger, $configManager, $container, $historyModel,);
-    },
-    IHistoryController::class => function (Container $container) {
-        $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
-        $historyView = $container->get(IHistoryView::class);
-        $historyModel = $container->get(IHistoryModel::class);
-        return new HistoryController($redirectHandler, $logger, $configManager, $historyView, $historyModel,);
-    },
-    IHistoryView::class => function ($container) {
-        $templateEngine = $container->get(IWebTemplateEngine::class);
-        return new HistoryView($templateEngine);
-    },
-    ICalculatorView::class => function ($container) {
-        $templateEngine = $container->get(IWebTemplateEngine::class);
-        return new CalculatorView($templateEngine);
-    },
+    //Shared
     IAddition::class => function ($container) {
         $logger = $container->get(LoggerInterface::class);
         return new Addition($logger);
@@ -78,5 +55,37 @@ return [
     ISinCosTan::class => function ($container) {
         $logger = $container->get(LoggerInterface::class);
         return new SinCosTan($logger);
+    },
+    IHistoryModel::class => function () {
+        return new HistoryModel();
+    },
+    //Web
+    IWebCalculatorController::class => function (Container $container) {
+        $redirectHandler = $container->get(IWebRedirectHandler::class);
+        $logger = $container->get(LoggerInterface::class);
+        $configManager = $container->get(IWebConfigManager::class);
+        $historyModel = $container->get(IHistoryModel::class);
+        return new WebCalculatorController($redirectHandler, $logger, $configManager, $container, $historyModel,);
+    },
+    IHistoryController::class => function (Container $container) {
+        $redirectHandler = $container->get(IWebRedirectHandler::class);
+        $logger = $container->get(LoggerInterface::class);
+        $configManager = $container->get(IWebConfigManager::class);
+        $historyView = $container->get(IHistoryView::class);
+        $historyModel = $container->get(IHistoryModel::class);
+        return new HistoryControllerWeb($redirectHandler, $logger, $configManager, $historyView, $historyModel,);
+    },
+    ICalculatorView::class => function ($container) {
+        $templateEngine = $container->get(IWebTemplateEngine::class);
+        return new CalculatorView($templateEngine);
+    },
+    IHistoryView::class => function ($container) {
+        $templateEngine = $container->get(IWebTemplateEngine::class);
+        return new HistoryView($templateEngine);
+    },
+    //Console
+    IConsoleCalculatorController::class => function (Container $container) {
+        $logger = $container->get(LoggerInterface::class);
+        return new ConsoleCalculatorController($logger,);
     },
 ];

@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers;
 
-use Engine\Controllers\BaseController;
+use Engine\Controllers\WebBaseController;
 use Engine\DTO\WebRequestDTO;
 use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
@@ -10,7 +10,7 @@ use Engine\Services\Container\Container;
 use JetBrains\PhpStorm\NoReturn;
 use Psr\Log\LoggerInterface;
 
-class CalculatorController extends BaseController implements ICalculatorController
+class WebCalculatorController extends WebBaseController implements IWebCalculatorController
 {
     private string $input = '';
     private string $result = '';

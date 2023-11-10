@@ -2,6 +2,7 @@
 
 namespace Engine\Router;
 
+use Engine\DTO\ConsoleRequestDTO;
 use Engine\IConsoleRouter;
 use Engine\Services\Container\Container;
 use Psr\Log\LoggerInterface;
@@ -28,47 +29,35 @@ class ConsoleRouter implements IConsoleRouter
         global $argv;
         $consoleInput = $argv;
 
-        $this->validateInput($consoleInput);
-        $this->processInput($consoleInput);
-    }
-
-    /**
-     * Проверка валидности ввода validateInput
-     * arr[1] есть в роутах
-     * количество аргументов соответствуют экшну'
-     * processInput
-     * достать экшн $consoleInput[1]
-     * достать аргументы после экшна array_slice($consoleInput, 2);
-     * передать в регвест
-     * передать регвест в контроллер
-     */
-
-    private function validateInput(array $consoleInput): void
-    {
         $action = $consoleInput[1] ?? '';
         $routes = $this->configManager->getRoutes();
+        $route = $routes[$action];
 
-        if (empty($routes[$action])) {
-            echo "Error! wrong action in route";
-            die;
-        }
+        $this->validateRoute($route);
+        $this->validateArgumentCount($consoleInput, $action);
 
-        $minArgCount = $this->configManager->getMinArgCount($action);
+        $controllerName = $route['controller'];
+        $controller = $this->container->get($controllerName);
+        var_dump($controller);
+        die;
+        $controller->run($request);
 
-        if (count($consoleInput) < $minArgCount) {
-            echo "Error! too few args";
+    }
+
+    private function validateRoute(array $route): void
+    {
+        if (empty($route)) {
+            echo "Ошибка! Неправильный action";
             die;
         }
     }
 
-    private function processInput(array $consoleInput): void
+    private function validateArgumentCount(array $consoleInput, string $action): void
     {
-        $command = $consoleInput[1];
-
-        if ($command === 'calculate') {
-            echo '$command === calculate';
-        } else {
-            echo '$command !== calculate';
+        $minArgCount = $this->configManager->getMinArgCount($action);
+        if (count($consoleInput) < $minArgCount) {
+            echo "Ошибка! Недостаточно аргументов";
+            die;
         }
     }
 }

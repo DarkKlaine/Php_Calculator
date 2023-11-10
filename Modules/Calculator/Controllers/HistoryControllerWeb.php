@@ -2,12 +2,12 @@
 
 namespace Modules\Calculator\Controllers;
 
-use Engine\Controllers\BaseController;
+use Engine\Controllers\WebBaseController;
 use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
 use Psr\Log\LoggerInterface;
 
-class HistoryController extends BaseController implements IHistoryController
+class HistoryControllerWeb extends WebBaseController implements IHistoryController
 {
     private IHistoryView $historyView;
     private IHistoryModel $historyModel;

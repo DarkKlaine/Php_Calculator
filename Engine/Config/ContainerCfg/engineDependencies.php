@@ -1,6 +1,6 @@
 <?php
 
-use Engine\Controllers\AuthController;
+use Engine\Controllers\AuthControllerWeb;
 use Engine\Controllers\IAccessDeniedView;
 use Engine\Controllers\ILoginView;
 use Engine\IConsoleRouter;
@@ -49,7 +49,7 @@ return [
         $accessDeniedView = $container->get(IAccessDeniedView::class);
         $auth = $container->get(IAuth::class);
         $loginView = $container->get(ILoginView::class);
-        return new AuthController($redirectHandler, $logger, $configManager, $accessDeniedView, $auth, $loginView,);
+        return new AuthControllerWeb($redirectHandler, $logger, $configManager, $accessDeniedView, $auth, $loginView,);
     },
     IAccessDeniedView::class => function ($container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);

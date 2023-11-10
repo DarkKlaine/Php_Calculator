@@ -2,7 +2,7 @@
 
 namespace Engine\Router;
 
-use Engine\Controllers\BaseController;
+use Engine\Controllers\WebBaseController;
 use Engine\DTO\WebRequestDTO;
 use Engine\IWebRouter;
 use Engine\Services\Container\Container;
@@ -47,7 +47,7 @@ class WebRouter implements IWebRouter
             }
 
             $controllerName = $route['controller'];
-            /** @var BaseController $controller */
+            /** @var WebBaseController $controller */
             $controller = $this->container->get($controllerName);
             $controller->run($request);
         } else {
