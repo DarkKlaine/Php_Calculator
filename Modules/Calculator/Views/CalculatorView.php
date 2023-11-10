@@ -1,7 +1,4 @@
 <?php
-/**
- * uses App/Views/Templates/calculator.tpl.php
- */
 
 namespace Modules\Calculator\Views;
 

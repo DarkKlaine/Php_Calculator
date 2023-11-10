@@ -18,8 +18,6 @@ class AccessDeniedView implements IAccessDeniedView
 
     public function render(): void
     {
-        $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
-
         $this->templateEngine->assignVar('title', $this->title);
 
         $this->templateEngine->setInjectTplFile($this->accessDeniedTplFile);
