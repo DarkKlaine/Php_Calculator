@@ -1,6 +1,7 @@
 .idea
 Log
 ProjectDrafts.txt
+linesAndCharactersCounter
 
 # Игнорировать все папки внутри vendor, кроме composer
 /vendor/*
