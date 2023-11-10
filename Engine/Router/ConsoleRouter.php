@@ -2,9 +2,8 @@
 
 namespace Engine\Router;
 
-use Engine\Container\Container;
 use Engine\IConsoleRouter;
-use JetBrains\PhpStorm\NoReturn;
+use Engine\Services\Container\Container;
 use Psr\Log\LoggerInterface;
 
 class ConsoleRouter implements IConsoleRouter
@@ -44,22 +43,22 @@ class ConsoleRouter implements IConsoleRouter
      * передать регвест в контроллер
      */
 
-    #[NoReturn] private function validateInput(array $consoleInput): void
+    private function validateInput(array $consoleInput): void
     {
         $action = $consoleInput[1] ?? '';
         $routes = $this->configManager->getRoutes();
 
         if (empty($routes[$action])) {
-            echo "no! action in route";
+            echo "Error! wrong action in route";
             die;
         }
 
-        if (count($consoleInput) < $this->configManager->getMinArgCount($action)) {
-            echo "no! too few args";
+        $minArgCount = $this->configManager->getMinArgCount($action);
+
+        if (count($consoleInput) < $minArgCount) {
+            echo "Error! too few args";
             die;
         }
-        echo "yes";
-        die;
     }
 
     private function processInput(array $consoleInput): void

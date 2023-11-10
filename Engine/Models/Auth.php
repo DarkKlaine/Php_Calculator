@@ -5,19 +5,19 @@ namespace Engine\Models;
 use Engine\DTO\WebRequestDTO;
 use Engine\Router\IAuth;
 use Engine\Router\IWebConfigManager;
-use Engine\Router\IRedirectHandler;
+use Engine\Router\IWebRedirectHandler;
 
 class Auth implements IAuth
 {
     private array $users;
     private IAuthSessionHandler $authSessionHandler;
-    private IRedirectHandler $redirectHandler;
+    private IWebRedirectHandler $redirectHandler;
     private IWebConfigManager $configManager;
 
 
     public function __construct(
         array               $users,
-        IRedirectHandler    $redirectHandler,
+        IWebRedirectHandler $redirectHandler,
         IAuthSessionHandler $authSessionHandler,
         IWebConfigManager   $configManager,
     )

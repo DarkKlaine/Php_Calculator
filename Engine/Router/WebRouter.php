@@ -2,10 +2,10 @@
 
 namespace Engine\Router;
 
-use Engine\Container\Container;
 use Engine\Controllers\BaseController;
 use Engine\DTO\WebRequestDTO;
 use Engine\IWebRouter;
+use Engine\Services\Container\Container;
 use Psr\Log\LoggerInterface;
 
 class WebRouter implements IWebRouter

@@ -4,7 +4,7 @@ namespace Engine\Router;
 
 use JetBrains\PhpStorm\NoReturn;
 
-class RedirectHandler implements IRedirectHandler
+class WebRedirectHandler implements IWebRedirectHandler
 {
     #[NoReturn] public static function redirect($url): void
     {

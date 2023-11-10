@@ -2,7 +2,7 @@
 
 namespace Engine;
 
-class ConsoleApp extends Application
+class ConsoleApp extends MainApp
 {
     public function run(): void
     {

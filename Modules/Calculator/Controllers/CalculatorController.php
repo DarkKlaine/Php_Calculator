@@ -2,11 +2,11 @@
 
 namespace Modules\Calculator\Controllers;
 
-use Engine\Container\Container;
 use Engine\Controllers\BaseController;
 use Engine\DTO\WebRequestDTO;
 use Engine\Router\IWebConfigManager;
-use Engine\Router\IRedirectHandler;
+use Engine\Router\IWebRedirectHandler;
+use Engine\Services\Container\Container;
 use JetBrains\PhpStorm\NoReturn;
 use Psr\Log\LoggerInterface;
 
@@ -19,11 +19,11 @@ class CalculatorController extends BaseController implements ICalculatorControll
     private IHistoryModel $historyModel;
 
     public function __construct(
-        IRedirectHandler  $redirectHandler,
-        LoggerInterface   $logger,
-        IWebConfigManager $configManager,
-        Container         $container,
-        IHistoryModel     $historyModel
+        IWebRedirectHandler $redirectHandler,
+        LoggerInterface     $logger,
+        IWebConfigManager   $configManager,
+        Container           $container,
+        IHistoryModel       $historyModel
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);

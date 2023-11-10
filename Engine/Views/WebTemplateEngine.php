@@ -2,11 +2,11 @@
 
 namespace Engine\Views;
 
-class TemplateEngine implements ITemplateEngine
+class WebTemplateEngine implements IWebTemplateEngine
 {
     protected array $vars = [];
-    private string $engineTemplatesPath = '../Config/Templates/';
-    private string $moduleTemplatesPath = '';
+    private string $engineTemplatesPath = __DIR__ . '/Templates/';
+    private string $moduleTemplatesPath = __DIR__ . '/Templates/';
     private string $injectFile;
 
     public function assignVar(string $name, mixed $value): void

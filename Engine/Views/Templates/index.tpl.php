@@ -1,9 +1,9 @@
 <?php
 /**
- * @var TemplateEngine $this
+ * @var WebTemplateEngine $this
  */
 
-use Engine\Views\TemplateEngine;
+use Engine\Views\WebTemplateEngine;
 
 ?>
 <!DOCTYPE html>

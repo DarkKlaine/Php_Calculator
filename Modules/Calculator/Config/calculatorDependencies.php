@@ -1,9 +1,9 @@
 <?php
 
-use Engine\Container\Container;
 use Engine\Router\IWebConfigManager;
-use Engine\Router\IRedirectHandler;
-use Engine\Views\ITemplateEngine;
+use Engine\Router\IWebRedirectHandler;
+use Engine\Services\Container\Container;
+use Engine\Views\IWebTemplateEngine;
 use Modules\Calculator\Controllers\CalculatorController;
 use Modules\Calculator\Controllers\HistoryController;
 use Modules\Calculator\Controllers\IAddition;
@@ -33,14 +33,14 @@ return [
         return new HistoryModel();
     },
     ICalculatorController::class => function (Container $container) {
-        $redirectHandler = $container->get(IRedirectHandler::class);
+        $redirectHandler = $container->get(IWebRedirectHandler::class);
         $logger = $container->get(LoggerInterface::class);
         $configManager = $container->get(IWebConfigManager::class);
         $historyModel = $container->get(IHistoryModel::class);
         return new CalculatorController($redirectHandler, $logger, $configManager, $container, $historyModel,);
     },
     IHistoryController::class => function (Container $container) {
-        $redirectHandler = $container->get(IRedirectHandler::class);
+        $redirectHandler = $container->get(IWebRedirectHandler::class);
         $logger = $container->get(LoggerInterface::class);
         $configManager = $container->get(IWebConfigManager::class);
         $historyView = $container->get(IHistoryView::class);
@@ -48,11 +48,11 @@ return [
         return new HistoryController($redirectHandler, $logger, $configManager, $historyView, $historyModel,);
     },
     IHistoryView::class => function ($container) {
-        $templateEngine = $container->get(ITemplateEngine::class);
+        $templateEngine = $container->get(IWebTemplateEngine::class);
         return new HistoryView($templateEngine);
     },
     ICalculatorView::class => function ($container) {
-        $templateEngine = $container->get(ITemplateEngine::class);
+        $templateEngine = $container->get(IWebTemplateEngine::class);
         return new CalculatorView($templateEngine);
     },
     IAddition::class => function ($container) {

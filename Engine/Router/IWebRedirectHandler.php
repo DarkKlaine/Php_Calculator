@@ -2,7 +2,7 @@
 
 namespace Engine\Router;
 
-interface IRedirectHandler
+interface IWebRedirectHandler
 {
     public static function redirect($url): void;
 }

@@ -2,7 +2,7 @@
 
 namespace Engine\Views;
 
-interface ITemplateEngine
+interface IWebTemplateEngine
 {
     public function assignVar(string $name, mixed $value): void;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Container;
+namespace Engine\Services\Container;
 
 use Engine\IContainer;
 use Exception;

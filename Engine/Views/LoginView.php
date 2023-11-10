@@ -9,16 +9,16 @@ class LoginView implements ILoginView
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
     private string $loginTplFile = 'login.tpl.php';
-    private ITemplateEngine $templateEngine;
+    private IWebTemplateEngine $templateEngine;
 
-    public function __construct(ITemplateEngine $templateEngine)
+    public function __construct(IWebTemplateEngine $templateEngine)
     {
         $this->templateEngine = $templateEngine;
     }
 
     public function render(): void
     {
-        $this->templateEngine->setModuleTemplatesPath('../Config/Templates/');
+        $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
         $this->templateEngine->assignVar('title', $this->title);
 

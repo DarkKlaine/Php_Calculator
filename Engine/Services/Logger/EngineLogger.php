@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Models\Logger;
+namespace Engine\Services\Logger;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;

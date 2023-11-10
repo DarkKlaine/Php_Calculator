@@ -2,7 +2,6 @@
 
 namespace Modules\Calculator\Models;
 
-use Engine\Container\Container;
 use Psr\Log\LoggerInterface;
 
 abstract class Computation

@@ -6,7 +6,7 @@ use Engine\DTO\WebRequestDTO;
 use Engine\Router\IAuth;
 use Engine\Router\IAuthController;
 use Engine\Router\IWebConfigManager;
-use Engine\Router\IRedirectHandler;
+use Engine\Router\IWebRedirectHandler;
 use Psr\Log\LoggerInterface;
 
 class AuthController extends BaseController implements IAuthController
@@ -16,12 +16,12 @@ class AuthController extends BaseController implements IAuthController
     private ILoginView $loginView;
 
     public function __construct(
-        IRedirectHandler  $redirectHandler,
-        LoggerInterface   $logger,
-        IWebConfigManager $configManager,
-        IAccessDeniedView $accessDeniedView,
-        IAuth             $auth,
-        ILoginView        $loginView,
+        IWebRedirectHandler $redirectHandler,
+        LoggerInterface     $logger,
+        IWebConfigManager   $configManager,
+        IAccessDeniedView   $accessDeniedView,
+        IAuth               $auth,
+        ILoginView          $loginView,
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);
