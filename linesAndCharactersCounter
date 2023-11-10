@@ -6,9 +6,8 @@ $directory = __DIR__;
 $linesAndCharacters = countLinesAndCharacters($directory);
 
 // Выводим результаты
-echo "Общее количество строк кода: {$linesAndCharacters['lines']}\n";
-echo "Общее количество символов: {$linesAndCharacters['characters']}\n";
-
+echo "Общее количество строк кода: " . $linesAndCharacters['lines'] . PHP_EOL;
+echo "Общее количество символов: " . $linesAndCharacters['characters'];
 /**
  * Функция для подсчета количества строк кода и символов в указанной директории и ее поддиректориях
  *
