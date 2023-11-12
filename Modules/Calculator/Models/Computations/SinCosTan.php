@@ -2,8 +2,8 @@
 
 namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\Controllers\ISinCosTan;
 use Modules\Calculator\Models\Computation;
+use Modules\Calculator\Models\ISinCosTan;
 
 class SinCosTan extends Computation implements ISinCosTan
 {

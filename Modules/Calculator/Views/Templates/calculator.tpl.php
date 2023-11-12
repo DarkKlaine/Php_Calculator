@@ -1,9 +1,9 @@
 <?php
 /**
- * @see CalculatorView
+ * @see WebCalculatorView
  */
 
-use Modules\Calculator\Views\CalculatorView;
+use Modules\Calculator\Views\WebCalculatorView;
 
 ?>
 

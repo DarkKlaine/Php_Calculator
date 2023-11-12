@@ -5,18 +5,19 @@ namespace Modules\Calculator\Controllers;
 use Engine\Controllers\WebBaseController;
 use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
+use Modules\Calculator\Models\IHistoryModel;
 use Psr\Log\LoggerInterface;
 
-class HistoryControllerWeb extends WebBaseController implements IHistoryController
+class WebHistoryController extends WebBaseController implements IWebHistoryController
 {
-    private IHistoryView $historyView;
+    private IWebHistoryView $historyView;
     private IHistoryModel $historyModel;
 
     public function __construct(
         IWebRedirectHandler $redirectHandler,
         LoggerInterface     $logger,
         IWebConfigManager   $configManager,
-        IHistoryView        $historyView,
+        IWebHistoryView     $historyView,
         IHistoryModel       $historyModel,
     )
     {
@@ -27,11 +28,11 @@ class HistoryControllerWeb extends WebBaseController implements IHistoryControll
 
     public function showGeneral(): void
     {
-        $this->historyView->render($this->historyModel->getGeneralHistoryString());
+        $this->historyView->render($this->historyModel->getGeneralHistoryString(true));
     }
 
     public function showPersonal(): void
     {
-        $this->historyView->render($this->historyModel->getSessionHistoryString());
+        $this->historyView->render($this->historyModel->getSessionHistoryString(true));
     }
 }

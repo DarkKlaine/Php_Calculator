@@ -5,22 +5,18 @@ use Engine\Router\IWebRedirectHandler;
 use Engine\Services\Container\Container;
 use Engine\Views\IWebTemplateEngine;
 use Modules\Calculator\Controllers\ConsoleCalculatorController;
-use Modules\Calculator\Controllers\HistoryControllerWeb;
-use Modules\Calculator\Controllers\IAddition;
+use Modules\Calculator\Controllers\ConsoleHistoryController;
 use Modules\Calculator\Controllers\ICalculatorModel;
-use Modules\Calculator\Controllers\ICalculatorView;
 use Modules\Calculator\Controllers\IConsoleCalculatorController;
 use Modules\Calculator\Controllers\IConsoleCalculatorView;
-use Modules\Calculator\Controllers\IDivide;
-use Modules\Calculator\Controllers\IExponentiation;
-use Modules\Calculator\Controllers\IHistoryController;
-use Modules\Calculator\Controllers\IHistoryModel;
-use Modules\Calculator\Controllers\IHistoryView;
-use Modules\Calculator\Controllers\IMultiply;
-use Modules\Calculator\Controllers\ISinCosTan;
-use Modules\Calculator\Controllers\ISubtraction;
+use Modules\Calculator\Controllers\IConsoleHistoryController;
+use Modules\Calculator\Controllers\IConsoleHistoryView;
 use Modules\Calculator\Controllers\IWebCalculatorController;
+use Modules\Calculator\Controllers\IWebCalculatorView;
+use Modules\Calculator\Controllers\IWebHistoryController;
+use Modules\Calculator\Controllers\IWebHistoryView;
 use Modules\Calculator\Controllers\WebCalculatorController;
+use Modules\Calculator\Controllers\WebHistoryController;
 use Modules\Calculator\Models\CalculatorModel;
 use Modules\Calculator\Models\Computations\Addition;
 use Modules\Calculator\Models\Computations\Divide;
@@ -29,9 +25,17 @@ use Modules\Calculator\Models\Computations\Multiply;
 use Modules\Calculator\Models\Computations\SinCosTan;
 use Modules\Calculator\Models\Computations\Subtraction;
 use Modules\Calculator\Models\HistoryModel;
-use Modules\Calculator\Views\CalculatorView;
+use Modules\Calculator\Models\IAddition;
+use Modules\Calculator\Models\IDivide;
+use Modules\Calculator\Models\IExponentiation;
+use Modules\Calculator\Models\IHistoryModel;
+use Modules\Calculator\Models\IMultiply;
+use Modules\Calculator\Models\ISinCosTan;
+use Modules\Calculator\Models\ISubtraction;
 use Modules\Calculator\Views\ConsoleCalculatorView;
-use Modules\Calculator\Views\HistoryView;
+use Modules\Calculator\Views\ConsoleHistoryView;
+use Modules\Calculator\Views\WebCalculatorView;
+use Modules\Calculator\Views\WebHistoryView;
 use Psr\Log\LoggerInterface;
 
 return [
@@ -80,24 +84,24 @@ return [
         $configManager = $container->get(IWebConfigManager::class);
         $calculatorModel = $container->get(ICalculatorModel::class);
         $historyModel = $container->get(IHistoryModel::class);
-        $calculatorView = $container->get(ICalculatorView::class);
+        $calculatorView = $container->get(IWebCalculatorView::class);
         return new WebCalculatorController($redirectHandler, $logger, $configManager, $calculatorModel, $historyModel, $calculatorView,);
     },
-    IHistoryController::class => function (Container $container) {
+    IWebHistoryController::class => function (Container $container) {
         $redirectHandler = $container->get(IWebRedirectHandler::class);
         $logger = $container->get(LoggerInterface::class);
         $configManager = $container->get(IWebConfigManager::class);
-        $historyView = $container->get(IHistoryView::class);
+        $historyView = $container->get(IWebHistoryView::class);
         $historyModel = $container->get(IHistoryModel::class);
-        return new HistoryControllerWeb($redirectHandler, $logger, $configManager, $historyView, $historyModel,);
+        return new WebHistoryController($redirectHandler, $logger, $configManager, $historyView, $historyModel,);
     },
-    ICalculatorView::class => function (Container $container) {
+    IWebCalculatorView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
-        return new CalculatorView($templateEngine);
+        return new WebCalculatorView($templateEngine);
     },
-    IHistoryView::class => function (Container $container) {
+    IWebHistoryView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
-        return new HistoryView($templateEngine);
+        return new WebHistoryView($templateEngine);
     },
     //Console
     IConsoleCalculatorController::class => function (Container $container) {
@@ -107,7 +111,16 @@ return [
         $consoleCalculatorView = $container->get(IConsoleCalculatorView::class);
         return new ConsoleCalculatorController($logger, $calculatorModel, $historyModel, $consoleCalculatorView);
     },
+    IConsoleHistoryController::class => function (Container $container) {
+        $logger = $container->get(LoggerInterface::class);
+        $historyModel = $container->get(IHistoryModel::class);
+        $historyView = $container->get(IConsoleHistoryView::class);
+        return new ConsoleHistoryController($logger, $historyModel, $historyView);
+    },
     IConsoleCalculatorView::class => function () {
         return new ConsoleCalculatorView();
+    },
+    IConsoleHistoryView::class => function () {
+        return new ConsoleHistoryView();
     },
 ];

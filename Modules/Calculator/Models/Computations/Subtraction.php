@@ -2,8 +2,8 @@
 
 namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\Controllers\ISubtraction;
 use Modules\Calculator\Models\Computation;
+use Modules\Calculator\Models\ISubtraction;
 
 class Subtraction extends Computation implements ISubtraction
 {

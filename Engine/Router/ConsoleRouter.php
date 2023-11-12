@@ -31,13 +31,13 @@ class ConsoleRouter implements IConsoleRouter
 
         $action = $consoleInput[1] ?? '';
         $routes = $this->configManager->getRoutes();
-        $route = $routes[$action];
+        $route = $routes[$action] ?? [];
 
         $this->validateRoute($route);
         $this->validateArgumentCount($consoleInput, $action);
 
         $request = new ConsoleRequestDTO(
-            $action,
+            $route['action'] ?? '',
             array_slice($consoleInput, 2),
         );
 

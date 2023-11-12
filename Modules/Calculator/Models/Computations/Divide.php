@@ -2,8 +2,8 @@
 
 namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\Controllers\IDivide;
 use Modules\Calculator\Models\Computation;
+use Modules\Calculator\Models\IDivide;
 
 class Divide extends Computation implements IDivide
 {

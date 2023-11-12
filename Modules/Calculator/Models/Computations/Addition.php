@@ -2,8 +2,8 @@
 
 namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\Controllers\IAddition;
 use Modules\Calculator\Models\Computation;
+use Modules\Calculator\Models\IAddition;
 
 class Addition extends Computation implements IAddition
 {

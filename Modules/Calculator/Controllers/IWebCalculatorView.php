@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers;
 
-interface ICalculatorView
+interface IWebCalculatorView
 {
     public function render(string $input, string $result): void;
 }

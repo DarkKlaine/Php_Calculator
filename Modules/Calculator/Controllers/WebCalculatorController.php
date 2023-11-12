@@ -6,13 +6,14 @@ use Engine\Controllers\WebBaseController;
 use Engine\DTO\WebRequestDTO;
 use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
+use Modules\Calculator\Models\IHistoryModel;
 use Psr\Log\LoggerInterface;
 
 class WebCalculatorController extends WebBaseController implements IWebCalculatorController
 {
     private IHistoryModel $historyModel;
     private ICalculatorModel $calculatorModel;
-    private ICalculatorView $calculatorView;
+    private IWebCalculatorView $calculatorView;
 
     public function __construct(
         IWebRedirectHandler $redirectHandler,
@@ -20,7 +21,7 @@ class WebCalculatorController extends WebBaseController implements IWebCalculato
         IWebConfigManager   $configManager,
         ICalculatorModel    $calculatorModel,
         IHistoryModel       $historyModel,
-        ICalculatorView     $calculatorView,
+        IWebCalculatorView  $calculatorView,
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
+namespace Modules\Calculator\Models;
 
 interface ISubtraction
 {

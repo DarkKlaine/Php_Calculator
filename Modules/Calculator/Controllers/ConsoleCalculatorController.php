@@ -5,6 +5,7 @@ namespace Modules\Calculator\Controllers;
 use Engine\Controllers\ConsoleBaseController;
 use Engine\DTO\ConsoleRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
+use Modules\Calculator\Models\IHistoryModel;
 use Psr\Log\LoggerInterface;
 
 class ConsoleCalculatorController extends ConsoleBaseController implements IConsoleCalculatorController

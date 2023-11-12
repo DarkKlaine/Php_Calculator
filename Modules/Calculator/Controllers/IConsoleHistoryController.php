@@ -2,7 +2,9 @@
 
 namespace Modules\Calculator\Controllers;
 
-class IConsoleHistoryController
-{
+use Engine\DTO\ConsoleRequestDTO;
 
+interface IConsoleHistoryController
+{
+    public function showHistory(): void;
 }

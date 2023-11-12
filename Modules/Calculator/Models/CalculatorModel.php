@@ -2,13 +2,7 @@
 
 namespace Modules\Calculator\Models;
 
-use Modules\Calculator\Controllers\IAddition;
 use Modules\Calculator\Controllers\ICalculatorModel;
-use Modules\Calculator\Controllers\IDivide;
-use Modules\Calculator\Controllers\IExponentiation;
-use Modules\Calculator\Controllers\IMultiply;
-use Modules\Calculator\Controllers\ISinCosTan;
-use Modules\Calculator\Controllers\ISubtraction;
 use Psr\Log\LoggerInterface;
 
 class CalculatorModel implements ICalculatorModel

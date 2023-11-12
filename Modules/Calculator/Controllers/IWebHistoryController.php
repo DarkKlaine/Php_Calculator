@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers;
 
-interface IHistoryController
+interface IWebHistoryController
 {
     public function showGeneral(): void;
 

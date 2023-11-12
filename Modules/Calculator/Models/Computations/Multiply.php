@@ -2,8 +2,8 @@
 
 namespace Modules\Calculator\Models\Computations;
 
-use Modules\Calculator\Controllers\IMultiply;
 use Modules\Calculator\Models\Computation;
+use Modules\Calculator\Models\IMultiply;
 
 class Multiply extends Computation implements IMultiply
 {

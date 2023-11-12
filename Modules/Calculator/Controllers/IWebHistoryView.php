@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers;
 
-interface IHistoryView
+interface IWebHistoryView
 {
     public function render(string $history): void;
 }

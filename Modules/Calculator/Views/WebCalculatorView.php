@@ -1,34 +1,33 @@
 <?php
-/**
- * uses App/Views/Templates/history.tpl.php
- */
 
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\IHistoryView;
+use Modules\Calculator\Controllers\IWebCalculatorView;
 
-class HistoryView implements IHistoryView
+class WebCalculatorView implements IWebCalculatorView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
-    private string $historyTplFile = 'history.tpl.php';
+    private string $calculatorTplFile = 'calculator.tpl.php';
+
     private IWebTemplateEngine $templateEngine;
 
     public function __construct(IWebTemplateEngine $templateEngine)
     {
         $this->templateEngine = $templateEngine;
     }
-
-    public function render(string $history): void
+    public function render(string $input, string $result): void
     {
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->assignVar('history', $history);
+        $this->templateEngine->assignVar('input', $input);
 
-        $this->templateEngine->setInjectTplFile($this->historyTplFile);
+        $this->templateEngine->assignVar('result', $result);
+
+        $this->templateEngine->setInjectTplFile($this->calculatorTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }

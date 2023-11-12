@@ -2,8 +2,6 @@
 
 namespace Modules\Calculator\Models;
 
-use Modules\Calculator\Controllers\IHistoryModel;
-
 class HistoryModel implements IHistoryModel
 {
     private string $logDir = __DIR__ . '/../../../Log';
@@ -89,27 +87,31 @@ class HistoryModel implements IHistoryModel
         $_SESSION['history'] = $logArray;
     }
 
-    public function getGeneralHistoryString(): string
+    public function getGeneralHistoryString(bool $isForWeb): string
+    {
+        $logArray = file($this->logFile) ?? [];
+        return $this->generateHistoryString($logArray, $isForWeb);
+    }
+
+    private function generateHistoryString(array $logArray, bool $isForWeb): string
     {
         $historyString = '';
-        if (file_exists($this->logFile)) {
-            $logArray = file($this->logFile);
-            for ($i = 0; $i < count($logArray); $i++) {
-                $historyString .= str_replace(' ', '&nbsp', $logArray[$i]) . '<br>';
-            }
+
+        for ($i = 0; $i < count($logArray); $i++) {
+            $historyString .= $logArray[$i];
         }
+
+        if ($isForWeb) {
+            $historyString = str_replace(' ', '&nbsp', $historyString);
+            $historyString = str_replace(PHP_EOL, '<br>', $historyString);
+        }
+
         return $historyString;
     }
 
-    public function getSessionHistoryString(): string
+    public function getSessionHistoryString(bool $isForWeb): string
     {
-        $historyString = '';
-        if (isset($_SESSION['history'])) {
-            $logArray = $_SESSION['history'];
-            for ($i = 0; $i < count($logArray); $i++) {
-                $historyString .= str_replace(' ', '&nbsp', $logArray[$i]) . '<br>';
-            }
-        }
-        return $historyString;
+        $logArray = $_SESSION['history'] ?? [];
+        return $this->generateHistoryString($logArray, $isForWeb);
     }
 }
