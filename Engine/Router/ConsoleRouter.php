@@ -36,10 +36,13 @@ class ConsoleRouter implements IConsoleRouter
         $this->validateRoute($route);
         $this->validateArgumentCount($consoleInput, $action);
 
+        $request = new ConsoleRequestDTO(
+            $action,
+            array_slice($consoleInput, 2),
+        );
+
         $controllerName = $route['controller'];
         $controller = $this->container->get($controllerName);
-        var_dump($controller);
-        die;
         $controller->run($request);
 
     }

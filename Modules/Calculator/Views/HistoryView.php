@@ -20,7 +20,7 @@ class HistoryView implements IHistoryView
         $this->templateEngine = $templateEngine;
     }
 
-    public function render($history): void
+    public function render(string $history): void
     {
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 

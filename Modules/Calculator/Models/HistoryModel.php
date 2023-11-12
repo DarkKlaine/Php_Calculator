@@ -6,8 +6,8 @@ use Modules\Calculator\Controllers\IHistoryModel;
 
 class HistoryModel implements IHistoryModel
 {
-    private string $logDir = '../Log';
-    private string $logFile = '../Log/History.Log';
+    private string $logDir = __DIR__ . '/../../../Log';
+    private string $logFile = __DIR__ . '/../../../Log/History.Log';
     private int $maxLogSize = 10;
 
     public function addToHistory(string $input, string $result, bool $needSessionHistory): void
@@ -26,7 +26,10 @@ class HistoryModel implements IHistoryModel
 
     private function addToGlobalHistory(string $stringForLogging): void
     {
-        mkdir($this->logDir);
+        if (is_dir($this->logDir) === false) {
+            mkdir($this->logDir);
+        }
+
         if (file_exists($this->logFile)) {
             $logArray = file($this->logFile);
             $logArray = $this->trimToMaxSize($logArray);

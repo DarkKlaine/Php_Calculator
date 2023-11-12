@@ -6,29 +6,27 @@ use Engine\Controllers\WebBaseController;
 use Engine\DTO\WebRequestDTO;
 use Engine\Router\IWebConfigManager;
 use Engine\Router\IWebRedirectHandler;
-use Engine\Services\Container\Container;
-use JetBrains\PhpStorm\NoReturn;
 use Psr\Log\LoggerInterface;
 
 class WebCalculatorController extends WebBaseController implements IWebCalculatorController
 {
-    private string $input = '';
-    private string $result = '';
-    private string $inputPattern = '/^-?\d+(\.\d+)? (([+\-\/*]|pow) -?\d+(\.\d+)?|sin|cos|tan)$/';
-    private Container $container;
     private IHistoryModel $historyModel;
+    private ICalculatorModel $calculatorModel;
+    private ICalculatorView $calculatorView;
 
     public function __construct(
         IWebRedirectHandler $redirectHandler,
         LoggerInterface     $logger,
         IWebConfigManager   $configManager,
-        Container           $container,
-        IHistoryModel       $historyModel
+        ICalculatorModel    $calculatorModel,
+        IHistoryModel       $historyModel,
+        ICalculatorView     $calculatorView,
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);
-        $this->container = $container;
         $this->historyModel = $historyModel;
+        $this->calculatorModel = $calculatorModel;
+        $this->calculatorView = $calculatorView;
     }
 
     public function showForm(WebRequestDTO $request): void
@@ -38,50 +36,26 @@ class WebCalculatorController extends WebBaseController implements IWebCalculato
         $input = $get['input'] ?? '';
         $result = $get['result'] ?? '';
 
-        $view = $this->container->get(ICalculatorView::class);
-        $view->render($input, $result);
+        $this->calculatorView->render($input, $result);
     }
 
-    #[NoReturn] public function calculate(WebRequestDTO $request): void
+    public function calculate(WebRequestDTO $request): void
     {
         $post = $request->getPost();
-        if (isset($post['userInput'])) {
-            $this->input = $post['userInput'];
-            $this->countIt();
+        $inputDataString = $post['userInput'] ?? '';
+
+        if ($inputDataString === '') {
+            return;
         }
-        $encodedInput = urlencode($this->input);
-        $encodedResult = urlencode($this->result);
+
+        $inputData = explode(' ', $inputDataString);
+
+        $result = $this->calculatorModel->countIt($inputData);
+
+        $this->historyModel->addToHistory($inputDataString, $result, true);
+
+        $encodedInput = urlencode($inputDataString);
+        $encodedResult = urlencode($result);
         $this->redirectHandler->redirect(sprintf("/?input=%s&result=%s", $encodedInput, $encodedResult));
-    }
-
-    private function countIt(): void
-    {
-        if (preg_match($this->inputPattern, $this->input)) {
-            [$value1, $operator, $value2] = explode(' ', $this->input);
-
-            $operations = [
-                '+' => IAddition::class,
-                '-' => ISubtraction::class,
-                '*' => IMultiply::class,
-                '/' => IDivide::class,
-                'pow' => IExponentiation::class,
-                'sin' => ISinCosTan::class,
-                'cos' => ISinCosTan::class,
-                'tan' => ISinCosTan::class,
-            ];
-
-            if (empty($operations[$operator])) {
-                $this->result = "Error. Incorrect operator.";
-                $this->logger->error('Ошибка. Неправильный математический оператор.');
-            } else {
-                $className = $operations[$operator];
-                $operation = $this->container->get($className);
-                $this->result = $operation->getResult($value1, $operator, $value2 ?? '');
-            }
-        } else {
-            $this->result = "Error. Wrong input! Try again.";
-            $this->logger->error("Неправильный ввод: $this->input");
-        }
-        $this->historyModel->addToHistory($this->input, $this->result, true);
     }
 }

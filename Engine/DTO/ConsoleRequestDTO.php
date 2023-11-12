@@ -7,7 +7,7 @@ class ConsoleRequestDTO
     private array $inputData;
     private string $action;
 
-    public function __construct(array $inputData, string $action)
+    public function __construct(string $action, array $inputData,)
     {
         $this->action = $action;
         $this->inputData = $inputData;

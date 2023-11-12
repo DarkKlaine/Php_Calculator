@@ -8,7 +8,7 @@ use Stringable;
 
 class EngineLogger implements LoggerInterface
 {
-    protected string $logFile = '../Log/Calculator.Log';
+    protected string $logFile = __DIR__ . '/../../../Log/Calculator.Log';
 
     public function emergency(Stringable|string $message, array $context = []): void
     {
