@@ -50,8 +50,9 @@ class ConsoleRouter implements IConsoleRouter
     private function validateRoute(array $route): void
     {
         if (empty($route)) {
+            $this->logger->error("Ошибка! Неправильный action");
             echo "Ошибка! Неправильный action";
-            die;
+            exit;
         }
     }
 
@@ -59,8 +60,9 @@ class ConsoleRouter implements IConsoleRouter
     {
         $minArgCount = $this->configManager->getMinArgCount($action);
         if (count($consoleInput) < $minArgCount) {
+            $this->logger->error("Ошибка! Недостаточно аргументов");
             echo "Ошибка! Недостаточно аргументов";
-            die;
+            exit;
         }
     }
 }
