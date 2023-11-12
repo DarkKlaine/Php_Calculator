@@ -86,12 +86,12 @@ class CalculatorModel implements ICalculatorModel
         $patternOperators = '/^(?:[+\-\/*]|pow|sin|cos|tan)$/';
 
         // Проверка первого элемента массива
-        if (!preg_match($patternValues, $inputData[0])) {
+        if (preg_match($patternValues, $inputData[0]) === 0) {
             return false;
         }
 
         // Проверка второго элемента массива
-        if (!preg_match($patternOperators, $inputData[1])) {
+        if (preg_match($patternOperators, $inputData[1]) === 0) {
             return false;
         }
 
@@ -101,7 +101,7 @@ class CalculatorModel implements ICalculatorModel
         }
 
         // Проверка третьего элемента массива
-        if (!preg_match($patternValues, $inputData[2])) {
+        if (preg_match($patternValues, $inputData[2]) === 0) {
             return false;
         }
 

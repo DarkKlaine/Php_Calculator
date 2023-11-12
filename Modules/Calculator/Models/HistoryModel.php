@@ -30,6 +30,7 @@ class HistoryModel implements IHistoryModel
             mkdir($this->logDir);
         }
 
+        $logArray = [];
         if (file_exists($this->logFile)) {
             $logArray = file($this->logFile);
             $logArray = $this->trimToMaxSize($logArray);
@@ -76,6 +77,7 @@ class HistoryModel implements IHistoryModel
 
     private function addToSessionHistory(string $stringForLogging): void
     {
+        $logArray = [];
         if (isset($_SESSION['history'])) {
             $logArray = $_SESSION['history'];
             $logArray = $this->trimToMaxSize($logArray);
