@@ -14,9 +14,12 @@ class HistoryModel implements IHistoryModel
             return;
         }
 
+        // Формирование строки для логирования
         $stringForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . PHP_EOL;
 
+        // Добавление строки в глобальный лог
         $this->addToGlobalHistory($stringForLogging);
+        // Добавление строки в лог сессии (если необходимо)
         if ($needSessionHistory) {
             $this->addToSessionHistory($stringForLogging);
         }
@@ -28,18 +31,18 @@ class HistoryModel implements IHistoryModel
             mkdir($this->logDir);
         }
 
-        $logArray = [];
-        if (file_exists($this->logFile)) {
-            $logArray = file($this->logFile);
-            $logArray = $this->trimToMaxSize($logArray);
-        }
+        $logArray = file($this->logFile) ?? [];
 
+        $logArray = $this->processLogArray($logArray, $stringForLogging);
+
+        file_put_contents($this->logFile, implode("", $logArray));
+    }
+
+    private function processLogArray(array $logArray, string $stringForLogging): array
+    {
+        $logArray = $this->trimToMaxSize($logArray);
         $logArray[] = $stringForLogging;
-        $logArray = $this->numberingAndPadding($logArray);
-
-        $file = fopen($this->logFile, 'w');
-        fwrite($file, implode("", $logArray));
-        fclose($file);
+        return $this->numberingAndPadding($logArray);
     }
 
     private function trimToMaxSize(array $logArray): array
@@ -75,14 +78,9 @@ class HistoryModel implements IHistoryModel
 
     private function addToSessionHistory(string $stringForLogging): void
     {
-        $logArray = [];
-        if (isset($_SESSION['history'])) {
-            $logArray = $_SESSION['history'];
-            $logArray = $this->trimToMaxSize($logArray);
-        }
+        $logArray = $_SESSION['history'] ?? [];
 
-        $logArray[] = $stringForLogging;
-        $logArray = $this->numberingAndPadding($logArray);
+        $logArray = $this->processLogArray($logArray, $stringForLogging);
 
         $_SESSION['history'] = $logArray;
     }
