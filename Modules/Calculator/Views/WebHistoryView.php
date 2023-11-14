@@ -6,7 +6,7 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\IWebHistoryView;
+use Modules\Calculator\Controllers\WebControllers\IWebHistoryView;
 
 class WebHistoryView implements IWebHistoryView
 {

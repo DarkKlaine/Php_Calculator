@@ -1,8 +1,8 @@
 <?php
 
-use Engine\Router\IAuthController;
-use Modules\Calculator\Controllers\IWebCalculatorController;
-use Modules\Calculator\Controllers\IWebHistoryController;
+use Engine\Router\WebRouter\IAuthController;
+use Modules\Calculator\Controllers\WebControllers\IWebCalculatorController;
+use Modules\Calculator\Controllers\WebControllers\IWebHistoryController;
 
 return [
     '/' => ['controller' => IWebCalculatorController::class, 'action' => 'showForm'],

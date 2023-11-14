@@ -3,7 +3,7 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\IWebCalculatorView;
+use Modules\Calculator\Controllers\WebControllers\IWebCalculatorView;
 
 class WebCalculatorView implements IWebCalculatorView
 {

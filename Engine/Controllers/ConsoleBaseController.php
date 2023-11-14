@@ -2,10 +2,10 @@
 
 namespace Engine\Controllers;
 
-use Engine\DTO\ConsoleRequestDTO;
+use Engine\Router\ConsoleRouter\ConsoleRequestDTO;
 use Psr\Log\LoggerInterface;
 
-class ConsoleBaseController
+abstract class ConsoleBaseController
 {
     protected LoggerInterface $logger;
 

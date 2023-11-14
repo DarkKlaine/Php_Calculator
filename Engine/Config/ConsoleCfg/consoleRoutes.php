@@ -1,7 +1,7 @@
 <?php
 
-use Modules\Calculator\Controllers\IConsoleCalculatorController;
-use Modules\Calculator\Controllers\IConsoleHistoryController;
+use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorController;
+use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryController;
 
 return [
     'calculate' => ['controller' => IConsoleCalculatorController::class, 'action' => 'calculate', 'minArgs' => 2],

@@ -2,12 +2,12 @@
 
 namespace Engine\Controllers;
 
-use Engine\DTO\WebRequestDTO;
-use Engine\Router\IWebConfigManager;
-use Engine\Router\IWebRedirectHandler;
+use Engine\Router\WebRouter\IWebConfigManager;
+use Engine\Router\WebRouter\IWebRedirectHandler;
+use Engine\Router\WebRouter\WebRequestDTO;
 use Psr\Log\LoggerInterface;
 
-class WebBaseController
+abstract class WebBaseController
 {
     protected IWebRedirectHandler $redirectHandler;
     protected LoggerInterface $logger;
@@ -31,7 +31,6 @@ class WebBaseController
         if (method_exists($this, $action)) {
             $this->$action($request);
         } else {
-
             $this->logger->error("Ошибка в WebBaseController. Неправильный 'action' в webRoutes.php.");
             $this->redirectHandler->redirect($this->configManager->getHomeUrl());
         }

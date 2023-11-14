@@ -2,7 +2,7 @@
 
 namespace Engine\Services;
 
-use Engine\Router\IConsoleConfigManager;
+use Engine\Router\ConsoleRouter\IConsoleConfigManager;
 
 class ConsoleConfigManager implements IConsoleConfigManager
 {

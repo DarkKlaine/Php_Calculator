@@ -2,7 +2,7 @@
 
 namespace Engine\Services;
 
-use Engine\Router\IWebConfigManager;
+use Engine\Router\WebRouter\IWebConfigManager;
 
 class WebConfigManager implements IWebConfigManager
 {
