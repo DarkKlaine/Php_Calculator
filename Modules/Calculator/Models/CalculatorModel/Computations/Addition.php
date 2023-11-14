@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Calculator\Models\Computations;
+namespace Modules\Calculator\Models\CalculatorModel\Computations;
 
-use Modules\Calculator\Models\Computation;
-use Modules\Calculator\Models\IAddition;
+use Modules\Calculator\Models\CalculatorModel\Computation;
+use Modules\Calculator\Models\CalculatorModel\IAddition;
 
 class Addition extends Computation implements IAddition
 {
