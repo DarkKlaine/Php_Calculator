@@ -1,29 +1,30 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
+namespace Modules\Calculator\Controllers\ConsoleControllers;
 
 use Engine\Controllers\ConsoleBaseController;
-use Engine\DTO\ConsoleRequestDTO;
+use Engine\Router\ConsoleRouter\ConsoleRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
-use Modules\Calculator\Models\IHistoryModel;
+use Modules\Calculator\Controllers\ICalculatorModel;
+use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;
 use Psr\Log\LoggerInterface;
 
 class ConsoleCalculatorController extends ConsoleBaseController implements IConsoleCalculatorController
 {
     private ICalculatorModel $calculatorModel;
-    private IHistoryModel $historyModel;
+    private IHistoryDecorator $consoleHistoryModel;
     private IConsoleCalculatorView $consoleCalculatorView;
 
     public function __construct(
-        LoggerInterface $logger,
-        ICalculatorModel $calculatorModel,
-        IHistoryModel $historyModel,
+        LoggerInterface        $logger,
+        ICalculatorModel       $calculatorModel,
+        IHistoryDecorator      $consoleHistoryDecorator,
         IConsoleCalculatorView $consoleCalculatorView,
     )
     {
         parent::__construct($logger);
         $this->calculatorModel = $calculatorModel;
-        $this->historyModel = $historyModel;
+        $this->consoleHistoryModel = $consoleHistoryDecorator;
         $this->consoleCalculatorView = $consoleCalculatorView;
     }
 
@@ -32,7 +33,7 @@ class ConsoleCalculatorController extends ConsoleBaseController implements ICons
         $inputData = $request->getInputData();
         $result = $this->calculatorModel->countIt($inputData);
         $inputDataToString = implode(' ', $inputData);
-        $this->historyModel->addToHistory($inputDataToString, $result, false);
+        $this->consoleHistoryModel->addToHistory($inputDataToString, $result);
         $this->consoleCalculatorView->display($inputDataToString, $result);
     }
 }

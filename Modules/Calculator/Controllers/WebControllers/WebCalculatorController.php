@@ -1,17 +1,18 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
+namespace Modules\Calculator\Controllers\WebControllers;
 
 use Engine\Controllers\WebBaseController;
-use Engine\DTO\WebRequestDTO;
-use Engine\Router\IWebConfigManager;
-use Engine\Router\IWebRedirectHandler;
-use Modules\Calculator\Models\IHistoryModel;
+use Engine\Router\WebRouter\IWebConfigManager;
+use Engine\Router\WebRouter\IWebRedirectHandler;
+use Engine\Router\WebRouter\WebRequestDTO;
+use Modules\Calculator\Controllers\ICalculatorModel;
+use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;
 use Psr\Log\LoggerInterface;
 
 class WebCalculatorController extends WebBaseController implements IWebCalculatorController
 {
-    private IHistoryModel $historyModel;
+    private IHistoryDecorator $webHistoryModel;
     private ICalculatorModel $calculatorModel;
     private IWebCalculatorView $calculatorView;
 
@@ -20,12 +21,12 @@ class WebCalculatorController extends WebBaseController implements IWebCalculato
         LoggerInterface     $logger,
         IWebConfigManager   $configManager,
         ICalculatorModel    $calculatorModel,
-        IHistoryModel       $historyModel,
+        IHistoryDecorator   $webHistoryDecorator,
         IWebCalculatorView  $calculatorView,
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);
-        $this->historyModel = $historyModel;
+        $this->webHistoryModel = $webHistoryDecorator;
         $this->calculatorModel = $calculatorModel;
         $this->calculatorView = $calculatorView;
     }
@@ -53,7 +54,7 @@ class WebCalculatorController extends WebBaseController implements IWebCalculato
 
         $result = $this->calculatorModel->countIt($inputData);
 
-        $this->historyModel->addToHistory($inputDataString, $result, true);
+        $this->webHistoryModel->addToHistory($inputDataString, $result);
 
         $encodedInput = urlencode($inputDataString);
         $encodedResult = urlencode($result);
