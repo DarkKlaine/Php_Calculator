@@ -2,26 +2,31 @@
 
 namespace Engine\Services\Container;
 
-use Engine\IContainer;
 use Exception;
+use Psr\Container\ContainerInterface;
 
-class Container implements IContainer
+class Container implements ContainerInterface
 {
-    private array $dependencies = [];
+    private array $dependencies;
 
-    public function set(string $className, \Closure $closure): void
+    public function __construct(array $dependencies)
     {
-        $this->dependencies[$className] = $closure;
+        $this->dependencies = $dependencies;
     }
 
     /**
      * @throws Exception
      */
-    public function get(string $className): object
+    public function get(string $id): object
     {
-        if (isset($this->dependencies[$className])) {
-            return $this->dependencies[$className]($this);
+        if ($this->has($id)) {
+            return $this->dependencies[$id]($this);
         }
-        throw new Exception("Зависимость '$className' не найдена в контейнере.");
+        throw new Exception("Зависимость '$id' не найдена в контейнере.");
+    }
+
+    public function has(string $id): bool
+    {
+        return isset($this->dependencies[$id]);
     }
 }
