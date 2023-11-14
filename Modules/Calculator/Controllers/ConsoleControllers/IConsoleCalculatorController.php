@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
+namespace Modules\Calculator\Controllers\ConsoleControllers;
 
-use Engine\DTO\ConsoleRequestDTO;
+use Engine\Router\ConsoleRouter\ConsoleRequestDTO;
 
 interface IConsoleCalculatorController
 {

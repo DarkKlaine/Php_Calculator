@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Calculator\Models;
+namespace Modules\Calculator\Models\CalculatorModel;
 
 use Psr\Log\LoggerInterface;
 

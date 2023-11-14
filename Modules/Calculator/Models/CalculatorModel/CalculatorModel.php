@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Calculator\Models;
+namespace Modules\Calculator\Models\CalculatorModel;
 
 use Modules\Calculator\Controllers\ICalculatorModel;
 use Psr\Log\LoggerInterface;
@@ -42,42 +42,47 @@ class CalculatorModel implements ICalculatorModel
             $message = "Неправильный ввод, попробуйте снова";
             $this->logger->error($message);
             return $message;
-        } else {
-            // Безопасно разбираю входные данные на переменные
-            $value1 = $inputData[0] ?? '';
-            $operator = $inputData[1] ?? '';
-            $value2 = $inputData[2] ?? '';
-
-            // Массив с операциями
-            $operations = [
-                '+' => $this->addition,
-                '-' => $this->subtraction,
-                '*' => $this->multiply,
-                '/' => $this->divide,
-                'pow' => $this->exponentiation,
-                'sin' => $this->sinCosTan,
-                'cos' => $this->sinCosTan,
-                'tan' => $this->sinCosTan,
-            ];
-
-            // Получение класса операции
-            $operationClass = $operations[$operator] ?? null;
-
-            // Если класс найден, вызываю getResult()
-            if ($operationClass !== null) {
-                return $operationClass->getResult($value1, $operator, $value2);
-            } else {
-                $message = "Неправильный оператор: " . $operator;
-                $this->logger->error($message);
-                return $message;
-            }
         }
+
+        // Безопасно разбираю входные данные на переменные
+        $value1 = $inputData[0] ?? '';
+        $operator = $inputData[1] ?? '';
+        $value2 = $inputData[2] ?? '';
+
+        // Массив с операциями
+        $operations = [
+            '+' => $this->addition,
+            '-' => $this->subtraction,
+            '*' => $this->multiply,
+            '/' => $this->divide,
+            'pow' => $this->exponentiation,
+            'sin' => $this->sinCosTan,
+            'cos' => $this->sinCosTan,
+            'tan' => $this->sinCosTan,
+        ];
+
+        // Получение класса операции
+        $operationClass = $operations[$operator] ?? null;
+
+        // Если класс найден, вызываю getResult()
+        if ($operationClass !== null) {
+            return $operationClass->getResult($value1, $operator, $value2);
+        }
+
+        $message = "Неправильный оператор: " . $operator;
+        $this->logger->error($message);
+        return $message;
     }
 
     private function isValidInput(array $inputData): bool
     {
         $patternValues = '/^-?\d+(\.\d+)?$/';
         $patternOperators = '/^(?:[+\-\/*]|pow|sin|cos|tan)$/';
+
+        // Проверка на количество аргументов в массиве
+        if (count($inputData) < 2) {
+            return false;
+        }
 
         // Проверка первого элемента массива
         if (preg_match($patternValues, $inputData[0]) === 0) {

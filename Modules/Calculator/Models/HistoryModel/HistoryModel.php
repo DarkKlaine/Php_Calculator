@@ -1,11 +1,13 @@
 <?php
 
-namespace Modules\Calculator\Models;
+namespace Modules\Calculator\Models\HistoryModel;
+
+use Modules\Calculator\Controllers\IHistoryModel;
 
 class HistoryModel implements IHistoryModel
 {
-    private string $logDir = __DIR__ . '/../../../Log';
-    private string $logFile = __DIR__ . '/../../../Log/History.Log';
+    private string $logDir = __DIR__ . '/../../../../Log';
+    private string $logFile = __DIR__ . '/../../../../Log/History.Log';
     private int $maxLogSize = 10;
 
     public function addToHistory(string $input, string $result, bool $needSessionHistory): void

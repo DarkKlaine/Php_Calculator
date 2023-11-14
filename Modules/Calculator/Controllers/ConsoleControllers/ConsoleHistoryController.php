@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
+namespace Modules\Calculator\Controllers\ConsoleControllers;
 
 use Engine\Controllers\ConsoleBaseController;
-use Modules\Calculator\Models\IHistoryModel;
+use Modules\Calculator\Controllers\IHistoryModel;
 use Psr\Log\LoggerInterface;
 
 class ConsoleHistoryController extends ConsoleBaseController implements IConsoleHistoryController
@@ -14,11 +14,11 @@ class ConsoleHistoryController extends ConsoleBaseController implements IConsole
     public function __construct(
         LoggerInterface     $logger,
         IHistoryModel       $historyModel,
-        IConsoleHistoryView $historyView,
+        IConsoleHistoryView $consoleHistoryView,
     )
     {
         parent::__construct($logger);
-        $this->historyView = $historyView;
+        $this->historyView = $consoleHistoryView;
         $this->historyModel = $historyModel;
     }
 

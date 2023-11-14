@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
+namespace Modules\Calculator\Controllers\WebControllers;
 
-use Engine\DTO\WebRequestDTO;
+use Engine\Router\WebRouter\WebRequestDTO;
 
 interface IWebCalculatorController
 {

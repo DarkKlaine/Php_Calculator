@@ -1,16 +1,15 @@
 <?php
 
-namespace Engine\Router;
+namespace Engine\Router\ConsoleRouter;
 
-use Engine\DTO\ConsoleRequestDTO;
+use Engine\Controllers\ConsoleBaseController;
 use Engine\IConsoleRouter;
+use Engine\Router\AbstractRouter;
 use Engine\Services\Container\Container;
 use Psr\Log\LoggerInterface;
 
-class ConsoleRouter implements IConsoleRouter
+class ConsoleRouter extends AbstractRouter implements IConsoleRouter
 {
-    private LoggerInterface $logger;
-    private Container $container;
     private IConsoleConfigManager $configManager;
 
     public function __construct(
@@ -19,9 +18,8 @@ class ConsoleRouter implements IConsoleRouter
         Container         $container,
     )
     {
-        $this->logger = $logger;
+        parent::__construct($logger, $container);
         $this->configManager = $configManager;
-        $this->container = $container;
     }
 
     public function handleRequest(): void
@@ -29,12 +27,11 @@ class ConsoleRouter implements IConsoleRouter
         global $argv;
         $consoleInput = $argv;
 
-        $action = $consoleInput[1] ?? '';
+        $command = $consoleInput[1] ?? '';
         $routes = $this->configManager->getRoutes();
-        $route = $routes[$action] ?? [];
+        $route = $routes[$command] ?? [];
 
         $this->validateRoute($route);
-        $this->validateArgumentCount($consoleInput, $action);
 
         $request = new ConsoleRequestDTO(
             $route['action'] ?? '',
@@ -42,9 +39,9 @@ class ConsoleRouter implements IConsoleRouter
         );
 
         $controllerName = $route['controller'];
+        /** @var ConsoleBaseController $controller */
         $controller = $this->container->get($controllerName);
         $controller->run($request);
-
     }
 
     private function validateRoute(array $route): void
@@ -52,16 +49,6 @@ class ConsoleRouter implements IConsoleRouter
         if (empty($route)) {
             $this->logger->error("Ошибка! Неправильный action");
             echo "Ошибка! Неправильный action";
-            exit;
-        }
-    }
-
-    private function validateArgumentCount(array $consoleInput, string $action): void
-    {
-        $minArgCount = $this->configManager->getMinArgCount($action);
-        if (count($consoleInput) < $minArgCount) {
-            $this->logger->error("Ошибка! Недостаточно аргументов");
-            echo "Ошибка! Недостаточно аргументов";
             exit;
         }
     }

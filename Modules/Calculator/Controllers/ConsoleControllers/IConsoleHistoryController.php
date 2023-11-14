@@ -1,8 +1,6 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
-
-use Engine\DTO\ConsoleRequestDTO;
+namespace Modules\Calculator\Controllers\ConsoleControllers;
 
 interface IConsoleHistoryController
 {

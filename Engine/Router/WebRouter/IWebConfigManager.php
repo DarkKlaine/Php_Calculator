@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Router;
+namespace Engine\Router\WebRouter;
 
 interface IWebConfigManager
 {

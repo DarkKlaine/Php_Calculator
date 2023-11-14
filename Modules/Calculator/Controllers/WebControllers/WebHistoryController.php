@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Calculator\Controllers;
+namespace Modules\Calculator\Controllers\WebControllers;
 
 use Engine\Controllers\WebBaseController;
-use Engine\Router\IWebConfigManager;
-use Engine\Router\IWebRedirectHandler;
-use Modules\Calculator\Models\IHistoryModel;
+use Engine\Router\WebRouter\IWebConfigManager;
+use Engine\Router\WebRouter\IWebRedirectHandler;
+use Modules\Calculator\Controllers\IHistoryModel;
 use Psr\Log\LoggerInterface;
 
 class WebHistoryController extends WebBaseController implements IWebHistoryController
@@ -18,12 +18,12 @@ class WebHistoryController extends WebBaseController implements IWebHistoryContr
         LoggerInterface     $logger,
         IWebConfigManager   $configManager,
         IWebHistoryView     $historyView,
-        IHistoryModel       $historyModel,
+        IHistoryModel       $webHistoryDecorator,
     )
     {
         parent::__construct($redirectHandler, $logger, $configManager);
         $this->historyView = $historyView;
-        $this->historyModel = $historyModel;
+        $this->historyModel = $webHistoryDecorator;
     }
 
     public function showGeneral(): void

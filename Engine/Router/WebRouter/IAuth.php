@@ -1,8 +1,6 @@
 <?php
 
-namespace Engine\Router;
-
-use Engine\DTO\WebRequestDTO;
+namespace Engine\Router\WebRouter;
 
 interface IAuth
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\DTO;
+namespace Engine\Router\ConsoleRouter;
 
 class ConsoleRequestDTO
 {

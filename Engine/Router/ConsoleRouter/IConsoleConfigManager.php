@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Router;
+namespace Engine\Router\ConsoleRouter;
 
 interface IConsoleConfigManager
 {
