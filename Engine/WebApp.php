@@ -2,7 +2,7 @@
 
 namespace Engine;
 
-class WebApp extends MainApp
+class WebApp extends AbstractApp
 {
     public function run(): void
     {
