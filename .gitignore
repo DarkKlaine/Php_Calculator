@@ -1,7 +1,7 @@
 .idea
 Log
 Test
-ProjectDrafts.txt
+Test/ProjectDrafts.txt
 CounterAll
 
 # Игнорировать все папки внутри vendor, кроме composer
