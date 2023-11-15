@@ -7,9 +7,10 @@ use Modules\Calculator\Models\CalculatorModel\IAddition;
 
 class Addition extends Computation implements IAddition
 {
-    public function calculate(): void
+    public function getResult(string $value1, string $action, string $value2 = ''): string
     {
-        $this->result = (float)$this->value1 + (float)$this->value2;
-        $this->logger->info("Операция сложения: $this->value1 + $this->value2 = $this->result");
+        $result = (float)$value1 + (float)$value2;
+        $this->logger->info("Операция сложения: $value1 + $value2 = $result");
+        return $result;
     }
 }

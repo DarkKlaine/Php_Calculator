@@ -7,9 +7,10 @@ use Modules\Calculator\Models\CalculatorModel\ISubtraction;
 
 class Subtraction extends Computation implements ISubtraction
 {
-    public function calculate(): void
+    public function getResult(string $value1, string $action, string $value2 = ''): string
     {
-        $this->result = (float)$this->value1 - (float)$this->value2;
-        $this->logger->info("Операция вычитания: $this->value1 - $this->value2 = $this->result");
+        $result = $value1 - $value2;
+        $this->logger->info("Операция вычитания: $value1 - $value2 = $result");
+        return $result;
     }
 }

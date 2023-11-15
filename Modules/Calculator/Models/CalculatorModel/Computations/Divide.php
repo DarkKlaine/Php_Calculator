@@ -7,14 +7,15 @@ use Modules\Calculator\Models\CalculatorModel\IDivide;
 
 class Divide extends Computation implements IDivide
 {
-    public function calculate(): void
+    public function getResult(string $value1, string $action, string $value2 = ''): string
     {
-        if ($this->value2 === '0') {
-            $this->result = "Error. You can't divide by zero.";
-            $this->logger->info("Деление на ноль: $this->value1 / $this->value2");
+        if ($value2 === '0') {
+            $result = "Ошибка. Деление на ноль.";
+            $this->logger->info("Деление на ноль: $value1 / $value2");
         } else {
-            $this->result = (float)$this->value1 / (float)$this->value2;
-            $this->logger->info("Операция деления: $this->value1 / $this->value2 = $this->result");
+            $result = $value1 / $value2;
+            $this->logger->info("Операция деления: $value1 / $value2 = $result");
         }
+        return $result;
     }
 }

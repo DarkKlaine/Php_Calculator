@@ -8,25 +8,26 @@ use Modules\Calculator\Models\CalculatorModel\ISinCosTan;
 class SinCosTan extends Computation implements ISinCosTan
 {
 
-    public function calculate(): void
+    public function getResult(string $value1, string $action, string $value2 = ''): string
     {
-        switch ($this->action) {
+        switch ($action) {
             case "sin":
-                $this->result = sin(deg2rad((float)$this->value1));
-                $this->logger->info("Операция вычисления синуса угла: $this->value1 sin = $this->result");
+                $result = sin(deg2rad($value1));
+                $this->logger->info("Операция вычисления синуса угла: $value1 sin = $result");
                 break;
             case "cos":
-                $this->result = cos(deg2rad((float)$this->value1));
-                $this->logger->info("Операция вычисления косинуса угла: $this->value1 cos = $this->result");
+                $result = cos(deg2rad($value1));
+                $this->logger->info("Операция вычисления косинуса угла: $value1 cos = $result");
                 break;
             case "tan":
-                $this->result = tan(deg2rad((float)$this->value1));
-                $this->logger->info("Операция вычисления тангенса угла: $this->value1 tan = $this->result");
+                $result = tan(deg2rad($value1));
+                $this->logger->info("Операция вычисления тангенса угла: $value1 tan = $result");
                 break;
             default:
-                $this->result = "Error. Incorrect math.";
+                $result = "Ошибка. Неправильный математический оператор.";
                 $this->logger->error('Ошибка. Неправильный математический оператор.');
                 break;
         }
+        return $result;
     }
 }
