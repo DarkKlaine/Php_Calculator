@@ -3,7 +3,7 @@
 - DRY - Dont repeat yourself
 - YAGNI - Не добавляй функциональность, в которой нет непосредственной надобности
 
-*Сейчас* вцвцв
+*Сейчас*
 0. Почитай про подход git-flow и про merge request'ы gitlab: https://danielkummer.github.io/git-flow-cheatsheet/index.ru_RU.html
 
 8. Продумать, какие изменения нужно внести, чтобы у тебя калькулятор получал не операцию типа 1 + 1, а,
