@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'accessDenied' => '/ushellnotpass',
+    'accessDenied' => '/accessDenied',
     'login' => '/login',
 ];

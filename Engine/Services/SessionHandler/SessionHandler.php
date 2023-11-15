@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Services;
+namespace Engine\Services\SessionHandler;
 
 class SessionHandler implements ISessionHandler
 {

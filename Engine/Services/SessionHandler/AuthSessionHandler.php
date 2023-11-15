@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Services;
+namespace Engine\Services\SessionHandler;
 
 use Engine\Models\IAuthSessionHandler;
 

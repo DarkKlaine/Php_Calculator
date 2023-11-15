@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Router\WebRouter;
+namespace Engine\Services\Routers\WebRouter;
 
 interface IWebRedirectHandler
 {

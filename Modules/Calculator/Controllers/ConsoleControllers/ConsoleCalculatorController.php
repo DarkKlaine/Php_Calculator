@@ -3,7 +3,7 @@
 namespace Modules\Calculator\Controllers\ConsoleControllers;
 
 use Engine\Controllers\ConsoleBaseController;
-use Engine\Router\ConsoleRouter\ConsoleRequestDTO;
+use Engine\Services\Routers\ConsoleRouter\ConsoleRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
 use Modules\Calculator\Controllers\ICalculatorModel;
 use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Engine\Router\ConsoleRouter;
+namespace Engine\Services\Routers\ConsoleRouter;
 
 use Engine\Controllers\ConsoleBaseController;
-use Engine\IConsoleRouter;
-use Engine\Router\AbstractRouter;
+use Engine\IRouter;
 use Engine\Services\Container\Container;
+use Engine\Services\Routers\AbstractRouter;
 use Psr\Log\LoggerInterface;
 
-class ConsoleRouter extends AbstractRouter implements IConsoleRouter
+class ConsoleRouter extends AbstractRouter implements IRouter
 {
     private IConsoleConfigManager $configManager;
 

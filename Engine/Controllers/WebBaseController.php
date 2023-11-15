@@ -2,9 +2,9 @@
 
 namespace Engine\Controllers;
 
-use Engine\Router\WebRouter\IWebConfigManager;
-use Engine\Router\WebRouter\IWebRedirectHandler;
-use Engine\Router\WebRouter\WebRequestDTO;
+use Engine\Services\Routers\WebRouter\IWebConfigManager;
+use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
+use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Psr\Log\LoggerInterface;
 
 abstract class WebBaseController

@@ -1,8 +1,8 @@
 <?php
 
-namespace Engine\Services;
+namespace Engine\Services\ConfigManagers;
 
-use Engine\Router\ConsoleRouter\IConsoleConfigManager;
+use Engine\Services\Routers\ConsoleRouter\IConsoleConfigManager;
 
 class ConsoleConfigManager implements IConsoleConfigManager
 {

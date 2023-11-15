@@ -3,23 +3,21 @@
 use Engine\Controllers\AuthControllerWeb;
 use Engine\Controllers\IAccessDeniedView;
 use Engine\Controllers\ILoginView;
-use Engine\IConsoleRouter;
-use Engine\IWebRouter;
 use Engine\Models\Auth;
 use Engine\Models\IAuthSessionHandler;
-use Engine\Router\ConsoleRouter\ConsoleRouter;
-use Engine\Router\ConsoleRouter\IConsoleConfigManager;
-use Engine\Router\WebRouter\IAuth;
-use Engine\Router\WebRouter\IAuthController;
-use Engine\Router\WebRouter\IWebConfigManager;
-use Engine\Router\WebRouter\IWebRedirectHandler;
-use Engine\Router\WebRouter\WebRedirectHandler;
-use Engine\Router\WebRouter\WebRouter;
-use Engine\Services\AuthSessionHandler;
-use Engine\Services\ConsoleConfigManager;
+use Engine\Services\ConfigManagers\ConsoleConfigManager;
+use Engine\Services\ConfigManagers\WebConfigManager;
 use Engine\Services\Container\Container;
 use Engine\Services\Logger\EngineLogger;
-use Engine\Services\WebConfigManager;
+use Engine\Services\Routers\ConsoleRouter\ConsoleRouter;
+use Engine\Services\Routers\ConsoleRouter\IConsoleConfigManager;
+use Engine\Services\Routers\WebRouter\IAuth;
+use Engine\Services\Routers\WebRouter\IAuthController;
+use Engine\Services\Routers\WebRouter\IWebConfigManager;
+use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
+use Engine\Services\Routers\WebRouter\WebRedirectHandler;
+use Engine\Services\Routers\WebRouter\WebRouter;
+use Engine\Services\SessionHandler\AuthSessionHandler;
 use Engine\Views\AccessDeniedView;
 use Engine\Views\IWebTemplateEngine;
 use Engine\Views\LoginView;
@@ -36,7 +34,7 @@ return [
         return new AuthSessionHandler();
     },
     IAuth::class => function (Container $container) {
-        $users = require(__DIR__ . '/../WebCfg/users.php');
+        $users = require(__DIR__ . '/../../../Config/WebCfg/users.php');
         $redirectHandler = $container->get(IWebRedirectHandler::class);
         $authSessionHandler = $container->get(IAuthSessionHandler::class);
         $configManager = $container->get(IWebConfigManager::class);
@@ -66,24 +64,24 @@ return [
     IWebTemplateEngine::class => function () {
         return new WebTemplateEngine();
     },
-    IWebRouter::class => function (Container $container) {
+    WebRouter::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
         $configManager = $container->get(IWebConfigManager::class);
         $auth = $container->get(IAuth::class);
         return new WebRouter($logger, $configManager, $auth, $container);
     },
     IWebConfigManager::class => function () {
-        $appConfig = require(__DIR__ . '/../WebCfg/app.php');
+        $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');
         return new WebConfigManager($appConfig);
     },
     //Console
-    IConsoleRouter::class => function (Container $container) {
+    ConsoleRouter::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
         $configManager = $container->get(IConsoleConfigManager::class);
         return new ConsoleRouter($logger, $configManager, $container);
     },
     IConsoleConfigManager::class => function () {
-        $appConfig = require(__DIR__ . '/../ConsoleCfg/app.php');
+        $appConfig = require(__DIR__ . '/../../../Config/ConsoleCfg/app.php');
         return new ConsoleConfigManager($appConfig);
     },
 ];

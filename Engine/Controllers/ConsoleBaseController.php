@@ -2,7 +2,7 @@
 
 namespace Engine\Controllers;
 
-use Engine\Router\ConsoleRouter\ConsoleRequestDTO;
+use Engine\Services\Routers\ConsoleRouter\ConsoleRequestDTO;
 use Psr\Log\LoggerInterface;
 
 abstract class ConsoleBaseController

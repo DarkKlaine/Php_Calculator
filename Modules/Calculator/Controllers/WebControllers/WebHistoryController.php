@@ -3,8 +3,8 @@
 namespace Modules\Calculator\Controllers\WebControllers;
 
 use Engine\Controllers\WebBaseController;
-use Engine\Router\WebRouter\IWebConfigManager;
-use Engine\Router\WebRouter\IWebRedirectHandler;
+use Engine\Services\Routers\WebRouter\IWebConfigManager;
+use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
 use Modules\Calculator\Controllers\IHistoryModel;
 use Psr\Log\LoggerInterface;
 

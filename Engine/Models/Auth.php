@@ -2,10 +2,10 @@
 
 namespace Engine\Models;
 
-use Engine\Router\WebRouter\IAuth;
-use Engine\Router\WebRouter\IWebConfigManager;
-use Engine\Router\WebRouter\IWebRedirectHandler;
-use Engine\Router\WebRouter\WebRequestDTO;
+use Engine\Services\Routers\WebRouter\IAuth;
+use Engine\Services\Routers\WebRouter\IWebConfigManager;
+use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
+use Engine\Services\Routers\WebRouter\WebRequestDTO;
 
 class Auth implements IAuth
 {

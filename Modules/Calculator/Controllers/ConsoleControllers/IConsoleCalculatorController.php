@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers\ConsoleControllers;
 
-use Engine\Router\ConsoleRouter\ConsoleRequestDTO;
+use Engine\Services\Routers\ConsoleRouter\ConsoleRequestDTO;
 
 interface IConsoleCalculatorController
 {

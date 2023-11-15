@@ -1,8 +1,8 @@
 <?php
 
-namespace Engine\Services;
+namespace Engine\Services\ConfigManagers;
 
-use Engine\Router\WebRouter\IWebConfigManager;
+use Engine\Services\Routers\WebRouter\IWebConfigManager;
 
 class WebConfigManager implements IWebConfigManager
 {

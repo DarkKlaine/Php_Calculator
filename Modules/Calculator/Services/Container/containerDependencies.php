@@ -1,8 +1,8 @@
 <?php
 
-use Engine\Router\WebRouter\IWebConfigManager;
-use Engine\Router\WebRouter\IWebRedirectHandler;
 use Engine\Services\Container\Container;
+use Engine\Services\Routers\WebRouter\IWebConfigManager;
+use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
 use Modules\Calculator\Controllers\ConsoleControllers\ConsoleCalculatorController;
 use Modules\Calculator\Controllers\ConsoleControllers\ConsoleHistoryController;

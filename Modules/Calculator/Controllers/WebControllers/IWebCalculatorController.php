@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers\WebControllers;
 
-use Engine\Router\WebRouter\WebRequestDTO;
+use Engine\Services\Routers\WebRouter\WebRequestDTO;
 
 interface IWebCalculatorController
 {

@@ -3,9 +3,9 @@
 namespace Modules\Calculator\Controllers\WebControllers;
 
 use Engine\Controllers\WebBaseController;
-use Engine\Router\WebRouter\IWebConfigManager;
-use Engine\Router\WebRouter\IWebRedirectHandler;
-use Engine\Router\WebRouter\WebRequestDTO;
+use Engine\Services\Routers\WebRouter\IWebConfigManager;
+use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
+use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Modules\Calculator\Controllers\ICalculatorModel;
 use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;
 use Psr\Log\LoggerInterface;
