@@ -31,8 +31,8 @@ class ConsoleCalculatorController extends ConsoleBaseController implements ICons
     #[NoReturn] public function calculate(ConsoleRequestDTO $request): void
     {
         $inputData = $request->getInputData();
-        $result = $this->calculatorModel->countIt($inputData);
-        $inputDataToString = implode(' ', $inputData);
+        $inputDataToString = implode('', $inputData);
+        $result = $this->calculatorModel->getResult($inputDataToString);
         $this->consoleHistoryModel->addToHistory($inputDataToString, $result);
         $this->consoleCalculatorView->display($inputDataToString, $result);
     }

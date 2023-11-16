@@ -35,19 +35,69 @@ class CalculatorModel implements ICalculatorModel
         $this->logger = $logger;
     }
 
-    public function countIt(array $inputData): string
+    public function getResult(string $expression): string
     {
-        // Проверка валидности входных данных
-        if ($this->isValidInput($inputData) === false) {
+        $expression = str_replace(' ', '', $expression);
+
+        $result = $this->processInputExpression($expression);
+
+        $divByZeroMsg = 'Ошибка. Деление на ноль.';
+        if (str_contains($result, $divByZeroMsg)) {
+            return $divByZeroMsg;
+        }
+
+        if (is_numeric($result) === false) {
             $message = "Неправильный ввод, попробуйте снова";
             $this->logger->error($message);
             return $message;
         }
 
-        // Безопасно разбираю входные данные на переменные
-        $value1 = $inputData[0] ?? '';
-        $operator = $inputData[1] ?? '';
-        $value2 = $inputData[2] ?? '';
+        return $result;
+    }
+
+
+
+    private function processInputExpression(string $expression): string
+    {
+        $openBracket = strrpos($expression, '(') + 1;
+        $closeBracket = strpos($expression, ')', $openBracket) - $openBracket;
+        $subExpression = substr($expression, $openBracket, $closeBracket);
+        $result = $this->processSubExpression($subExpression);
+        $expression = str_replace("($subExpression)", $result, $expression);
+
+        if (str_contains($expression, "(")) {
+            return $this->processInputExpression($expression);
+        }
+
+        return $this->processSubExpression($expression);
+    }
+
+    private function processSubExpression(string $expression): string
+    {
+        $expression = $this->processTrigonometry($expression);
+        $expression = $this->processExponentiation($expression);
+        $expression = $this->processMultiplyAndDivide($expression);
+        return $this->processPlusAndMinus($expression);
+    }
+
+    private function recursiveProcessExpression(string $expression, string $pattern): string
+    {
+        if (preg_match($pattern, $expression, $matches)) {
+            $subExpression = $matches[0];
+            $result = $this->calculateSimpleExpression($subExpression, $pattern);
+            $expression = str_replace($subExpression, $result, $expression);
+            return $this->recursiveProcessExpression($expression, $pattern);
+        }
+
+        return $expression;
+    }
+
+    private function calculateSimpleExpression(string $expression, string $pattern): string
+    {
+        preg_match($pattern, $expression, $matches);
+        $value1 = $matches[1] ?? '';
+        $operator = $matches[3] ?? '';
+        $value2 = $matches[4] ?? '';
 
         // Массив с операциями
         $operations = [
@@ -74,37 +124,27 @@ class CalculatorModel implements ICalculatorModel
         return $message;
     }
 
-    private function isValidInput(array $inputData): bool
+    private function processTrigonometry(string $expression): string
     {
-        $patternValues = '/^-?\d+(\.\d+)?$/';
-        $patternOperators = '/^(?:[+\-\/*]|pow|sin|cos|tan)$/';
+        $pattern = '/(())(sin|cos|tan)(-?\d+(\.\d+)?)/';
+        return $this->recursiveProcessExpression($expression, $pattern);
+    }
 
-        // Проверка на количество аргументов в массиве
-        if (count($inputData) < 2) {
-            return false;
-        }
+    private function processExponentiation(string $expression): string
+    {
+        $pattern = '/(-?\d+(\.\d+)?)(pow)(-?\d+(\.\d+)?)/';
+        return $this->recursiveProcessExpression($expression, $pattern);
+    }
 
-        // Проверка первого элемента массива
-        if (preg_match($patternValues, $inputData[0]) === 0) {
-            return false;
-        }
+    private function processMultiplyAndDivide(string $expression): string
+    {
+        $pattern = '/(-?\d+(\.\d+)?)([*\/])(-?\d+(\.\d+)?)/';
+        return $this->recursiveProcessExpression($expression, $pattern);
+    }
 
-        // Проверка второго элемента массива
-        if (preg_match($patternOperators, $inputData[1]) === 0) {
-            return false;
-        }
-
-        // Если второй элемент равен 'sin', 'cos' или 'tan', то третий элемент игнорирую - возвращаю true
-        if (in_array($inputData[1], ['sin', 'cos', 'tan'])) {
-            return true;
-        }
-
-        // Проверка третьего элемента массива
-        if (preg_match($patternValues, $inputData[2]) === 0) {
-            return false;
-        }
-
-        // Если все проверки пройдены - возвращаю true
-        return true;
+    private function processPlusAndMinus(string $expression): string
+    {
+        $pattern = '/(-?\d+(\.\d+)?)([+\-])(-?\d+(\.\d+)?)/';
+        return $this->recursiveProcessExpression($expression, $pattern);
     }
 }
