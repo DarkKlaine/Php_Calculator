@@ -37,18 +37,16 @@ class CalculatorModel implements ICalculatorModel
 
     public function getResult(string $expression): string
     {
-        // Удаляем пробелы
         $expression = str_replace(' ', '', $expression);
-        // Проверка валидности входных данных
-//        if ($this->isValidInput($expression) === false) {
-//            $message = "Неправильный ввод, попробуйте снова";
-//            $this->logger->error($message);
-//            return $message;
-//        }
 
         $result = $this->processInputExpression($expression);
 
-        if (!is_numeric($result)) {
+        $divByZeroMsg = 'Ошибка. Деление на ноль.';
+        if (str_contains($result, $divByZeroMsg)) {
+            return $divByZeroMsg;
+        }
+
+        if (is_numeric($result) === false) {
             $message = "Неправильный ввод, попробуйте снова";
             $this->logger->error($message);
             return $message;
@@ -57,31 +55,7 @@ class CalculatorModel implements ICalculatorModel
         return $result;
     }
 
-//    private function isValidInput(string $expression): bool
-//    {
-//        $pattern = '/^([0-9.()+\-*\/]|pow|sin|cos|tan)+$/';
-//        if (preg_match($pattern, $expression) === false) {
-//            return false;
-//        }
-//
-//        $openBracketCount = 0;
-//        $closeBracketCount = 0;
-//
-//        for ($i = 0; $i < strlen($expression); $i++) {
-//            $char = $expression[$i];
-//
-//            if ($char === '(') {
-//                $openBracketCount++;
-//            } elseif ($char === ')') {
-//                $closeBracketCount++;
-//            }
-//        }
-//
-//        if ($openBracketCount === $closeBracketCount) {
-//            return true;
-//        }
-//        return false;
-//    }
+
 
     private function processInputExpression(string $expression): string
     {
@@ -100,26 +74,25 @@ class CalculatorModel implements ICalculatorModel
 
     private function processSubExpression(string $expression): string
     {
-        $expression = $this->calculateTrigonometry($expression);
-        $expression = $this->calculateExponentiation($expression);
-        $expression = $this->calculateMultiplyAndDivide($expression);
-        return $this->calculatePlusAndMinus($expression);
+        $expression = $this->processTrigonometry($expression);
+        $expression = $this->processExponentiation($expression);
+        $expression = $this->processMultiplyAndDivide($expression);
+        return $this->processPlusAndMinus($expression);
     }
 
-    private function calculateExpression(string $expression, string $pattern): string
+    private function recursiveProcessExpression(string $expression, string $pattern): string
     {
         if (preg_match($pattern, $expression, $matches)) {
             $subExpression = $matches[0];
-            $result = $this->countIt($subExpression, $pattern);
+            $result = $this->calculateSimpleExpression($subExpression, $pattern);
             $expression = str_replace($subExpression, $result, $expression);
-            echo $subExpression . PHP_EOL;
-            return $this->calculateExpression($expression, $pattern);
+            return $this->recursiveProcessExpression($expression, $pattern);
         }
 
         return $expression;
     }
 
-    private function countIt(string $expression, string $pattern): string
+    private function calculateSimpleExpression(string $expression, string $pattern): string
     {
         preg_match($pattern, $expression, $matches);
         $value1 = $matches[1] ?? '';
@@ -151,27 +124,27 @@ class CalculatorModel implements ICalculatorModel
         return $message;
     }
 
-    private function calculateTrigonometry(string $expression): string
+    private function processTrigonometry(string $expression): string
     {
         $pattern = '/(())(sin|cos|tan)(-?\d+(\.\d+)?)/';
-        return $this->calculateExpression($expression, $pattern);
+        return $this->recursiveProcessExpression($expression, $pattern);
     }
 
-    private function calculateExponentiation(string $expression): string
+    private function processExponentiation(string $expression): string
     {
         $pattern = '/(-?\d+(\.\d+)?)(pow)(-?\d+(\.\d+)?)/';
-        return $this->calculateExpression($expression, $pattern);
+        return $this->recursiveProcessExpression($expression, $pattern);
     }
 
-    private function calculateMultiplyAndDivide(string $expression): string
+    private function processMultiplyAndDivide(string $expression): string
     {
         $pattern = '/(-?\d+(\.\d+)?)([*\/])(-?\d+(\.\d+)?)/';
-        return $this->calculateExpression($expression, $pattern);
+        return $this->recursiveProcessExpression($expression, $pattern);
     }
 
-    private function calculatePlusAndMinus(string $expression): string
+    private function processPlusAndMinus(string $expression): string
     {
         $pattern = '/(-?\d+(\.\d+)?)([+\-])(-?\d+(\.\d+)?)/';
-        return $this->calculateExpression($expression, $pattern);
+        return $this->recursiveProcessExpression($expression, $pattern);
     }
 }
