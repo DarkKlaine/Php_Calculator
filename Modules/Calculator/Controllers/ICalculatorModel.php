@@ -4,5 +4,5 @@ namespace Modules\Calculator\Controllers;
 
 interface ICalculatorModel
 {
-    public function countIt(array $inputData): string;
+    public function getResult(string $expression): string;
 }

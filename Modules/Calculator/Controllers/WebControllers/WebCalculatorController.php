@@ -50,9 +50,7 @@ class WebCalculatorController extends WebBaseController implements IWebCalculato
             return;
         }
 
-        $inputData = explode(' ', $inputDataString);
-
-        $result = $this->calculatorModel->countIt($inputData);
+        $result = $this->calculatorModel->getResult($inputDataString);
 
         $this->webHistoryModel->addToHistory($inputDataString, $result);
 

@@ -12,16 +12,16 @@ class SinCosTan extends Computation implements ISinCosTan
     {
         switch ($action) {
             case "sin":
-                $result = sin(deg2rad($value1));
-                $this->logger->info("Операция вычисления синуса угла: $value1 sin = $result");
+                $result = sin(deg2rad($value2));
+                $this->logger->info("Операция вычисления синуса угла: sin($value2) = $result");
                 break;
             case "cos":
-                $result = cos(deg2rad($value1));
-                $this->logger->info("Операция вычисления косинуса угла: $value1 cos = $result");
+                $result = cos(deg2rad($value2));
+                $this->logger->info("Операция вычисления косинуса угла: cos($value2) = $result");
                 break;
             case "tan":
-                $result = tan(deg2rad($value1));
-                $this->logger->info("Операция вычисления тангенса угла: $value1 tan = $result");
+                $result = tan(deg2rad($value2));
+                $this->logger->info("Операция вычисления тангенса угла: tan($value2) = $result");
                 break;
             default:
                 $result = "Ошибка. Неправильный математический оператор.";
