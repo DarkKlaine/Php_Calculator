@@ -22,7 +22,7 @@ class WebTemplateEngine implements IWebTemplateEngine
     public function display(string $tplFile): void
     {
         $template = $this->engineTemplatesPath . $tplFile;
-        require_once($template);
+        require($template);
     }
 
     public function setModuleTemplatesPath(string $moduleTemplatesPath): void
@@ -37,6 +37,6 @@ class WebTemplateEngine implements IWebTemplateEngine
 
     private function injectTplFile(): void
     {
-        require_once($this->injectFile);
+        require($this->injectFile);
     }
 }
