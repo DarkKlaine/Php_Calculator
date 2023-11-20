@@ -8,6 +8,7 @@ use Engine\Models\IAuthSessionHandler;
 use Engine\Services\ConfigManagers\ConsoleConfigManager;
 use Engine\Services\ConfigManagers\WebConfigManager;
 use Engine\Services\Container\Container;
+use Engine\Services\DBConnector\DBConnection;
 use Engine\Services\Logger\EngineLogger;
 use Engine\Services\Routers\ConsoleRouter\ConsoleRouter;
 use Engine\Services\Routers\ConsoleRouter\IConsoleConfigManager;
@@ -28,6 +29,14 @@ return [
     //Shared
     LoggerInterface::class => function () {
         return new EngineLogger();
+    },
+    DBConnection::class => function () {
+        $dbConnection = require(__DIR__ . '/../../../Config/dbConnection.php');
+        $host = $dbConnection['host'];
+        $username = $dbConnection['username'];
+        $password = $dbConnection['password'];
+        $dbname = $dbConnection['dbname'];
+        return new DBConnection($host, $username, $password, $dbname);
     },
     //Auth
     IAuthSessionHandler::class => function () {
