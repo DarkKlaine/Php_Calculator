@@ -7,21 +7,17 @@ use PDOException;
 
 class DBConnection
 {
-    private string $servername = "localhost";
-    private string $username = "root";
-    private string $password = "pass";
-    private string $dbname = "history";
     private ?PDO $connection = null;
 
-    public function __construct()
+    public function __construct(string $host, string $username, string $password, string $dbname)
     {
-        $dsn = "mysql:host={$this->servername};dbname={$this->dbname}";
+        $dsn = "mysql:host={$host};dbname={$dbname}";
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ];
 
         try {
-            $this->connection = new PDO($dsn, $this->username, $this->password, $options);
+            $this->connection = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $e) {
             die("Ошибка подключения: " . $e->getMessage());
         }
