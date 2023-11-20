@@ -2,13 +2,20 @@
 
 namespace Modules\Calculator\Models\HistoryModel;
 
+use Engine\Services\DBConnector\DBConnection;
 use Modules\Calculator\Controllers\IHistoryModel;
+use PDOException;
 
 class HistoryModel implements IHistoryModel
 {
     private string $logDir = __DIR__ . '/../../../../Log';
     private string $logFile = __DIR__ . '/../../../../Log/History.Log';
     private int $maxLogSize = 10;
+    private DBConnection $dbConnection;
+
+    public function __construct (DBConnection $dbConnection) {
+        $this->dbConnection = $dbConnection;
+    }
 
     public function addToHistory(string $input, string $result, bool $needSessionHistory): void
     {
@@ -21,6 +28,8 @@ class HistoryModel implements IHistoryModel
 
         // Добавление строки в глобальный лог
         $this->addToGlobalHistory($stringForLogging);
+        // Добавление строки в базу данных
+//        $this->addToDBHistory($stringForLogging);
         // Добавление строки в лог сессии (если необходимо)
         if ($needSessionHistory) {
             $this->addToSessionHistory($stringForLogging);
@@ -113,5 +122,18 @@ class HistoryModel implements IHistoryModel
     {
         $logArray = $_SESSION['history'] ?? [];
         return $this->generateHistoryString($logArray, $isForWeb);
+    }
+
+    private function addToDBHistory(string $stringForLogging): void
+    {
+        $connection = $this->dbConnection->getConnection();
+        $sqlInsert = "INSERT INTO history (expression) VALUES ($stringForLogging)";
+
+        try {
+            $connection->exec($sqlInsert);
+            echo "Запись успешно создана" . PHP_EOL;
+        } catch (PDOException $e) {
+            echo "Ошибка при создании записи: " . $e->getMessage() . PHP_EOL;
+        }
     }
 }

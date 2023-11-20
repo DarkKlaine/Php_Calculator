@@ -1,6 +1,7 @@
 <?php
 
 use Engine\Services\Container\Container;
+use Engine\Services\DBConnector\DBConnection;
 use Engine\Services\Routers\WebRouter\IWebConfigManager;
 use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
@@ -76,8 +77,9 @@ return [
         $sinCosTan = $container->get(ISinCosTan::class);
         return new CalculatorModel($logger, $addition, $subtraction, $multiply, $divide, $exponentiation, $sinCosTan);
     },
-    IHistoryModel::class => function () {
-        return new HistoryModel();
+    IHistoryModel::class => function (Container $container) {
+        $dbConnection = $container->get(DBConnection::class);
+        return new HistoryModel($dbConnection);
     },
     //Web
     IWebCalculatorController::class => function (Container $container) {
