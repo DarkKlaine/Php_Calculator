@@ -2,6 +2,7 @@
 
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\DBConnection;
+use Engine\Services\DBConnector\IDBConnection;
 use Engine\Services\Routers\WebRouter\IWebConfigManager;
 use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
@@ -78,8 +79,9 @@ return [
         return new CalculatorModel($logger, $addition, $subtraction, $multiply, $divide, $exponentiation, $sinCosTan);
     },
     IHistoryModel::class => function (Container $container) {
-        $dbConnection = $container->get(DBConnection::class);
-        return new HistoryModel($dbConnection);
+        $dbConnection = $container->get(IDBConnection::class);
+        $logger = $container->get(LoggerInterface::class);
+        return new HistoryModel($dbConnection, $logger);
     },
     //Web
     IWebCalculatorController::class => function (Container $container) {

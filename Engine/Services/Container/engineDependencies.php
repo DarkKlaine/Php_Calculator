@@ -9,6 +9,7 @@ use Engine\Services\ConfigManagers\ConsoleConfigManager;
 use Engine\Services\ConfigManagers\WebConfigManager;
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\DBConnection;
+use Engine\Services\DBConnector\IDBConnection;
 use Engine\Services\Logger\EngineLogger;
 use Engine\Services\Routers\ConsoleRouter\ConsoleRouter;
 use Engine\Services\Routers\ConsoleRouter\IConsoleConfigManager;
@@ -30,13 +31,14 @@ return [
     LoggerInterface::class => function () {
         return new EngineLogger();
     },
-    DBConnection::class => function () {
+    IDBConnection::class => function (Container $container) {
         $dbConnection = require(__DIR__ . '/../../../Config/dbConnection.php');
         $host = $dbConnection['host'];
         $username = $dbConnection['username'];
         $password = $dbConnection['password'];
         $dbname = $dbConnection['dbname'];
-        return new DBConnection($host, $username, $password, $dbname);
+        $logger = $container->get(LoggerInterface::class);
+        return new DBConnection($logger, $host, $username, $password, $dbname);
     },
     //Auth
     IAuthSessionHandler::class => function () {

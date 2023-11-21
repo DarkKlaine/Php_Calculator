@@ -4,12 +4,19 @@ namespace Engine\Services\DBConnector;
 
 use PDO;
 use PDOException;
+use Psr\Log\LoggerInterface;
 
-class DBConnection
+class DBConnection implements IDBConnection
 {
     private ?PDO $connection = null;
 
-    public function __construct(string $host, string $username, string $password, string $dbname)
+    public function __construct(
+        LoggerInterface $logger,
+        string $host,
+        string $username,
+        string $password,
+        string $dbname
+    )
     {
         $dsn = "mysql:host={$host};dbname={$dbname}";
         $options = [
@@ -19,7 +26,8 @@ class DBConnection
         try {
             $this->connection = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $e) {
-            die("Ошибка подключения: " . $e->getMessage());
+            $logger->error("Ошибка подключения: " . $e->getMessage());
+            die();
         }
     }
 
@@ -31,6 +39,5 @@ class DBConnection
     public function closeConnection(): void
     {
         $this->connection = null;
-        echo "Соединение закрыто." . PHP_EOL;
     }
 }

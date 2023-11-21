@@ -22,4 +22,4 @@ if (empty($this->vars['result']) === false || $this->vars['result'] === '0') {
 }
 ?>
 <br>
-<a href="/history">Вся история</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/session">Моя история</a>
+<a href="/history">Вся история</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/session">Моя история</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/db">База данных</a>

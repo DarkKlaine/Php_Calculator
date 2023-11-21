@@ -10,5 +10,5 @@ return [
     '/calculate' => ['controller' => IWebCalculatorController::class, 'action' => 'calculate'],
     '/history' => ['controller' => IWebHistoryController::class, 'action' => 'showGeneral'],
     '/session' => ['controller' => IWebHistoryController::class, 'action' => 'showPersonal'],
-//    '/db' => ['controller' => IWebHistoryController::class, 'action' => 'showDB'],
+    '/db' => ['controller' => IWebHistoryController::class, 'action' => 'showDB'],
 ];

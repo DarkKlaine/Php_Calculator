@@ -36,8 +36,8 @@ class WebHistoryController extends WebBaseController implements IWebHistoryContr
         $this->historyView->render($this->historyModel->getSessionHistoryString(true));
     }
 
-//    public function showDB(): void
-//    {
-//        $this->historyView->render($this->historyModel->getDBHistoryString(true));
-//    }
+    public function showDB(): void
+    {
+        $this->historyView->render($this->historyModel->getDBHistoryString(true));
+    }
 }
