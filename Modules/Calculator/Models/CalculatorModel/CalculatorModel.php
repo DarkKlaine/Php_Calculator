@@ -55,20 +55,16 @@ class CalculatorModel implements ICalculatorModel
         return $result;
     }
 
-
-
     private function processInputExpression(string $expression): string
     {
+        if (str_contains($expression, "(")) {
         $openBracket = strrpos($expression, '(') + 1;
         $closeBracket = strpos($expression, ')', $openBracket) - $openBracket;
         $subExpression = substr($expression, $openBracket, $closeBracket);
         $result = $this->processSubExpression($subExpression);
         $expression = str_replace("($subExpression)", $result, $expression);
-
-        if (str_contains($expression, "(")) {
-            return $this->processInputExpression($expression);
+        return $this->processInputExpression($expression);
         }
-
         return $this->processSubExpression($expression);
     }
 

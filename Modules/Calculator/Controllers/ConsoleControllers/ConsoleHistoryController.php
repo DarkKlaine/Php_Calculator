@@ -22,8 +22,13 @@ class ConsoleHistoryController extends ConsoleBaseController implements IConsole
         $this->historyModel = $historyModel;
     }
 
-    public function showHistory(): void
+    public function showGeneralHistory(): void
     {
         $this->historyView->display($this->historyModel->getGeneralHistoryString(false));
+    }
+
+    public function showDBHistory(): void
+    {
+        $this->historyView->display($this->historyModel->getDBHistoryString(false));
     }
 }
