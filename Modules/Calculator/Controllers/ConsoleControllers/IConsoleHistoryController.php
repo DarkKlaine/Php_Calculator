@@ -4,5 +4,7 @@ namespace Modules\Calculator\Controllers\ConsoleControllers;
 
 interface IConsoleHistoryController
 {
-    public function showHistory(): void;
+    public function showGeneralHistory(): void;
+
+    public function showDBHistory(): void;
 }
