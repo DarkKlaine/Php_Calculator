@@ -1,25 +1,28 @@
-<?php
-/**
- * @see WebCalculatorView
- */
+<div class="text-center">
+    <h3 class="">Калькулятор</h3>
+</div>
 
-use Modules\Calculator\Views\WebCalculatorView;
-
-?>
-
-<form method="post" action="/calculate">
-    <input type="text" name="userInput" placeholder="Введите выражение" required>
-    <button type="submit">Вычислить</button>
-</form>
-<br>
+<div class="form-body">
+    <form class="row g-3" method="post" action="/calculate">
+        <div class="col-12">
+            <label for="inputExpression" class="form-label"></label>
+            <pre style="font-family: monospace; text-align: center; font-size: 18px;">
 <?php
 if (empty($this->vars['result']) === false || $this->vars['result'] === '0') {
-    echo 'Выражение: ' . $this->vars['input'] . '<br>';
-    echo 'Результат: ' . $this->vars['result'] . '<br>';
+    echo 'Выражение: ' . $this->vars['input'] . PHP_EOL;
+    echo 'Результат: ' . $this->vars['result'] . PHP_EOL;
 } else {
-    echo 'Калькулятор поддерживает следующие функции:<br>';
-    echo '+, -, /, *, pow, sin, cos, tan <br>';
+    echo 'Поддерживает следующие функции:' . PHP_EOL;
+    echo '+, -, /, *, pow, sin, cos, tan' . PHP_EOL;
+    echo 'Умеет вычислять сложные выражения' . PHP_EOL;
 }
-?>
-<br>
-<a href="/history">Вся история</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/session">Моя история</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/db">База данных</a>
+?></pre>
+            <input type="text" class="form-control" id="inputExpression" name="userInput" placeholder="Введите выражение" required>
+        </div>
+        <div class="col-12">
+            <div class="d-grid">
+                <button type="submit" class="btn btn-light">Вычислить</button>
+            </div>
+        </div>
+    </form>
+</div>
