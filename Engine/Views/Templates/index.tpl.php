@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light rounded fixed-top rounded-0 shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <h4 class="logo-text">DKEngine</h4>
+                    <h4 class="logo-text">DK Engine</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
                 <?php require 'links.tpl.php' ?>
