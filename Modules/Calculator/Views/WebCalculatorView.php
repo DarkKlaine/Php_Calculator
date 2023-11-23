@@ -9,6 +9,7 @@ class WebCalculatorView implements IWebCalculatorView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
+    private string $linksTplFile = 'links.tpl.php';
     private string $calculatorTplFile = 'calculator.tpl.php';
 
     private IWebTemplateEngine $templateEngine;
@@ -27,7 +28,7 @@ class WebCalculatorView implements IWebCalculatorView
 
         $this->templateEngine->assignVar('result', $result);
 
-        $this->templateEngine->setInjectTplFile($this->calculatorTplFile);
+        $this->templateEngine->setInjectTplFile($this->linksTplFile, $this->calculatorTplFile, null,);
 
         $this->templateEngine->display($this->indexTplFile);
     }

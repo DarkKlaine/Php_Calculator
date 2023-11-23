@@ -9,6 +9,7 @@ class LoginView implements ILoginView
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
     private string $loginTplFile = 'login.tpl.php';
+    private string $pswScriptTplFile = 'psw.script.tpl.php';
     private IWebTemplateEngine $templateEngine;
 
     public function __construct(IWebTemplateEngine $templateEngine)
@@ -20,7 +21,7 @@ class LoginView implements ILoginView
     {
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->setInjectTplFile($this->loginTplFile);
+        $this->templateEngine->setInjectTplFile(null, $this->loginTplFile, $this->pswScriptTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }
