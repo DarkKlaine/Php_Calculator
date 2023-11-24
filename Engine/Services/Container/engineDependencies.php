@@ -5,8 +5,8 @@ use Engine\Controllers\IAccessDeniedView;
 use Engine\Controllers\ILoginView;
 use Engine\Models\Auth;
 use Engine\Models\IAuthSessionHandler;
-use Engine\Services\ConfigManagers\ConsoleConfigManager;
-use Engine\Services\ConfigManagers\WebConfigManager;
+use Engine\Services\ConfigManagers\ConsoleBaseConfigManager;
+use Engine\Services\ConfigManagers\WebBaseConfigManager;
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\DBConnection;
 use Engine\Services\DBConnector\IDBConnection;
@@ -83,7 +83,7 @@ return [
     },
     IWebConfigManager::class => function () {
         $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');
-        return new WebConfigManager($appConfig);
+        return new WebBaseConfigManager($appConfig);
     },
     //Console
     ConsoleRouter::class => function (Container $container) {
@@ -93,6 +93,6 @@ return [
     },
     IConsoleConfigManager::class => function () {
         $appConfig = require(__DIR__ . '/../../../Config/ConsoleCfg/app.php');
-        return new ConsoleConfigManager($appConfig);
+        return new ConsoleBaseConfigManager($appConfig);
     },
 ];

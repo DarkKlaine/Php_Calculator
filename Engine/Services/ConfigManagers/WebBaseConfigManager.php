@@ -4,7 +4,7 @@ namespace Engine\Services\ConfigManagers;
 
 use Engine\Services\Routers\WebRouter\IWebConfigManager;
 
-class WebConfigManager implements IWebConfigManager
+class WebBaseConfigManager implements IWebConfigManager
 {
     private string $homeUrl;
     private string $accessDeniedPage;

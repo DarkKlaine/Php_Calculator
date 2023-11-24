@@ -4,7 +4,7 @@ namespace Engine\Services\ConfigManagers;
 
 use Engine\Services\Routers\ConsoleRouter\IConsoleConfigManager;
 
-class ConsoleConfigManager implements IConsoleConfigManager
+class ConsoleBaseConfigManager implements IConsoleConfigManager
 {
     private array $routes;
 
