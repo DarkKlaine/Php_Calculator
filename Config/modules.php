@@ -40,6 +40,9 @@ return [
  */
 
 //http 403
+//glob
+//*.di.php
+//*.routes.php
 
 /**
 
