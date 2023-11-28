@@ -2,7 +2,7 @@
 </button>
 <div class="collapse navbar-collapse" id="navbarSupportedContent1">
     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link text-white" href="/calculator"><i class='bx bx-category-alt me-1'></i>Калькулятор</a>
+        <li class="nav-item"><a class="nav-link text-white" href="/"><i class='bx bx-category-alt me-1'></i>Калькулятор</a>
         </li>
         <li class="nav-item"><a class="nav-link text-white" href="/history"><i class='bx bx-category-alt me-1'></i>История общая</a>
         </li>

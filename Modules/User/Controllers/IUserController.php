@@ -2,7 +2,7 @@
 
 namespace Modules\UsersCRUD\Controllers;
 
-interface IUsersController
+interface IUserController
 {
 
 }

@@ -27,9 +27,16 @@ class WebRouter extends AbstractRouter implements IRouter
 
     public function handleRequest(): void
     {
-        $url = strtok($_SERVER['REQUEST_URI'], '?');
+        $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
         $routes = $this->configManager->getRoutes();
-        $route = $routes[$url] ?? [];
+        $route = [];
+
+        foreach ($routes as $key => $value) {
+            if ($value['url'] === $requestUri) {
+                $route = $value;
+                break;
+            }
+        }
 
         $this->validateRoute($route);
 
@@ -37,11 +44,11 @@ class WebRouter extends AbstractRouter implements IRouter
             $_POST,
             $_GET,
             $route['action'] ?? '',
-            $url,
+            $requestUri,
         );
 
         if ($this->configManager->isAuthEnabled()) {
-            $this->auth->verifyAuth($url);
+            $this->auth->verifyAuth($requestUri);
         }
 
         $controllerName = $route['controller'];

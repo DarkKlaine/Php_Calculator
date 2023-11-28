@@ -42,7 +42,7 @@ class WebTemplateEngine implements IWebTemplateEngine
     private function injectLinksTpl(): void
     {
         if ($this->linksTpl !== null) {
-            require($this->engineTemplatesPath . $this->linksTpl);
+            require($this->moduleTemplatesPath . $this->linksTpl);
         }
     }
 

@@ -3,6 +3,14 @@
 use Engine\Services\Routers\WebRouter\IAuthController;
 
 return [
-    '/accessDenied' => ['controller' => IAuthController::class, 'action' => 'accessDenied'],
-    '/login' => ['controller' => IAuthController::class, 'action' => 'login'],
+    'AccessDenied' => [
+        'url' => '/accessDenied',
+        'controller' => IAuthController::class,
+        'action' => 'accessDenied'
+    ],
+    'Login' => [
+        'url' => '/login',
+        'controller' => IAuthController::class,
+        'action' => 'login'
+    ],
 ];

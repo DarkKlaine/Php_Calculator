@@ -4,7 +4,7 @@ namespace Engine\Services\ConfigManagers;
 
 use Engine\Services\Routers\ConsoleRouter\IConsoleConfigManager;
 
-class ConsoleBaseConfigManager implements IConsoleConfigManager
+class BaseConfigManagerConsole implements IConsoleConfigManager
 {
     private array $routes;
 
@@ -16,10 +16,5 @@ class ConsoleBaseConfigManager implements IConsoleConfigManager
     public function getRoutes(): array
     {
         return $this->routes;
-    }
-
-    public function getMinArgCount(string $action): int
-    {
-        return $this->routes[$action]['minArgs'] + 2;
     }
 }

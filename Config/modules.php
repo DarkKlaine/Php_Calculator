@@ -3,7 +3,7 @@
 return [
     'modulesList' => [
         'Calculator',
-        'UsersCRUD',
+        'User',
     ],
     'modulesPath' => __DIR__ . '/../Modules/',
 ];
@@ -49,7 +49,7 @@ return [
 $config = require __DIR__ . '/modules.php';
 $modulesPath = $config['modulesPath'];
 $modulesList = $config['modulesList'];
-$moduleDepsPath = '/Config/Container/containerDependencies.php;
+$moduleDepsPath = '/Config/container.di.php;
 
 $dependencies = [];
 
@@ -61,7 +61,7 @@ foreach ($modulesList as $module) {
 }
 
 return array_merge(
-    require __DIR__ . '/engineDependencies.php',
+    require __DIR__ . '/engine.di.php',
     $dependencies
 );
 
