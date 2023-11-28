@@ -1,6 +1,6 @@
 <?php
 
-use Modules\UsersCRUD\Controllers\IUserController;
+use Modules\User\Controllers\IUserController;
 
 return [
 //    '/user/register/username' => ['controller' => IUserController::class, 'action' => 'setUsername'],
