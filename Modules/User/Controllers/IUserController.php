@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\UsersCRUD\Controllers;
+namespace Modules\User\Controllers;
 
 interface IUserController
 {
