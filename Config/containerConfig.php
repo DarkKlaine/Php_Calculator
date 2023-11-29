@@ -3,12 +3,12 @@
 $config = require __DIR__ . '/modules.php';
 $modulesPath = $config['modulesPath'];
 $modulesList = $config['modulesList'];
-$moduleDepsPath = '/Config/container.di.php';
+$moduleDependenciesPath = '/Config/container.di.php';
 
 $dependencies = [];
 
 foreach ($modulesList as $module) {
-    $dependencyFile = $modulesPath . $module . $moduleDepsPath;
+    $dependencyFile = $modulesPath . $module . $moduleDependenciesPath;
     if (file_exists($dependencyFile)) {
         $dependencies = array_merge($dependencies, require $dependencyFile);
     }
