@@ -54,9 +54,13 @@ class WebCalculatorController implements IWebCalculatorController
 
         $this->webHistoryModel->addToHistory($inputDataString, $result);
 
-        $encodedInput = urlencode($inputDataString);
-        $encodedResult = urlencode($result);
-        $url = $this->calculatorUrl . sprintf("/?input=%s&result=%s", $encodedInput, $encodedResult);
+        $queryParams = [
+            'input' => $inputDataString,
+            'result' => $result
+        ];
+        $postData = http_build_query($queryParams);
+
+        $url = $this->calculatorUrl . '/?' . $postData;
         $this->redirectHandler->redirect($url);
     }
 }
