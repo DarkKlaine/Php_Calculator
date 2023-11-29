@@ -1,12 +1,15 @@
 <?php
 
 use Engine\Controllers\AuthControllerWeb;
+use Engine\Controllers\EngineControllerWeb;
 use Engine\Controllers\IAccessDeniedView;
+use Engine\Controllers\IEngineControllerWeb;
 use Engine\Controllers\ILoginView;
 use Engine\Models\Auth;
 use Engine\Models\IAuthSessionHandler;
-use Engine\Services\ConfigManagers\ConsoleConfigManager;
-use Engine\Services\ConfigManagers\WebConfigManager;
+use Engine\Services\ConfigManagers\BaseConfigManagerConsole;
+use Engine\Services\ConfigManagers\AuthConfigManagerWeb;
+use Engine\Services\ConfigManagers\BaseConfigManagerWeb;
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\DBConnection;
 use Engine\Services\DBConnector\IDBConnection;
@@ -21,10 +24,13 @@ use Engine\Services\Routers\WebRouter\WebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRouter;
 use Engine\Services\SessionHandler\AuthSessionHandler;
 use Engine\Views\AccessDeniedView;
+use Engine\Views\EngineHomePageView;
+use Engine\Views\IEngineHomePageView;
 use Engine\Views\IWebTemplateEngine;
 use Engine\Views\LoginView;
 use Engine\Views\WebTemplateEngine;
 use Psr\Log\LoggerInterface;
+use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 
 return [
     //Shared
@@ -41,6 +47,10 @@ return [
         return new DBConnection($logger, $host, $username, $password, $dbname);
     },
     //Auth
+    IAuthConfigManagerWeb::class => function () {
+        $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');
+        return new AuthConfigManagerWeb($appConfig);
+    },
     IAuthSessionHandler::class => function () {
         return new AuthSessionHandler();
     },
@@ -48,17 +58,14 @@ return [
         $users = require(__DIR__ . '/../../../Config/WebCfg/users.php');
         $redirectHandler = $container->get(IWebRedirectHandler::class);
         $authSessionHandler = $container->get(IAuthSessionHandler::class);
-        $configManager = $container->get(IWebConfigManager::class);
+        $configManager = $container->get(IAuthConfigManagerWeb::class);
         return new Auth($users, $redirectHandler, $authSessionHandler, $configManager,);
     },
     IAuthController::class => function (Container $container) {
-        $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
         $accessDeniedView = $container->get(IAccessDeniedView::class);
         $auth = $container->get(IAuth::class);
         $loginView = $container->get(ILoginView::class);
-        return new AuthControllerWeb($redirectHandler, $logger, $configManager, $accessDeniedView, $auth, $loginView,);
+        return new AuthControllerWeb($accessDeniedView, $auth, $loginView,);
     },
     IAccessDeniedView::class => function ($container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
@@ -69,6 +76,14 @@ return [
         return new LoginView($templateEngine);
     },
     //Web
+    IEngineControllerWeb::class => function (Container $container) {
+        $engineHomePageView = $container->get(IEngineHomePageView::class);
+        return new EngineControllerWeb($engineHomePageView);
+    },
+    IEngineHomePageView::class => function ($container) {
+        $templateEngine = $container->get(IWebTemplateEngine::class);
+        return new EngineHomePageView($templateEngine);
+    },
     IWebRedirectHandler::class => function () {
         return new WebRedirectHandler();
     },
@@ -77,13 +92,14 @@ return [
     },
     WebRouter::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
+        $configManager = $container->get(IAuthConfigManagerWeb::class);
         $auth = $container->get(IAuth::class);
-        return new WebRouter($logger, $configManager, $auth, $container);
+        $redirectHandler = $container->get(IWebRedirectHandler::class);
+        return new WebRouter($logger, $configManager, $auth, $container,$redirectHandler);
     },
     IWebConfigManager::class => function () {
         $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');
-        return new WebConfigManager($appConfig);
+        return new BaseConfigManagerWeb($appConfig);
     },
     //Console
     ConsoleRouter::class => function (Container $container) {
@@ -93,6 +109,6 @@ return [
     },
     IConsoleConfigManager::class => function () {
         $appConfig = require(__DIR__ . '/../../../Config/ConsoleCfg/app.php');
-        return new ConsoleConfigManager($appConfig);
+        return new BaseConfigManagerConsole($appConfig);
     },
 ];

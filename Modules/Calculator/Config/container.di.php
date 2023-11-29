@@ -36,6 +36,8 @@ use Modules\Calculator\Models\CalculatorModel\ISubtraction;
 use Modules\Calculator\Models\HistoryModel\ConsoleHistoryDecorator;
 use Modules\Calculator\Models\HistoryModel\HistoryModel;
 use Modules\Calculator\Models\HistoryModel\WebHistoryDecorator;
+use Modules\Calculator\Services\ConfigManager\CalculatorConfigManagerWeb;
+use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 use Modules\Calculator\Views\ConsoleCalculatorView;
 use Modules\Calculator\Views\ConsoleHistoryView;
 use Modules\Calculator\Views\WebCalculatorView;
@@ -84,22 +86,22 @@ return [
         return new HistoryModel($dbConnection, $logger);
     },
     //Web
+    ICalculatorConfigManagerWeb::class => function () {
+        $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');
+        return new CalculatorConfigManagerWeb($appConfig);
+    },
     IWebCalculatorController::class => function (Container $container) {
         $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
+        $configManager = $container->get(ICalculatorConfigManagerWeb::class);
         $calculatorModel = $container->get(ICalculatorModel::class);
         $historyDecorator = $container->get(WebHistoryDecorator::class);
         $calculatorView = $container->get(IWebCalculatorView::class);
-        return new WebCalculatorController($redirectHandler, $logger, $configManager, $calculatorModel, $historyDecorator, $calculatorView,);
+        return new WebCalculatorController($redirectHandler, $configManager, $calculatorModel, $historyDecorator, $calculatorView);
     },
     IWebHistoryController::class => function (Container $container) {
-        $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
         $historyView = $container->get(IWebHistoryView::class);
         $historyModel = $container->get(IHistoryModel::class);
-        return new WebHistoryController($redirectHandler, $logger, $configManager, $historyView, $historyModel,);
+        return new WebHistoryController($historyView, $historyModel,);
     },
     WebHistoryDecorator::class => function (Container $container) {
         $historyModel = $container->get(IHistoryModel::class);
@@ -107,11 +109,13 @@ return [
     },
     IWebCalculatorView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
-        return new WebCalculatorView($templateEngine);
+        $configManager = $container->get(ICalculatorConfigManagerWeb::class);
+        return new WebCalculatorView($templateEngine, $configManager);
     },
     IWebHistoryView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
-        return new WebHistoryView($templateEngine);
+        $configManager = $container->get(ICalculatorConfigManagerWeb::class);
+        return new WebHistoryView($templateEngine, $configManager);
     },
     //Console
     IConsoleCalculatorController::class => function (Container $container) {

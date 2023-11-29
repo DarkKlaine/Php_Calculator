@@ -2,14 +2,11 @@
 
 namespace Engine\Views;
 
-use Engine\Controllers\ILoginView;
-
-class LoginView implements ILoginView
+class EngineHomePageView implements IEngineHomePageView
 {
-    private string $title = 'PHP_Calculator';
+    private string $title = 'DK Engine';
     private string $indexTplFile = 'index.tpl.php';
-    private string $loginTplFile = 'login.tpl.php';
-    private string $pswScriptTplFile = 'psw.script.tpl.php';
+    private string $engineHomeTplFile = 'engineHome.tpl.php';
     private IWebTemplateEngine $templateEngine;
 
     public function __construct(IWebTemplateEngine $templateEngine)
@@ -21,7 +18,7 @@ class LoginView implements ILoginView
     {
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->setInjectTplFile($this->loginTplFile, scriptTpl: $this->pswScriptTplFile);
+        $this->templateEngine->setInjectTplFile($this->engineHomeTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }

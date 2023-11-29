@@ -3,7 +3,7 @@
 </div>
 
 <div class="form-body">
-    <form class="row g-3" method="post" action="/calculate">
+    <form class="row g-3" method="post" action="<?php echo $this->vars['Calculate'] ?>">
         <div class="col-12">
             <label for="inputExpression" class="form-label"></label>
             <pre style="font-family: monospace; text-align: center; font-size: 18px;">

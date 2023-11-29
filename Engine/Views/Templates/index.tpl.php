@@ -27,7 +27,7 @@
                     <h4 class="logo-text">DK Engine</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
-                <?php require 'links.tpl.php' ?>
+                <?php $this->injectMenuTpl() ?>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК КОНЕЦ -->
             </div>
         </nav>
@@ -41,7 +41,7 @@
                 <div class="card-body">
                     <div class="border p-4 rounded">
                         <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ НАЧАЛО -->
-                        <?php $this->injectTplFile() ?>
+                        <?php $this->injectContentTpl() ?>
                         <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ КОНЕЦ -->
                     </div>
                 </div>
@@ -62,7 +62,7 @@
 <script src="/assets/plugins/simplebar/js/simplebar.min.js"></script>
 <script src="/assets/plugins/metismenu/js/metisMenu.min.js"></script>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ НАЧАЛО -->
-<?php require 'psw.script.tpl.php' ?>
+<?php $this->injectScriptTpl() ?>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ КОНЕЦ -->
 <!--app JS-->
 <script src="/assets/js/app.js"></script>

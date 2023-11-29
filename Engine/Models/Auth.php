@@ -2,8 +2,8 @@
 
 namespace Engine\Models;
 
+use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\Routers\WebRouter\IAuth;
-use Engine\Services\Routers\WebRouter\IWebConfigManager;
 use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 
@@ -12,14 +12,14 @@ class Auth implements IAuth
     private array $users;
     private IAuthSessionHandler $authSessionHandler;
     private IWebRedirectHandler $redirectHandler;
-    private IWebConfigManager $configManager;
+    private IAuthConfigManagerWeb $configManager;
 
 
     public function __construct(
-        array               $users,
-        IWebRedirectHandler $redirectHandler,
-        IAuthSessionHandler $authSessionHandler,
-        IWebConfigManager   $configManager,
+        array                 $users,
+        IWebRedirectHandler   $redirectHandler,
+        IAuthSessionHandler   $authSessionHandler,
+        IAuthConfigManagerWeb $configManager,
     )
     {
         $this->users = $users;
@@ -42,6 +42,8 @@ class Auth implements IAuth
             session_destroy();
             $this->redirectHandler->redirect($this->configManager->getAccessDeniedPage());
         }
+
+        $this->setDestroyTime();
     }
 
     public function login(WebRequestDTO $request): void
@@ -50,8 +52,12 @@ class Auth implements IAuth
 
         if (!empty(array_intersect_assoc($this->users, $loginInfo))) {
             $this->authSessionHandler->setIsAuthorized(true);
-            $this->authSessionHandler->setDestroyTime(time() + $this->configManager->getAuthSessionLifeTime());
+            $this->setDestroyTime();
             $this->redirectHandler->redirect($this->configManager->getHomeUrl());
         }
+    }
+
+    private function setDestroyTime(): void {
+        $this->authSessionHandler->setDestroyTime(time() + $this->configManager->getAuthSessionLifeTime());
     }
 }
