@@ -6,27 +6,22 @@ use Modules\Calculator\Controllers\WebControllers\IWebHistoryController;
 return [
     'Calculator' => [
         'url' => '/calculator',
-        'controller' => IWebCalculatorController::class,
-        'action' => 'showForm'
+        'action' => [IWebCalculatorController::class, 'showForm']
     ],
     'Calculate' => [
         'url' => '/calculator/calculate',
-        'controller' => IWebCalculatorController::class,
-        'action' => 'calculate'
+        'action' => [IWebCalculatorController::class, 'calculate']
     ],
     'GlobalHistory' => [
         'url' => '/calculator/history/global',
-        'controller' => IWebHistoryController::class,
-        'action' => 'showGeneral'
+        'action' => [IWebHistoryController::class, 'showGeneral']
     ],
     'SessionHistory' => [
         'url' => '/calculator/history/session',
-        'controller' => IWebHistoryController::class,
-        'action' => 'showPersonal'
+        'action' => [IWebHistoryController::class, 'showPersonal']
     ],
     'DataBaseHistory' => [
         'url' => '/calculator/history/database',
-        'controller' => IWebHistoryController::class,
-        'action' => 'showDB'
+        'action' => [IWebHistoryController::class, 'showDB']
     ],
 ];

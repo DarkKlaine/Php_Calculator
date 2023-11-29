@@ -62,13 +62,10 @@ return [
         return new Auth($users, $redirectHandler, $authSessionHandler, $configManager,);
     },
     IAuthController::class => function (Container $container) {
-        $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
         $accessDeniedView = $container->get(IAccessDeniedView::class);
         $auth = $container->get(IAuth::class);
         $loginView = $container->get(ILoginView::class);
-        return new AuthControllerWeb($redirectHandler, $logger, $configManager, $accessDeniedView, $auth, $loginView,);
+        return new AuthControllerWeb($accessDeniedView, $auth, $loginView,);
     },
     IAccessDeniedView::class => function ($container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
@@ -80,11 +77,8 @@ return [
     },
     //Web
     IEngineControllerWeb::class => function (Container $container) {
-        $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $logger = $container->get(LoggerInterface::class);
-        $configManager = $container->get(IWebConfigManager::class);
         $engineHomePageView = $container->get(IEngineHomePageView::class);
-        return new EngineControllerWeb($redirectHandler, $logger, $configManager, $engineHomePageView);
+        return new EngineControllerWeb($engineHomePageView);
     },
     IEngineHomePageView::class => function ($container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
@@ -100,7 +94,8 @@ return [
         $logger = $container->get(LoggerInterface::class);
         $configManager = $container->get(IAuthConfigManagerWeb::class);
         $auth = $container->get(IAuth::class);
-        return new WebRouter($logger, $configManager, $auth, $container);
+        $redirectHandler = $container->get(IWebRedirectHandler::class);
+        return new WebRouter($logger, $configManager, $auth, $container,$redirectHandler);
     },
     IWebConfigManager::class => function () {
         $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');

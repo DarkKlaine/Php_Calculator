@@ -6,17 +6,14 @@ use Engine\Services\Routers\WebRouter\IAuthController;
 return [
     'EngineHome' => [
         'url' => '/',
-        'controller' => IEngineControllerWeb::class,
-        'action' => 'engineHomePage'
+        'action' => [IEngineControllerWeb::class, 'engineHomePage']
     ],
     'AccessDenied' => [
         'url' => '/accessDenied',
-        'controller' => IAuthController::class,
-        'action' => 'accessDenied'
+        'action' => [IAuthController::class, 'accessDenied']
     ],
     'Login' => [
         'url' => '/login',
-        'controller' => IAuthController::class,
-        'action' => 'login'
+        'action' => [IAuthController::class, 'login']
     ],
 ];
