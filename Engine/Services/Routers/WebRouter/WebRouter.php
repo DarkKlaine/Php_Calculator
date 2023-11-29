@@ -4,6 +4,7 @@ namespace Engine\Services\Routers\WebRouter;
 
 use Engine\Controllers\WebBaseController;
 use Engine\IRouter;
+use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\Container\Container;
 use Engine\Services\Routers\AbstractRouter;
 use Psr\Log\LoggerInterface;
@@ -11,11 +12,11 @@ use Psr\Log\LoggerInterface;
 class WebRouter extends AbstractRouter implements IRouter
 {
     private IAuth $auth;
-    private IWebConfigManager $configManager;
+    private IAuthConfigManagerWeb $configManager;
 
     public function __construct(
         LoggerInterface   $logger,
-        IWebConfigManager $configManager,
+        IAuthConfigManagerWeb $configManager,
         IAuth             $auth,
         Container         $container,
     )
@@ -27,7 +28,11 @@ class WebRouter extends AbstractRouter implements IRouter
 
     public function handleRequest(): void
     {
-        $requestUri = strtok($_SERVER['REQUEST_URI'], '?');
+        $requestUri = $_SERVER['REQUEST_URI'];
+        if (str_contains($requestUri, '/?')) {
+            $requestUri = strstr($requestUri, '/?', true);
+        }
+
         $routes = $this->configManager->getRoutes();
         $route = [];
 
@@ -66,5 +71,4 @@ class WebRouter extends AbstractRouter implements IRouter
             exit();
         }
     }
-
 }

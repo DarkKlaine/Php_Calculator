@@ -11,7 +11,7 @@
     <br>
     <div class="d-grid">
         <button type="button" class="btn btn-light"
-                onclick="window.location.href=''">Управление пользователями
+                onclick="window.location.href=''">Управление пользователями (скоро)
         </button>
     </div>
 </div>
