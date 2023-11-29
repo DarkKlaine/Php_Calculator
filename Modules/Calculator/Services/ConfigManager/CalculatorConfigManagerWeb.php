@@ -6,36 +6,29 @@ use Engine\Services\ConfigManagers\BaseConfigManagerWeb;
 
 class CalculatorConfigManagerWeb extends BaseConfigManagerWeb implements ICalculatorConfigManagerWeb
 {
-    private string $calculatorSublink;
 
-    public function __construct(array $appConfig, array $calculatorConfig)
+    public function __construct(array $appConfig)
     {
         parent::__construct($appConfig);
-        $this->calculatorSublink = $calculatorConfig['sublink'] ?? '';
-    }
-
-    public function getCalculatorSublink(): string
-    {
-        return $this->calculatorSublink;
     }
 
     public function getCalculatorUrl(): string {
-        return $this->calculatorSublink . $this->routes['Calculator']['url'];
+        return $this->routes['Calculator']['url'];
     }
 
     public function getCalculateUrl(): string {
-        return $this->calculatorSublink . $this->routes['Calculate']['url'];
+        return $this->routes['Calculate']['url'];
     }
 
     public function getGlobalHistoryUrl(): string {
-        return $this->calculatorSublink . $this->routes['GlobalHistory']['url'];
+        return $this->routes['GlobalHistory']['url'];
     }
 
     public function getSessionHistoryUrl(): string {
-        return $this->calculatorSublink . $this->routes['SessionHistory']['url'];
+        return $this->routes['SessionHistory']['url'];
     }
 
     public function getDataBaseHistoryUrl(): string {
-        return $this->calculatorSublink . $this->routes['DataBaseHistory']['url'];
+        return $this->routes['DataBaseHistory']['url'];
     }
 }

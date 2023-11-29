@@ -32,6 +32,7 @@ class WebCalculatorView implements IWebCalculatorView
         $this->templateEngine->assignVar('result', $result);
 
         $this->templateEngine->assignVar('Calculator', $this->configManager->getCalculatorUrl());
+        $this->templateEngine->assignVar('Calculate', $this->configManager->getCalculateUrl());
         $this->templateEngine->assignVar('GlobalHistory', $this->configManager->getGlobalHistoryUrl());
         $this->templateEngine->assignVar('SessionHistory', $this->configManager->getSessionHistoryUrl());
         $this->templateEngine->assignVar('DataBaseHistory', $this->configManager->getDataBaseHistoryUrl());

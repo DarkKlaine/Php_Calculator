@@ -1,7 +1,9 @@
 <?php
 
 use Engine\Controllers\AuthControllerWeb;
+use Engine\Controllers\EngineControllerWeb;
 use Engine\Controllers\IAccessDeniedView;
+use Engine\Controllers\IEngineControllerWeb;
 use Engine\Controllers\ILoginView;
 use Engine\Models\Auth;
 use Engine\Models\IAuthSessionHandler;
@@ -22,6 +24,8 @@ use Engine\Services\Routers\WebRouter\WebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRouter;
 use Engine\Services\SessionHandler\AuthSessionHandler;
 use Engine\Views\AccessDeniedView;
+use Engine\Views\EngineHomePageView;
+use Engine\Views\IEngineHomePageView;
 use Engine\Views\IWebTemplateEngine;
 use Engine\Views\LoginView;
 use Engine\Views\WebTemplateEngine;
@@ -75,6 +79,17 @@ return [
         return new LoginView($templateEngine);
     },
     //Web
+    IEngineControllerWeb::class => function (Container $container) {
+        $redirectHandler = $container->get(IWebRedirectHandler::class);
+        $logger = $container->get(LoggerInterface::class);
+        $configManager = $container->get(IWebConfigManager::class);
+        $engineHomePageView = $container->get(IEngineHomePageView::class);
+        return new EngineControllerWeb($redirectHandler, $logger, $configManager, $engineHomePageView);
+    },
+    IEngineHomePageView::class => function ($container) {
+        $templateEngine = $container->get(IWebTemplateEngine::class);
+        return new EngineHomePageView($templateEngine);
+    },
     IWebRedirectHandler::class => function () {
         return new WebRedirectHandler();
     },

@@ -15,6 +15,6 @@ foreach ($modulesList as $module) {
 }
 
 return array_merge(
-    require __DIR__ . '/authRoutes.php',
+    require __DIR__ . '/engineRoutes.php',
     $routes
 );

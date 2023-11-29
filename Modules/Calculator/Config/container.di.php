@@ -88,8 +88,7 @@ return [
     //Web
     ICalculatorConfigManagerWeb::class => function () {
         $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');
-        $calculatorConfig = require (__DIR__ . '/calculator.cfg.php');
-        return new CalculatorConfigManagerWeb($appConfig, $calculatorConfig);
+        return new CalculatorConfigManagerWeb($appConfig);
     },
     IWebCalculatorController::class => function (Container $container) {
         $redirectHandler = $container->get(IWebRedirectHandler::class);

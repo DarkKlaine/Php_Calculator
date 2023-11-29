@@ -5,7 +5,7 @@ use Modules\Calculator\Controllers\WebControllers\IWebHistoryController;
 
 return [
     'Calculator' => [
-        'url' => '/',
+        'url' => '/calculator',
         'controller' => IWebCalculatorController::class,
         'action' => 'showForm'
     ],
@@ -15,17 +15,17 @@ return [
         'action' => 'calculate'
     ],
     'GlobalHistory' => [
-        'url' => '/calculator/history',
+        'url' => '/calculator/history/global',
         'controller' => IWebHistoryController::class,
         'action' => 'showGeneral'
     ],
     'SessionHistory' => [
-        'url' => '/calculator/session',
+        'url' => '/calculator/history/session',
         'controller' => IWebHistoryController::class,
         'action' => 'showPersonal'
     ],
     'DataBaseHistory' => [
-        'url' => '/calculator/db',
+        'url' => '/calculator/history/database',
         'controller' => IWebHistoryController::class,
         'action' => 'showDB'
     ],

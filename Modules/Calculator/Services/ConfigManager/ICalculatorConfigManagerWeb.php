@@ -4,8 +4,6 @@ namespace Modules\Calculator\Services\ConfigManager;
 
 interface ICalculatorConfigManagerWeb
 {
-    public function getCalculatorSublink(): string;
-
     public function getCalculatorUrl(): string;
 
     public function getCalculateUrl(): string;
