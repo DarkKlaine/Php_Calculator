@@ -20,7 +20,7 @@ class AccessDeniedView implements IAccessDeniedView
     {
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->setInjectTplFile(null, $this->accessDeniedTplFile, null,);
+        $this->templateEngine->setInjectTplFile($this->accessDeniedTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }

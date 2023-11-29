@@ -7,7 +7,7 @@ class WebTemplateEngine implements IWebTemplateEngine
     protected array $vars = [];
     private string $engineTemplatesPath = __DIR__ . '/Templates/';
     private string $moduleTemplatesPath = __DIR__ . '/Templates/';
-    private ?string $linksTpl;
+    private ?string $menuTpl;
     private string $contentTpl;
     private ?string $scriptTpl;
 
@@ -16,9 +16,9 @@ class WebTemplateEngine implements IWebTemplateEngine
         $this->vars[$name] = $value;
     }
 
-    public function setInjectTplFile(?string $linksTpl, string $contentTpl, ?string $scriptTpl): void
+    public function setInjectTplFile(string $contentTpl, ?string $menuTpl = null, ?string $scriptTpl = null): void
     {
-        $this->linksTpl = $linksTpl;
+        $this->menuTpl = $menuTpl;
         $this->contentTpl = $contentTpl;
         $this->scriptTpl = $scriptTpl;
     }
@@ -39,10 +39,10 @@ class WebTemplateEngine implements IWebTemplateEngine
         $this->engineTemplatesPath = $engineTemplatesPath;
     }
 
-    private function injectLinksTpl(): void
+    private function injectMenuTpl(): void
     {
-        if ($this->linksTpl !== null) {
-            require($this->moduleTemplatesPath . $this->linksTpl);
+        if ($this->menuTpl !== null) {
+            require($this->moduleTemplatesPath . $this->menuTpl);
         }
     }
 

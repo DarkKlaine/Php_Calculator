@@ -21,7 +21,7 @@ class LoginView implements ILoginView
     {
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->setInjectTplFile(null, $this->loginTplFile, $this->pswScriptTplFile);
+        $this->templateEngine->setInjectTplFile($this->loginTplFile, scriptTpl: $this->pswScriptTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }

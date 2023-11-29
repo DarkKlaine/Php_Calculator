@@ -27,7 +27,7 @@
                     <h4 class="logo-text">DK Engine</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
-                <?php $this->injectLinksTpl() ?>
+                <?php $this->injectMenuTpl() ?>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК КОНЕЦ -->
             </div>
         </nav>

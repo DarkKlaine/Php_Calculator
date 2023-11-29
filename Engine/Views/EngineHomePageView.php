@@ -18,7 +18,7 @@ class EngineHomePageView implements IEngineHomePageView
     {
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->setInjectTplFile(null, $this->engineHomeTplFile, null,);
+        $this->templateEngine->setInjectTplFile($this->engineHomeTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }

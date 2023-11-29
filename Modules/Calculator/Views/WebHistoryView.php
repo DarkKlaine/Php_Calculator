@@ -13,7 +13,7 @@ class WebHistoryView implements IWebHistoryView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
-    private string $linksTplFile = 'links.tpl.php';
+    private string $menuTplFile = 'menu.tpl.php';
     private string $historyTplFile = 'history.tpl.php';
     private IWebTemplateEngine $templateEngine;
     private ICalculatorConfigManagerWeb $configManager;
@@ -37,7 +37,7 @@ class WebHistoryView implements IWebHistoryView
         $this->templateEngine->assignVar('SessionHistory', $this->configManager->getSessionHistoryUrl());
         $this->templateEngine->assignVar('DataBaseHistory', $this->configManager->getDataBaseHistoryUrl());
 
-        $this->templateEngine->setInjectTplFile($this->linksTplFile, $this->historyTplFile, null,);
+        $this->templateEngine->setInjectTplFile($this->historyTplFile, $this->menuTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }
