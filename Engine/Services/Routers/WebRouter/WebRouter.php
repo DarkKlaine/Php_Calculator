@@ -45,36 +45,20 @@ class WebRouter extends AbstractRouter implements IRouter
             }
         }
 
-        $this->validateRoute($route);
-
-        $request = new WebRequestDTO(
-            $_POST,
-            $_GET,
-        );
-
         if ($this->configManager->isAuthEnabled()) {
             $this->auth->verifyAuth($requestUri);
         }
 
-        $controllerName = $route['action'][0];
-        $methodName = $route['action'][1];
+        $className = $route['action'][0] ?? '';
+        $methodName = $route['action'][1] ?? '';
+        $request = new WebRequestDTO($_POST, $_GET,);
 
-        if (method_exists($controllerName, $methodName)) {
-            $controller = $this->container->get($controllerName);
+        if (method_exists($className, $methodName)) {
+            $controller = $this->container->get($className);
             $controller->$methodName($request);
         } else {
             $message = "Ошибка в WebRouter. Неправильный 'action' в *Routes.php.";
             $this->logger->error($message);
-            echo $message;
-            $this->redirectHandler->redirect($this->configManager->getHomeUrl());
-        }
-    }
-
-    private function validateRoute(array $route): void
-    {
-        if (empty($route)) {
-            $message = '404. Ошибка в WebRouter';
-            $this->logger->debug($message);
             echo $message;
             $this->redirectHandler->redirect($this->configManager->getHomeUrl());
         }
