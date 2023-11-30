@@ -16,7 +16,7 @@ class WebTemplateEngine implements IWebTemplateEngine
         $this->vars[$name] = $value;
     }
 
-    public function setInjectTplFile(string $contentTpl, ?string $menuTpl = null, ?string $scriptTpl = null): void
+    public function setTemplatesForInjection(string $contentTpl, ?string $menuTpl = null, ?string $scriptTpl = null): void
     {
         $this->menuTpl = $menuTpl;
         $this->contentTpl = $contentTpl;

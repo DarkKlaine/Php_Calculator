@@ -17,11 +17,11 @@ class WebCalculatorController implements IWebCalculatorController
     private IWebRedirectHandler $redirectHandler;
 
     public function __construct(
-        IWebRedirectHandler $redirectHandler,
-        ICalculatorConfigManagerWeb   $configManager,
-        ICalculatorModel    $calculatorModel,
-        IHistoryDecorator   $webHistoryDecorator,
-        IWebCalculatorView  $calculatorView,
+        IWebRedirectHandler         $redirectHandler,
+        ICalculatorConfigManagerWeb $configManager,
+        ICalculatorModel            $calculatorModel,
+        IHistoryDecorator           $webHistoryDecorator,
+        IWebCalculatorView          $calculatorView,
     )
     {
         $this->webHistoryModel = $webHistoryDecorator;
