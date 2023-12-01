@@ -33,7 +33,7 @@ class UserConfigManagerWeb extends BaseConfigManagerWeb implements IUserConfigMa
         return $this->routes['SetRole']['url'];
     }
 
-    public function getShowUsersListUrl(): string
+    public function getShowUserListUrl(): string
     {
         return $this->routes['ShowUsersList']['url'];
     }

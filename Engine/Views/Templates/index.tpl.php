@@ -10,6 +10,8 @@
     <!--plugins-->
     <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
     <link href="/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet"/>
+    <link href="/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/app.css" rel="stylesheet">
@@ -27,14 +29,13 @@
                     <h4 class="logo-text">DK Engine</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
-                <?php
-                $this->injectMenuTpl() ?>
+                <?php $this->injectMenuTpl() ?>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК КОНЕЦ -->
             </div>
         </nav>
     </header>
     <div class="section-calculator d-flex align-items-center justify-content-center my-5 my-lg-4">
-        <div class="container-fluid col-md-auto" style="min-width: 500px; max-width: 1800px;">
+        <div class="container-fluid col-md-auto" style="min-width: 500px; max-width: 1800px; min-height: 100px; max-height: 750px;">
             <div class=" row row-cols-1 row-cols-lg-1 row-cols-xl-1
         ">
                 <div class="col mx-auto">
@@ -42,8 +43,7 @@
                         <div class="card-body">
                             <div class="border p-4 rounded">
                                 <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ НАЧАЛО -->
-                                <?php
-                                $this->injectContentTpl() ?>
+                                <?php $this->injectContentTpl() ?>
                                 <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ КОНЕЦ -->
                             </div>
                         </div>
@@ -63,9 +63,17 @@
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/plugins/simplebar/js/simplebar.min.js"></script>
 <script src="/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+
+<script src="/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+<script src="/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ НАЧАЛО -->
-<?php
-$this->injectScriptTpl() ?>
+<?php $this->injectScriptTpl() ?>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ КОНЕЦ -->
 <!--app JS-->
 <script src="/assets/js/app.js"></script>

@@ -5,12 +5,11 @@ namespace Modules\User\Views;
 use Engine\Views\IWebTemplateEngine;
 use Modules\User\IUserConfigManagerWeb;
 
-class UserSetRoleView
+class UserListView
 {
-    private string $title = 'Выберите роль';
-    private string $description = 'Может состоять из 2–12 букв или цифр';
+    private string $title = 'Список пользователей';
     private string $indexTplFile = 'index.tpl.php';
-    private string $contentTplFile = 'setRole.tpl.php';
+    private string $contentTplFile = 'userList.tpl.php';
     private IWebTemplateEngine $templateEngine;
     private IUserConfigManagerWeb $configManager;
 
@@ -20,20 +19,14 @@ class UserSetRoleView
         $this->configManager = $configManager;
     }
 
-    public function render($request): void
+    public function render(): void
     {
         $this->templateEngine->assignVar('Title', $this->title);
-        $this->templateEngine->assignVar('Description', $this->description);
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
-        $this->templateEngine->assignVar('Action', $this->configManager->getShowUserInfoUrl());
-
-        $username = $request->getPost()['username'] ?? null;
-        $this->templateEngine->assignVar('Username', $username);
-
-        $password = $request->getPost()['password'] ?? null;
-        $this->templateEngine->assignVar('Password', $password);
+        $this->templateEngine->assignVar('UserList', $this->configManager->getShowUserListUrl());
+        $this->templateEngine->assignVar('UserInfo', $this->configManager->getShowUserInfoUrl());
 
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);
 

@@ -21,7 +21,7 @@ class UserSetPasswordView
         $this->configManager = $configManager;
     }
 
-    public function render(): void
+    public function render($request): void
     {
         $this->templateEngine->assignVar('Title', $this->title);
         $this->templateEngine->assignVar('Description', $this->description);
@@ -29,6 +29,9 @@ class UserSetPasswordView
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
         $this->templateEngine->assignVar('Action', $this->configManager->getSetRoleUrl());
+
+        $username = $request->getPost()['username'] ?? null;
+        $this->templateEngine->assignVar('Username', $username);
 
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile, scriptTpl: $this->pswScriptTplFile);
 

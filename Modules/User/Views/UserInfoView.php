@@ -5,12 +5,15 @@ namespace Modules\User\Views;
 use Engine\Views\IWebTemplateEngine;
 use Modules\User\IUserConfigManagerWeb;
 
-class UserSetRoleView
+class UserInfoView
 {
-    private string $title = 'Выберите роль';
-    private string $description = 'Может состоять из 2–12 букв или цифр';
+    private string $title = 'Иформация о пользователе';
+    private string $username = 'DarkKlaine';
+    private string $role = 'Администратор';
+    private string $registerDate = '01.12.2023 22:22';
+
     private string $indexTplFile = 'index.tpl.php';
-    private string $contentTplFile = 'setRole.tpl.php';
+    private string $contentTplFile = 'userInfo.tpl.php';
     private IWebTemplateEngine $templateEngine;
     private IUserConfigManagerWeb $configManager;
 
@@ -20,20 +23,17 @@ class UserSetRoleView
         $this->configManager = $configManager;
     }
 
-    public function render($request): void
+    public function render(): void
     {
         $this->templateEngine->assignVar('Title', $this->title);
-        $this->templateEngine->assignVar('Description', $this->description);
+        $this->templateEngine->assignVar('Username', $this->username);
+        $this->templateEngine->assignVar('Role', $this->role);
+        $this->templateEngine->assignVar('RegisterDate', $this->registerDate);
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
-        $this->templateEngine->assignVar('Action', $this->configManager->getShowUserInfoUrl());
-
-        $username = $request->getPost()['username'] ?? null;
-        $this->templateEngine->assignVar('Username', $username);
-
-        $password = $request->getPost()['password'] ?? null;
-        $this->templateEngine->assignVar('Password', $password);
+        $this->templateEngine->assignVar('Action', $this->configManager->getSetUsernameUrl());
+        $this->templateEngine->assignVar('ShowUsersList', $this->configManager->getShowUserListUrl());
 
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);
 

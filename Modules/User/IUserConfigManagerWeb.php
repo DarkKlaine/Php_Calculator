@@ -12,7 +12,7 @@ interface IUserConfigManagerWeb
 
     public function getSetRoleUrl(): string;
 
-    public function getShowUsersListUrl(): string;
+    public function getShowUserListUrl(): string;
 
     public function getShowUserInfoUrl(): string;
 }

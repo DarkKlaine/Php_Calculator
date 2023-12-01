@@ -1,15 +1,24 @@
 <div class="text-center">
-    <h3 class="">Выберите роль</h3><br>
+    <h3 class="">
+        <?php echo $this->vars['Title'] ?>
+    </h3><br>
+</div>
+
+<div class="text-center">
+    <h3 class="">
+        <?php echo $this->vars['Title'] ?>
+    </h3><br>
 </div>
 
 <div class="form-body">
-    <form class="row g-3">
+    <form class="row g-3" method="post" action="<?php echo $this->vars['Action'] ?>">
 
         <div class="col-12">
-            <select class="form-select mb-3" aria-label="Default select example">
-                <option selected>Показать варианты</option>
-                <option value="User">Пользователь</option>
-                <option value="Admin">Администратор</option>
+            <input type="hidden" name="username" value="<?php echo $this->vars['Username'] ?>">
+            <input type="hidden" name="password" value="<?php echo $this->vars['Password'] ?>">
+            <select class="form-select mb-3" aria-label="Select role" name="role">
+                <option selected value="user">Счетовод</option>
+                <option value="admin">Администратор</option>
             </select>
         </div>
         <div class="col-12">
