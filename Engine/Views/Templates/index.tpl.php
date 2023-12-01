@@ -27,7 +27,8 @@
                     <h4 class="logo-text">DK Engine</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
-                <?php $this->injectMenuTpl() ?>
+                <?php
+                $this->injectMenuTpl() ?>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК КОНЕЦ -->
             </div>
         </nav>
@@ -36,23 +37,24 @@
         <div class="container-fluid col-md-auto" style="min-width: 500px; max-width: 1800px;">
             <div class=" row row-cols-1 row-cols-lg-1 row-cols-xl-1
         ">
-        <div class="col mx-auto">
-            <div class="card mt-5 mt-lg-0">
-                <div class="card-body">
-                    <div class="border p-4 rounded">
-                        <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ НАЧАЛО -->
-                        <?php $this->injectContentTpl() ?>
-                        <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ КОНЕЦ -->
+                <div class="col mx-auto">
+                    <div class="card mt-5 mt-lg-0">
+                        <div class="card-body">
+                            <div class="border p-4 rounded">
+                                <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ НАЧАЛО -->
+                                <?php
+                                $this->injectContentTpl() ?>
+                                <!-- ТУТ ВСТАВЛЯТЬ ШАБЛОН СТРАНИЦЫ КОНЕЦ -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!--end row-->
         </div>
     </div>
-    <!--end row-->
-</div>
-</div>
-<footer class="bg-light shadow-sm border-top p-2 text-center fixed-bottom">
-</footer>
+    <footer class="bg-light shadow-sm border-top p-2 text-center fixed-bottom">
+    </footer>
 </div>
 <!--end wrapper-->
 <!-- Bootstrap JS -->
@@ -62,7 +64,8 @@
 <script src="/assets/plugins/simplebar/js/simplebar.min.js"></script>
 <script src="/assets/plugins/metismenu/js/metisMenu.min.js"></script>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ НАЧАЛО -->
-<?php $this->injectScriptTpl() ?>
+<?php
+$this->injectScriptTpl() ?>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ КОНЕЦ -->
 <!--app JS-->
 <script src="/assets/js/app.js"></script>

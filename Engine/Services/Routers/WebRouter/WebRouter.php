@@ -15,13 +15,12 @@ class WebRouter extends AbstractRouter implements IRouter
     private IWebRedirectHandler $redirectHandler;
 
     public function __construct(
-        LoggerInterface       $logger,
+        LoggerInterface $logger,
         IAuthConfigManagerWeb $configManager,
-        IAuth                 $auth,
-        Container             $container,
-        IWebRedirectHandler   $redirectHandler,
-    )
-    {
+        IAuth $auth,
+        Container $container,
+        IWebRedirectHandler $redirectHandler,
+    ) {
         parent::__construct($logger, $container);
         $this->configManager = $configManager;
         $this->auth = $auth;

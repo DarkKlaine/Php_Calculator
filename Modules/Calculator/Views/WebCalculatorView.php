@@ -21,6 +21,7 @@ class WebCalculatorView implements IWebCalculatorView
         $this->templateEngine = $templateEngine;
         $this->configManager = $configManager;
     }
+
     public function render(string $input, string $result): void
     {
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');

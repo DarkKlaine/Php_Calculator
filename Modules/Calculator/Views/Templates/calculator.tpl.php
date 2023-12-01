@@ -3,7 +3,8 @@
 </div>
 
 <div class="form-body">
-    <form class="row g-3" method="post" action="<?php echo $this->vars['Calculate'] ?>">
+    <form class="row g-3" method="post" action="<?php
+    echo $this->vars['Calculate'] ?>">
         <div class="col-12">
             <label for="inputExpression" class="form-label"></label>
             <pre style="font-family: monospace; text-align: center; font-size: 18px;">
@@ -17,7 +18,8 @@ if (empty($this->vars['result']) === false || $this->vars['result'] === '0') {
     echo 'Умеет вычислять сложные выражения' . PHP_EOL;
 }
 ?></pre>
-            <input type="text" class="form-control" id="inputExpression" name="userInput" placeholder="Введите выражение" required>
+            <input type="text" class="form-control" id="inputExpression" name="userInput"
+                   placeholder="Введите выражение" required>
         </div>
         <div class="col-12">
             <div class="d-grid">

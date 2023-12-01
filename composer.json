@@ -1,14 +1,14 @@
 {
-  "autoload": {
-    "psr-4": {
-      "Engine\\": "Engine/",
-      "Modules\\": "Modules/"
+    "autoload": {
+        "psr-4": {
+            "Engine\\": "Engine/",
+            "Modules\\": "Modules/"
+        }
+    },
+    "require": {
+        "ext-readline": "*",
+        "psr/log": "^3.0",
+        "psr/container": "^2.0",
+        "ext-pdo": "*"
     }
-  },
-  "require": {
-    "ext-readline": "*",
-    "psr/log": "^3.0",
-    "psr/container": "^2.0",
-    "ext-pdo": "*"
-  }
 }

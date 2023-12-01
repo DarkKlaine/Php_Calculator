@@ -1,19 +1,18 @@
 <div class="text-center">
     <h3 class="">
-        <?php echo $this->vars['Title'] ?>
+        <?php
+        echo $this->vars['Title'] ?>
     </h3><br>
 </div>
 
 <div class="col-12">
     <div class="d-grid">
-        <button type="button" class="btn btn-light"
-                onclick="window.location.href='/user'">Список пользователей
-        </button>
+        <a href="<?php
+        echo $this->vars['ShowUsersList'] ?>" class="btn btn-light">Список пользователей</a>
     </div>
     <br>
     <div class="d-grid">
-        <button type="button" class="btn btn-light"
-                onclick="window.location.href='/user'">Добавить нового пользователя
-        </button>
+        <a href="<?php
+        echo $this->vars['SetUsername'] ?>" class="btn btn-light">Добавить нового пользователя</a>
     </div>
 </div>

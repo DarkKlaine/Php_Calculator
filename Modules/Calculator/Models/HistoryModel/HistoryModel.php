@@ -59,6 +59,7 @@ class HistoryModel implements IHistoryModel
     {
         $logArray = $this->trimToMaxSize($logArray);
         $logArray[] = $stringForLogging;
+
         return $this->numberingAndPadding($logArray);
     }
 
@@ -119,6 +120,7 @@ class HistoryModel implements IHistoryModel
     public function getGeneralHistoryString(bool $isForWeb): string
     {
         $logArray = file($this->logFile) ?? [];
+
         return $this->generateHistoryString($logArray, $isForWeb);
     }
 
@@ -141,6 +143,7 @@ class HistoryModel implements IHistoryModel
     public function getSessionHistoryString(bool $isForWeb): string
     {
         $logArray = $_SESSION['history'] ?? [];
+
         return $this->generateHistoryString($logArray, $isForWeb);
     }
 
@@ -160,6 +163,7 @@ class HistoryModel implements IHistoryModel
         $this->dbConnection->closeConnection();
 
         $logArray = $this->numberingAndPadding($logArray);
+
         return $this->generateHistoryString($logArray, $isForWeb);
     }
 }

@@ -1,9 +1,17 @@
 <div class="text-center">
-    <h3 class="">Придумайте пароль</h3>
+    <h3 class="">
+        <?php
+        echo $this->vars['Title'] ?>
+    </h3>
+    <h7 class="">
+        <?php
+        echo $this->vars['Description'] ?>
+    </h7>
 </div>
 
 <div class="form-body">
-    <form class="row g-3">
+    <form class="row g-3" method="post" action="<?php
+    echo $this->vars['Action'] ?>">
         <div class="col-12">
             <label for="inputPassword" class="form-label"></label>
             <div class="input-group" id="password">

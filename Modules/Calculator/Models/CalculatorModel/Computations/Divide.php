@@ -16,6 +16,7 @@ class Divide extends Computation implements IDivide
             $result = $value1 / $value2;
             $this->logger->info("Операция деления: $value1 / $value2 = $result");
         }
+
         return $result;
     }
 }

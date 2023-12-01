@@ -16,8 +16,7 @@ class DBConnection implements IDBConnection
         string $username,
         string $password,
         string $dbname
-    )
-    {
+    ) {
         $dsn = "mysql:host={$host};dbname={$dbname}";
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

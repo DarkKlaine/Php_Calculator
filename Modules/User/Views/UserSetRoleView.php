@@ -2,7 +2,7 @@
 
 namespace Modules\User\Views;
 
-class UserRegisterRoleView
+class UserSetRoleView
 {
 
 }

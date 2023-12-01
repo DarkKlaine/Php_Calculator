@@ -6,7 +6,11 @@ interface IWebTemplateEngine
 {
     public function assignVar(string $name, mixed $value): void;
 
-    public function setTemplatesForInjection(string $contentTpl, ?string $menuTpl = null, ?string $scriptTpl = null): void;
+    public function setTemplatesForInjection(
+        string $contentTpl,
+        ?string $menuTpl = null,
+        ?string $scriptTpl = null
+    ): void;
 
     public function display(string $tplFile): void;
 

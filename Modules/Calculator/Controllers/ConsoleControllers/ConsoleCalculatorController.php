@@ -16,12 +16,11 @@ class ConsoleCalculatorController extends ConsoleBaseController implements ICons
     private IConsoleCalculatorView $consoleCalculatorView;
 
     public function __construct(
-        LoggerInterface        $logger,
-        ICalculatorModel       $calculatorModel,
-        IHistoryDecorator      $consoleHistoryDecorator,
+        LoggerInterface $logger,
+        ICalculatorModel $calculatorModel,
+        IHistoryDecorator $consoleHistoryDecorator,
         IConsoleCalculatorView $consoleCalculatorView,
-    )
-    {
+    ) {
         parent::__construct($logger);
         $this->calculatorModel = $calculatorModel;
         $this->consoleHistoryModel = $consoleHistoryDecorator;

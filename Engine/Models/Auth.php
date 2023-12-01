@@ -16,12 +16,11 @@ class Auth implements IAuth
 
 
     public function __construct(
-        array                 $users,
-        IWebRedirectHandler   $redirectHandler,
-        IAuthSessionHandler   $authSessionHandler,
+        array $users,
+        IWebRedirectHandler $redirectHandler,
+        IAuthSessionHandler $authSessionHandler,
         IAuthConfigManagerWeb $configManager,
-    )
-    {
+    ) {
         $this->users = $users;
         $this->redirectHandler = $redirectHandler;
         $this->authSessionHandler = $authSessionHandler;
@@ -57,7 +56,8 @@ class Auth implements IAuth
         }
     }
 
-    private function setDestroyTime(): void {
+    private function setDestroyTime(): void
+    {
         $this->authSessionHandler->setDestroyTime(time() + $this->configManager->getAuthSessionLifeTime());
     }
 }

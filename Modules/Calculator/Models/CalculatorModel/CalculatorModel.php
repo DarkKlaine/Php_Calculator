@@ -18,14 +18,13 @@ class CalculatorModel implements ICalculatorModel
 
     public function __construct(
         LoggerInterface $logger,
-        IAddition       $addition,
-        ISubtraction    $subtraction,
-        IMultiply       $multiply,
-        IDivide         $divide,
+        IAddition $addition,
+        ISubtraction $subtraction,
+        IMultiply $multiply,
+        IDivide $divide,
         IExponentiation $exponentiation,
-        ISinCosTan      $sinCosTan
-    )
-    {
+        ISinCosTan $sinCosTan
+    ) {
         $this->addition = $addition;
         $this->subtraction = $subtraction;
         $this->multiply = $multiply;
@@ -49,6 +48,7 @@ class CalculatorModel implements ICalculatorModel
         if (is_numeric($result) === false) {
             $message = "Неправильный ввод, попробуйте снова";
             $this->logger->error($message);
+
             return $message;
         }
 
@@ -58,13 +58,15 @@ class CalculatorModel implements ICalculatorModel
     private function processInputExpression(string $expression): string
     {
         if (str_contains($expression, "(")) {
-        $openBracket = strrpos($expression, '(') + 1;
-        $closeBracket = strpos($expression, ')', $openBracket) - $openBracket;
-        $subExpression = substr($expression, $openBracket, $closeBracket);
-        $result = $this->processSubExpression($subExpression);
-        $expression = str_replace("($subExpression)", $result, $expression);
-        return $this->processInputExpression($expression);
+            $openBracket = strrpos($expression, '(') + 1;
+            $closeBracket = strpos($expression, ')', $openBracket) - $openBracket;
+            $subExpression = substr($expression, $openBracket, $closeBracket);
+            $result = $this->processSubExpression($subExpression);
+            $expression = str_replace("($subExpression)", $result, $expression);
+
+            return $this->processInputExpression($expression);
         }
+
         return $this->processSubExpression($expression);
     }
 
@@ -73,6 +75,7 @@ class CalculatorModel implements ICalculatorModel
         $expression = $this->processTrigonometry($expression);
         $expression = $this->processExponentiation($expression);
         $expression = $this->processMultiplyAndDivide($expression);
+
         return $this->processPlusAndMinus($expression);
     }
 
@@ -82,6 +85,7 @@ class CalculatorModel implements ICalculatorModel
             $subExpression = $matches[0];
             $result = $this->calculateSimpleExpression($subExpression, $pattern);
             $expression = str_replace($subExpression, $result, $expression);
+
             return $this->recursiveProcessExpression($expression, $pattern);
         }
 
@@ -117,30 +121,35 @@ class CalculatorModel implements ICalculatorModel
 
         $message = "Неправильный оператор: " . $operator;
         $this->logger->error($message);
+
         return $message;
     }
 
     private function processTrigonometry(string $expression): string
     {
         $pattern = '/(())(sin|cos|tan)(-?\d+(\.\d+)?)/';
+
         return $this->recursiveProcessExpression($expression, $pattern);
     }
 
     private function processExponentiation(string $expression): string
     {
         $pattern = '/(-?\d+(\.\d+)?)(pow)(-?\d+(\.\d+)?)/';
+
         return $this->recursiveProcessExpression($expression, $pattern);
     }
 
     private function processMultiplyAndDivide(string $expression): string
     {
         $pattern = '/(-?\d+(\.\d+)?)([*\/])(-?\d+(\.\d+)?)/';
+
         return $this->recursiveProcessExpression($expression, $pattern);
     }
 
     private function processPlusAndMinus(string $expression): string
     {
         $pattern = '/(-?\d+(\.\d+)?)([+\-])(-?\d+(\.\d+)?)/';
+
         return $this->recursiveProcessExpression($expression, $pattern);
     }
 }

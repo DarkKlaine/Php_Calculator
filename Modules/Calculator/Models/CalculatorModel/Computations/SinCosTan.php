@@ -28,6 +28,7 @@ class SinCosTan extends Computation implements ISinCosTan
                 $this->logger->error('Ошибка. Неправильный математический оператор.');
                 break;
         }
+
         return $result;
     }
 }

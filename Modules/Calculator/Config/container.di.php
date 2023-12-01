@@ -1,9 +1,7 @@
 <?php
 
 use Engine\Services\Container\Container;
-use Engine\Services\DBConnector\DBConnection;
 use Engine\Services\DBConnector\IDBConnection;
-use Engine\Services\Routers\WebRouter\IWebConfigManager;
 use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
 use Modules\Calculator\Controllers\ConsoleControllers\ConsoleCalculatorController;
@@ -48,26 +46,32 @@ return [
     //Shared
     IAddition::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
+
         return new Addition($logger);
     },
     ISubtraction::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
+
         return new Subtraction($logger);
     },
     IMultiply::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
+
         return new Multiply($logger);
     },
     IDivide::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
+
         return new Divide($logger);
     },
     IExponentiation::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
+
         return new Exponentiation($logger);
     },
     ISinCosTan::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
+
         return new SinCosTan($logger);
     },
     ICalculatorModel::class => function (Container $container) {
@@ -78,16 +82,19 @@ return [
         $divide = $container->get(IDivide::class);
         $exponentiation = $container->get(IExponentiation::class);
         $sinCosTan = $container->get(ISinCosTan::class);
+
         return new CalculatorModel($logger, $addition, $subtraction, $multiply, $divide, $exponentiation, $sinCosTan);
     },
     IHistoryModel::class => function (Container $container) {
         $dbConnection = $container->get(IDBConnection::class);
         $logger = $container->get(LoggerInterface::class);
+
         return new HistoryModel($dbConnection, $logger);
     },
     //Web
     ICalculatorConfigManagerWeb::class => function () {
         $appConfig = require(__DIR__ . '/../../../Config/WebCfg/app.php');
+
         return new CalculatorConfigManagerWeb($appConfig);
     },
     IWebCalculatorController::class => function (Container $container) {
@@ -96,25 +103,36 @@ return [
         $calculatorModel = $container->get(ICalculatorModel::class);
         $historyDecorator = $container->get(WebHistoryDecorator::class);
         $calculatorView = $container->get(IWebCalculatorView::class);
-        return new WebCalculatorController($redirectHandler, $configManager, $calculatorModel, $historyDecorator, $calculatorView);
+
+        return new WebCalculatorController(
+            $redirectHandler,
+            $configManager,
+            $calculatorModel,
+            $historyDecorator,
+            $calculatorView
+        );
     },
     IWebHistoryController::class => function (Container $container) {
         $historyView = $container->get(IWebHistoryView::class);
         $historyModel = $container->get(IHistoryModel::class);
+
         return new WebHistoryController($historyView, $historyModel,);
     },
     WebHistoryDecorator::class => function (Container $container) {
         $historyModel = $container->get(IHistoryModel::class);
+
         return new WebHistoryDecorator($historyModel);
     },
     IWebCalculatorView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
         $configManager = $container->get(ICalculatorConfigManagerWeb::class);
+
         return new WebCalculatorView($templateEngine, $configManager);
     },
     IWebHistoryView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
         $configManager = $container->get(ICalculatorConfigManagerWeb::class);
+
         return new WebHistoryView($templateEngine, $configManager);
     },
     //Console
@@ -123,16 +141,19 @@ return [
         $calculatorModel = $container->get(ICalculatorModel::class);
         $historyDecorator = $container->get(ConsoleHistoryDecorator::class);
         $consoleCalculatorView = $container->get(IConsoleCalculatorView::class);
+
         return new ConsoleCalculatorController($logger, $calculatorModel, $historyDecorator, $consoleCalculatorView);
     },
     IConsoleHistoryController::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
         $historyModel = $container->get(IHistoryModel::class);
         $historyView = $container->get(IConsoleHistoryView::class);
+
         return new ConsoleHistoryController($logger, $historyModel, $historyView);
     },
     ConsoleHistoryDecorator::class => function (Container $container) {
         $historyModel = $container->get(IHistoryModel::class);
+
         return new ConsoleHistoryDecorator($historyModel);
     },
     IConsoleCalculatorView::class => function () {

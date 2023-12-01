@@ -14,10 +14,9 @@ class AuthControllerWeb implements IAuthController
 
     public function __construct(
         IAccessDeniedView $accessDeniedView,
-        IAuth             $auth,
-        ILoginView        $loginView,
-    )
-    {
+        IAuth $auth,
+        ILoginView $loginView,
+    ) {
         $this->accessDeniedView = $accessDeniedView;
         $this->auth = $auth;
         $this->loginView = $loginView;

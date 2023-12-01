@@ -13,27 +13,33 @@ class UserConfigManagerWeb extends BaseConfigManagerWeb implements IUserConfigMa
         parent::__construct($appConfig);
     }
 
-    public function getUserManagerUrl(): string {
+    public function getUserManagerUrl(): string
+    {
         return $this->routes['UserManager']['url'];
     }
 
-    public function getSetUsernameUrl(): string {
+    public function getSetUsernameUrl(): string
+    {
         return $this->routes['SetUsername']['url'];
     }
 
-    public function getSetPasswordUrl(): string {
+    public function getSetPasswordUrl(): string
+    {
         return $this->routes['SetPassword']['url'];
     }
 
-    public function getSetRoleUrl(): string {
+    public function getSetRoleUrl(): string
+    {
         return $this->routes['SetRole']['url'];
     }
 
-    public function getShowUsersListUrl(): string {
+    public function getShowUsersListUrl(): string
+    {
         return $this->routes['ShowUsersList']['url'];
     }
 
-    public function getShowUserInfoUrl(): string {
+    public function getShowUserInfoUrl(): string
+    {
         return $this->routes['ShowUserInfo']['url'];
     }
 }

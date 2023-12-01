@@ -11,6 +11,7 @@ class Exponentiation extends Computation implements IExponentiation
     {
         $result = pow($value1, $value2);
         $this->logger->info("Операция возведения в степень: $value1 pow $value2 = $result");
+
         return $result;
     }
 }

@@ -4,14 +4,10 @@
 
 <div class="col-12">
     <div class="d-grid">
-        <button type="button" class="btn btn-light"
-                onclick="window.location.href='/calculator'">Калькулятор
-        </button>
+        <a href="/calculator" class="btn btn-light">Калькулятор</a>
     </div>
     <br>
     <div class="d-grid">
-        <button type="button" class="btn btn-light"
-                onclick="window.location.href='/user'">Управление пользователями
-        </button>
+        <a href="/user" class="btn btn-light">Управление пользователями</a>
     </div>
 </div>

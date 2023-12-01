@@ -5,32 +5,30 @@ namespace Modules\User\Controllers;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Modules\User\IUserConfigManagerWeb;
 use Modules\User\Views\UserManagerView;
-use Modules\User\Views\UserRegisterPasswordView;
-use Modules\User\Views\UserRegisterRoleView;
-use Modules\User\Views\UserRegisterUsernameView;
+use Modules\User\Views\UserSetPasswordView;
+use Modules\User\Views\UserSetRoleView;
+use Modules\User\Views\UserSetUsernameView;
 
 class UserController
 {
     private IUserConfigManagerWeb $configManagerWeb;
     private UserManagerView $userManagerView;
-    private UserRegisterUsernameView $registerUsernameView;
-    private UserRegisterPasswordView $registerPasswordView;
-    private UserRegisterRoleView $registerRoleView;
+    private UserSetUsernameView $setUsernameView;
+    private UserSetPasswordView $setPasswordView;
+    private UserSetRoleView $setRoleView;
 
     public function __construct(
         IUserConfigManagerWeb $configManagerWeb,
         UserManagerView $userManagerView,
-        UserRegisterUsernameView $registerUsernameView,
-        UserRegisterPasswordView $registerPasswordView,
-        UserRegisterRoleView $registerRoleView,
-    )
-    {
-
+        UserSetUsernameView $setUsernameView,
+        UserSetPasswordView $setPasswordView,
+        UserSetRoleView $setRoleView,
+    ) {
         $this->configManagerWeb = $configManagerWeb;
         $this->userManagerView = $userManagerView;
-        $this->registerUsernameView = $registerUsernameView;
-        $this->registerPasswordView = $registerPasswordView;
-        $this->registerRoleView = $registerRoleView;
+        $this->setUsernameView = $setUsernameView;
+        $this->setPasswordView = $setPasswordView;
+        $this->setRoleView = $setRoleView;
     }
 
     public function userManager(WebRequestDTO $request): void
@@ -40,12 +38,12 @@ class UserController
 
     public function setUsername(WebRequestDTO $request): void
     {
-        // TODO: Implement setUsername() method.
+        $this->setUsernameView->render();
     }
 
     public function setPassword(WebRequestDTO $request): void
     {
-        // TODO: Implement setPassword() method.
+        $this->setPasswordView->render();
     }
 
     public function setRole(WebRequestDTO $request): void

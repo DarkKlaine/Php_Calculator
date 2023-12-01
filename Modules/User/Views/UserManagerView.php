@@ -3,6 +3,7 @@
 namespace Modules\User\Views;
 
 use Engine\Views\IWebTemplateEngine;
+use Modules\User\IUserConfigManagerWeb;
 
 class UserManagerView
 {
@@ -11,15 +12,19 @@ class UserManagerView
     private string $moduleTemplatesPath = __DIR__ . '/Templates/';
     private string $contentTplFile = 'userManager.tpl.php';
     private IWebTemplateEngine $templateEngine;
+    private IUserConfigManagerWeb $configManager;
 
-    public function __construct(IWebTemplateEngine $templateEngine)
+    public function __construct(IWebTemplateEngine $templateEngine, IUserConfigManagerWeb $configManager)
     {
         $this->templateEngine = $templateEngine;
+        $this->configManager = $configManager;
     }
 
     public function render(): void
     {
         $this->templateEngine->assignVar('Title', $this->title);
+        $this->templateEngine->assignVar('SetUsername', $this->configManager->getSetUsernameUrl());
+        $this->templateEngine->assignVar('ShowUsersList', $this->configManager->getShowUsersListUrl());
 
         $this->templateEngine->setModuleTemplatesPath($this->moduleTemplatesPath);
 

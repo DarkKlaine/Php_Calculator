@@ -12,19 +12,19 @@ return [
         'action' => [UserController::class, 'setUsername'],
     ],
     'SetPassword' => [
-        '/user/register/password',
+        'url' => '/user/register/password',
         'action' => [UserController::class, 'setPassword'],
     ],
     'SetRole' => [
-        '/user/register/role',
+        'url' => '/user/register/role',
         'action' => [UserController::class, 'setRole'],
     ],
     'ShowUsersList' => [
-        '/user/list',
+        'url' => '/user/list',
         'action' => [UserController::class, 'showUsersList'],
     ],
     'ShowUserInfo' => [
-        '/user/userinfo',
+        'url' => '/user/userinfo',
         'action' => [UserController::class, 'showUserInfo'],
     ],
 ];
