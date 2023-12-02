@@ -1,6 +1,7 @@
 <div class="text-center">
     <h3 class="">
-        <?php echo $this->vars['Title'] ?>
+        <?php
+        echo $this->vars['Title'] ?>
     </h3><br>
 </div>
 
@@ -12,38 +13,45 @@
                 <tr>
                     <th>Имя пользователя</th>
                     <th>Роль</th>
+                    <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td><a href="/">Username</a></td>
+                    <td>Username</td>
                     <td>Администратор</td>
-                </tr>
-                <tr>
-                    <td>Garrett Winters</td>
-                    <td>Accountant</td>
-                </tr>
-                <tr>
-                    <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
-                </tr>
-                <tr>
-                    <td>Cedric Kelly</td>
-                    <td>Senior Javascript Developer</td>
-                </tr>
-                <tr>
-                    <td>Airi Satou</td>
-                    <td>Accountant</td>
-                </tr>
-                <tr>
-                    <td>Brielle Williamson</td>
-                    <td>Integration Specialist</td>
+                    <td>
+                        <table>
+                            <form method="post" action="/">
+                                <input type="hidden" name="username" value="username">
+                                <button type="submit" style="display: none;"></button>
+                                <img src="/assets/images/info24.png" alt="Info"
+                                     onclick="document.querySelector('button[type=submit]').click();"
+                                     style="cursor: pointer;">
+                            </form>&nbsp;
+                            <form method="post" action="/">
+                                <input type="hidden" name="username" value="username">
+                                <button type="submit" style="display: none;"></button>
+                                <img src="/assets/images/edit24.png" alt="Edit"
+                                     onclick="document.querySelector('button[type=submit]').click();"
+                                     style="cursor: pointer;">
+                            </form>&nbsp;
+                            <form method="post" action="/">
+                                <input type="hidden" name="username" value="username">
+                                <button type="submit" style="display: none;"></button>
+                                <img src="/assets/images/delete24.png" alt="Delete"
+                                     onclick="document.querySelector('button[type=submit]').click();"
+                                     style="cursor: pointer;">
+                            </form>
+                        </table>
+                    </td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
                     <th>Имя пользователя</th>
                     <th>Роль</th>
+                    <th>Действия</th>
                 </tr>
                 </tfoot>
             </table>

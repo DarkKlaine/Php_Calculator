@@ -1,6 +1,6 @@
 <?php
 
-namespace Engine\Services\Routers\WebRouter;
+namespace Engine\Services\RedirectHandler;
 
 use JetBrains\PhpStorm\NoReturn;
 

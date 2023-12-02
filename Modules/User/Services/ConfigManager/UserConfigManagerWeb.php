@@ -42,4 +42,9 @@ class UserConfigManagerWeb extends BaseConfigManagerWeb implements IUserConfigMa
     {
         return $this->routes['ShowUserInfo']['url'];
     }
+
+    public function getRecordUserDataUrl(): string
+    {
+        return $this->routes['RecordUserData']['url'];
+    }
 }

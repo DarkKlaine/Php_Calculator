@@ -3,8 +3,8 @@
 namespace Engine\Models;
 
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
+use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\IAuth;
-use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 
 class Auth implements IAuth

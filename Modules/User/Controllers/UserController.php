@@ -2,54 +2,58 @@
 
 namespace Modules\User\Controllers;
 
-use Engine\Services\DBConnector\IDBConnection;
+use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
+use JetBrains\PhpStorm\NoReturn;
 use Modules\User\IUserConfigManagerWeb;
+use Modules\User\Models\UserModel;
 use Modules\User\Views\UserInfoView;
 use Modules\User\Views\UserListView;
 use Modules\User\Views\UserManagerView;
 use Modules\User\Views\UserSetPasswordView;
 use Modules\User\Views\UserSetRoleView;
 use Modules\User\Views\UserSetUsernameView;
-use PDOException;
 
 class UserController
 {
-    private IUserConfigManagerWeb $configManagerWeb;
     private UserManagerView $userManagerView;
     private UserSetUsernameView $setUsernameView;
     private UserSetPasswordView $setPasswordView;
     private UserSetRoleView $setRoleView;
     private UserListView $userListView;
     private UserInfoView $userInfoView;
-    private IDBConnection $connection;
+    private UserModel $userModel;
+    private IWebRedirectHandler $redirectHandler;
+    private IUserConfigManagerWeb $configManager;
 
     public function __construct(
-        IUserConfigManagerWeb $configManagerWeb,
         UserManagerView $userManagerView,
         UserSetUsernameView $setUsernameView,
         UserSetPasswordView $setPasswordView,
         UserSetRoleView $setRoleView,
         UserListView $userListView,
         UserInfoView $userInfoView,
-        IDBConnection $connection
+        UserModel $userModel,
+        IUserConfigManagerWeb $configManager,
+        IWebRedirectHandler $redirectHandler,
     ) {
-        $this->configManagerWeb = $configManagerWeb;
         $this->userManagerView = $userManagerView;
         $this->setUsernameView = $setUsernameView;
         $this->setPasswordView = $setPasswordView;
         $this->setRoleView = $setRoleView;
         $this->userListView = $userListView;
         $this->userInfoView = $userInfoView;
-        $this->connection = $connection;
+        $this->userModel = $userModel;
+        $this->redirectHandler = $redirectHandler;
+        $this->configManager = $configManager;
     }
 
-    public function userManager(WebRequestDTO $request): void
+    public function userManager(): void
     {
         $this->userManagerView->render();
     }
 
-    public function setUsername(WebRequestDTO $request): void
+    public function setUsername(): void
     {
         $this->setUsernameView->render();
     }
@@ -61,43 +65,51 @@ class UserController
 
     public function setRole(WebRequestDTO $request): void
     {
+        //TODO Вынести валидацию до if
         if ($request->getPost()['password'] === $request->getPost()['passwordConfirm']) {
-            $this->setRoleView->render($request);
+            $password = $request->getPost()['password'] ?? '';
+            $passwordHash = $this->userModel->validateAndHashPassword($password);
+            $this->setRoleView->render($request, $passwordHash);
+
+            return;
         }
+
         $this->setPasswordView->render($request);
     }
 
-    public function showUsersList(WebRequestDTO $request): void
+    public function showUsersList(): void
     {
-        $this->userListView->render();
+        $usersData = $this->userModel->getAllUsersDataFromDB();
+        $this->userListView->render($usersData);
     }
 
     public function showUserInfo(WebRequestDTO $request): void
     {
-        $this->addUserToDB($request);
-        var_dump($_POST);
-        exit;
-        $this->userInfoView->render();
-    }
-    private function addUserToDB(WebRequestDTO $request): void
-    {
-        $connection = $this->connection->getConnection();
-        $username = $request->getPost()['username'] ?? '';
-        $password = $request->getPost()['password'] ?? '';
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);;
-        $role = $request->getPost()['role'] ?? '';
+        $username = $request->getGet()['username'] ?? '';
+        if ($username !== '') {
+            $userData = $this->userModel->getUserDataFromDB($username);
+            if ($userData !== []) {
+                $this->userInfoView->render($userData);
 
-
-
-        $sqlInsert = "INSERT INTO `users` (`username`, `password_hash`, `role`) VALUES ('$username', '$passwordHash', '$role')";
-
-        try {
-            $connection->exec($sqlInsert);
-        } catch (PDOException $e) {
-            echo "Ошибка при создании записи: " . $e->getMessage();
-            //$this->logger->error("Ошибка при создании записи: " . $e->getMessage());
+                return;
+            }
         }
 
-        $this->connection->closeConnection();
+        $url = $this->configManager->getShowUserListUrl();
+        $this->redirectHandler->redirect($url);
     }
+
+    #[NoReturn] public function recordUserData(WebRequestDTO $request): void
+    {
+        $this->userModel->addUserToDB($request);
+
+        $queryParams = [
+            'username' => $request->getPost()['username'] ?? '',
+        ];
+        $postData = http_build_query($queryParams);
+        $url = $this->configManager->getShowUserInfoUrl() . '/?' . $postData;
+        $this->redirectHandler->redirect($url);
+    }
+
+
 }

@@ -3,9 +3,11 @@
 
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\IDBConnection;
+use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
 use Modules\User\Controllers\UserController;
 use Modules\User\IUserConfigManagerWeb;
+use Modules\User\Models\UserModel;
 use Modules\User\Services\ConfigManager\UserConfigManagerWeb;
 use Modules\User\Views\UserInfoView;
 use Modules\User\Views\UserListView;
@@ -13,6 +15,7 @@ use Modules\User\Views\UserManagerView;
 use Modules\User\Views\UserSetPasswordView;
 use Modules\User\Views\UserSetRoleView;
 use Modules\User\Views\UserSetUsernameView;
+use Psr\Log\LoggerInterface;
 
 return [
     //Shared
@@ -25,14 +28,20 @@ return [
     },
     UserController::class => function (Container $container) {
         return new UserController(
-            $container->get(IUserConfigManagerWeb::class),
             $container->get(UserManagerView::class),
             $container->get(UserSetUsernameView::class),
             $container->get(UserSetPasswordView::class),
             $container->get(UserSetRoleView::class),
             $container->get(UserListView::class),
             $container->get(UserInfoView::class),
-            $container->get(IDBConnection::class)
+            $container->get(UserModel::class),
+            $container->get(IUserConfigManagerWeb::class),
+            $container->get(IWebRedirectHandler::class),
+        );
+    },
+    UserModel::class => function (Container $container) {
+        return new UserModel(
+            $container->get(LoggerInterface::class), $container->get(IDBConnection::class),
         );
     },
     UserManagerView::class => function ($container) {

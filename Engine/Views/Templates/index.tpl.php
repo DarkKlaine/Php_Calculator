@@ -69,7 +69,15 @@
 <script src="/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#example').DataTable({
+            "columns": [{
+                "orderable": true
+            }, {
+                "orderable": true
+            }, {
+                "orderable": false
+            }]
+        });
     } );
 </script>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ НАЧАЛО -->

@@ -8,16 +8,20 @@ return [
         'action' => [UserController::class, 'userManager'],
     ],
     'SetUsername' => [
-        'url' => '/user/register/username',
+        'url' => '/user/manage/username',
         'action' => [UserController::class, 'setUsername'],
     ],
     'SetPassword' => [
-        'url' => '/user/register/password',
+        'url' => '/user/manage/password',
         'action' => [UserController::class, 'setPassword'],
     ],
     'SetRole' => [
-        'url' => '/user/register/role',
+        'url' => '/user/manage/role',
         'action' => [UserController::class, 'setRole'],
+    ],
+    'RecordUserData' => [
+        'url' => '/user/manage/record',
+        'action' => [UserController::class, 'recordUserData'],
     ],
     'ShowUsersList' => [
         'url' => '/user/list',

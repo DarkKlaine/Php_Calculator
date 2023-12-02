@@ -9,13 +9,13 @@
         Роль: <?php echo $this->vars['Role'] ?>
     </h6>
     <h6 class="">
-        Зарегистрирован: <?php echo $this->vars['RegisterDate'] ?>
+        Зарегистрирован: <?php echo $this->vars['Date'] ?>
     </h6><br>
 </div>
 
 <div class="col-12">
     <div class="d-grid">
-        <a href="<?php echo $this->vars['Action'] ?>" class="btn btn-light">Редактировать пользователя</a>
+        <a href="<?php echo $this->vars['EditUser'] ?>" class="btn btn-light">Редактировать пользователя</a>
     </div><br>
     <div class="d-grid">
         <a href="<?php echo $this->vars['ShowUsersList'] ?>" class="btn btn-light">Список пользователей</a>

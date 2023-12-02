@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers\WebControllers;
 
-use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
+use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Modules\Calculator\Controllers\ICalculatorModel;
 use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;

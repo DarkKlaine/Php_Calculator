@@ -19,7 +19,7 @@ class UserListView
         $this->configManager = $configManager;
     }
 
-    public function render(): void
+    public function render(array $usersData): void
     {
         $this->templateEngine->assignVar('Title', $this->title);
 

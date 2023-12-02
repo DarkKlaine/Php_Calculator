@@ -5,6 +5,7 @@ namespace Engine\Services\Routers\WebRouter;
 use Engine\IRouter;
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\Container\Container;
+use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\AbstractRouter;
 use Psr\Log\LoggerInterface;
 

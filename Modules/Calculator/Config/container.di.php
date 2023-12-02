@@ -2,7 +2,7 @@
 
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\IDBConnection;
-use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
+use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
 use Modules\Calculator\Controllers\ConsoleControllers\ConsoleCalculatorController;
 use Modules\Calculator\Controllers\ConsoleControllers\ConsoleHistoryController;
