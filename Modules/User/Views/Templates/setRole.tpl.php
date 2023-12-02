@@ -17,8 +17,8 @@
             <input type="hidden" name="username" value="<?php echo $this->vars['Username'] ?>">
             <input type="hidden" name="password" value="<?php echo $this->vars['Password'] ?>">
             <select class="form-select mb-3" aria-label="Select role" name="role">
-                <option selected value="user">Счетовод</option>
-                <option value="admin">Администратор</option>
+                <option selected value="Счетовод">Счетовод</option>
+                <option value="Администратор">Администратор</option>
             </select>
         </div>
         <div class="col-12">

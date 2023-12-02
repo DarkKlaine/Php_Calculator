@@ -11,6 +11,9 @@
     </div>
     <br>
     <div class="d-grid">
-        <a href="<?php echo $this->vars['SetUsername'] ?>" class="btn btn-light">Добавить нового пользователя</a>
+        <form class="row g-3" method="post" action="<?php echo $this->vars['CreateUser'] ?>">
+        <input type="hidden" name="operation" value="Create">
+        <button type="submit" class="btn btn-light">Добавить нового пользователя</button>
+        </form>
     </div>
 </div>

@@ -72,6 +72,45 @@ class UserModel
 
     public function getAllUsersDataFromDB(): array
     {
-        return [];
+        $connection = $this->connection->getConnection();
+        $sqlSelect = "SELECT `username`, `role` FROM `users`";
+        $userData = [];
+
+        try {
+            $result = $connection->query($sqlSelect);
+
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $username = $row['username'];
+                $role = $row['role'];
+
+                $userData[] = ['username' => $username, 'role' => $role];
+            }
+        } catch (PDOException $e) {
+            echo "Ошибка при получении записи: " . $e->getMessage();
+            $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
+        }
+
+        $this->connection->closeConnection();
+
+        return $userData;
+    }
+
+    public function isUsernameExist(string $username): bool
+    {
+        $connection = $this->connection->getConnection();
+        $sqlSelect = "SELECT `username` FROM `users` WHERE `username` = '$username'";
+        $userExist = false;
+
+        try {
+            $result = $connection->query($sqlSelect);
+            $userExist = !empty($result->fetch(PDO::FETCH_ASSOC));
+        } catch (PDOException $e) {
+            echo "Ошибка при получении записи: " . $e->getMessage();
+            $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
+        }
+
+        $this->connection->closeConnection();
+
+        return $userExist;
     }
 }

@@ -14,13 +14,13 @@
             <label for="inputPassword" class="form-label"></label>
             <div class="input-group" id="password">
                 <input type="password" class="form-control border-end-0" id="inputPassword" name="password"
-                       placeholder="Пароль" required="required" pattern="^[A-Za-z0-9]{2,12}$">
+                       placeholder="Пароль" required pattern="^[A-Za-z0-9]{2,12}$">
                 <a href="javascript:" class="input-group-text"><i class='bx bx-hide'></i></a>
             </div>
             <label for="confirmPassword" class="form-label"></label>
             <div class="input-group" id="confirm_password">
                 <input type="password" class="form-control border-end-0" id="confirmPassword" name="passwordConfirm"
-                       placeholder="Повторите пароль" required="required" pattern="^[A-Za-z0-9]{2,12}$">
+                       placeholder="Повторите пароль" required pattern="^[A-Za-z0-9]{2,12}$">
                 <a href="javascript:" class="input-group-text"><i class='bx bx-hide'></i></a>
             </div>
         </div>

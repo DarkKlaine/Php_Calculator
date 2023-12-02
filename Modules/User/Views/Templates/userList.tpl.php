@@ -17,35 +17,42 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Username</td>
-                    <td>Администратор</td>
+                <?php
+                foreach ($this->vars['UsersData'] as $userData) {
+                    $username = $userData['username'];
+                    $role = $userData['role'];
+                    $queryParams = [
+                        'username' => $username,
+                    ];
+                    $postData = http_build_query($queryParams);
+                    $userInfoUrl = $this->vars['Info'] . '/?' . $postData;
+                    ?>
+                    <tr>
+                        <td><?php echo $username; ?></td>
+                        <td><?php echo $role; ?></td>
                     <td>
                         <table>
-                            <form method="post" action="/">
-                                <input type="hidden" name="username" value="username">
-                                <button type="submit" style="display: none;"></button>
-                                <img src="/assets/images/info24.png" alt="Info"
-                                     onclick="document.querySelector('button[type=submit]').click();"
+                            <a href="<?php echo $userInfoUrl; ?>">
+                                <img src="/assets/images/info24.png" alt="Info" title="Информация о пользователе">
+                            </a>&nbsp;
+                            <form id="<?php echo $username; ?>_edit" method="post" action="<?php echo $this->vars['Edit']; ?>">
+                                <input type="hidden" name="currentUsername" value="<?php echo $username; ?>">
+                                <input type="hidden" name="operation" value="Edit">
+                                <button id="submitButton" type="submit" style="display: none;"></button>
+                                <img src="/assets/images/edit24.png" alt="Edit" title="Редактировать пользователя"
+                                     onclick="document.getElementById('<?php echo $username; ?>_edit').submit();"
                                      style="cursor: pointer;">
-                            </form>&nbsp;
-                            <form method="post" action="/">
-                                <input type="hidden" name="username" value="username">
+                            </form>&nbsp;&nbsp;
+                            <form id="<?php echo $username; ?>_delete" method="post" action="<?php echo $this->vars['Edit']; ?>">
+                                <input type="hidden" name="username" value="<?php echo $username; ?>">
                                 <button type="submit" style="display: none;"></button>
-                                <img src="/assets/images/edit24.png" alt="Edit"
-                                     onclick="document.querySelector('button[type=submit]').click();"
-                                     style="cursor: pointer;">
-                            </form>&nbsp;
-                            <form method="post" action="/">
-                                <input type="hidden" name="username" value="username">
-                                <button type="submit" style="display: none;"></button>
-                                <img src="/assets/images/delete24.png" alt="Delete"
-                                     onclick="document.querySelector('button[type=submit]').click();"
+                                <img src="/assets/images/delete24.png" alt="Delete" title="Удалить пользователя"
+                                     onclick="document.getElementById('<?php echo $username; ?>_delete').submit();"
                                      style="cursor: pointer;">
                             </form>
                         </table>
                     </td>
-                </tr>
+                <?php } ?>
                 </tbody>
                 <tfoot>
                 <tr>

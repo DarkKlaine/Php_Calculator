@@ -2,6 +2,7 @@
 
 namespace Modules\User\Views;
 
+use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Engine\Views\IWebTemplateEngine;
 use Modules\User\IUserConfigManagerWeb;
 
@@ -22,14 +23,30 @@ class UserSetUsernameView
         $this->configManager = $configManager;
     }
 
-    public function render(): void
+    public function render(WebRequestDTO $request, string $operation, bool $alreadyExist = false): void
     {
+        $required = '';
+        if ($operation === 'Create') {
+            $required = 'required ';
+        }
+
+        if ($alreadyExist) {
+            $this->templateEngine->assignVar(
+                'ErrorMessage',
+                '<br><br><span style="color: red;">Такой пользователь уже существует</span>'
+            );
+            $this->templateEngine->assignVar('IsInvalid', 'is-invalid');
+        }
+
         $this->templateEngine->assignVar('Title', $this->title);
         $this->templateEngine->assignVar('Description', $this->description);
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
         $this->templateEngine->assignVar('Action', $this->configManager->getSetPasswordUrl());
+        $this->templateEngine->assignVar('Operation', $request->getPost()['operation']);
+        $this->templateEngine->assignVar('CurrentUsername', $request->getPost()['currentUsername'] ?? '');
+        $this->templateEngine->assignVar('Required', $required);
 
         $this->templateEngine->setTemplatesForInjection($this->registerUsernameTplFile);
 

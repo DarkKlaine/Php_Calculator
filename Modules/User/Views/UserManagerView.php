@@ -23,7 +23,7 @@ class UserManagerView
     public function render(): void
     {
         $this->templateEngine->assignVar('Title', $this->title);
-        $this->templateEngine->assignVar('SetUsername', $this->configManager->getSetUsernameUrl());
+        $this->templateEngine->assignVar('CreateUser', $this->configManager->getSetUsernameUrl());
         $this->templateEngine->assignVar('ShowUsersList', $this->configManager->getShowUserListUrl());
 
         $this->templateEngine->setModuleTemplatesPath($this->moduleTemplatesPath);

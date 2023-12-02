@@ -25,8 +25,11 @@ class UserListView
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
-        $this->templateEngine->assignVar('UserList', $this->configManager->getShowUserListUrl());
-        $this->templateEngine->assignVar('UserInfo', $this->configManager->getShowUserInfoUrl());
+        $this->templateEngine->assignVar('UsersData', $usersData);
+
+        $this->templateEngine->assignVar('Info', $this->configManager->getShowUserInfoUrl());
+        $this->templateEngine->assignVar('Edit', $this->configManager->getSetUsernameUrl());
+        $this->templateEngine->assignVar('Delete', $this->configManager->getShowUserListUrl());
 
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);
 

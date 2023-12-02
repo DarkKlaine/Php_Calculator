@@ -53,27 +53,49 @@ class UserController
         $this->userManagerView->render();
     }
 
-    public function setUsername(): void
+    public function setUsername(WebRequestDTO $request): void
     {
-        $this->setUsernameView->render();
+        $operation = $this->getVerifiedOperation($request);
+
+        $this->setUsernameView->render($request, $operation);
+    }
+
+    private function getVerifiedOperation(WebRequestDTO $request): string
+    {
+        $operation = $request->getPost()['operation'] ?? '';
+        if ($operation !== 'Create' && $operation !== 'Edit') {
+            $url = $this->configManager->getUserManagerUrl();
+            $this->redirectHandler->redirect($url);
+        }
+
+        return $operation;
     }
 
     public function setPassword(WebRequestDTO $request): void
     {
+        $operation = $this->getVerifiedOperation($request);
+        $username = $request->getPost()['username'] ?? '';
+        $usernameExist = $this->userModel->isUsernameExist($username);
+        if ($usernameExist) {
+            $this->setUsernameView->render($request, $operation, true);
+
+            return;
+        }
         $this->setPasswordView->render($request);
     }
 
     public function setRole(WebRequestDTO $request): void
     {
-        //TODO Вынести валидацию до if
-        if ($request->getPost()['password'] === $request->getPost()['passwordConfirm']) {
-            $password = $request->getPost()['password'] ?? '';
-            $passwordHash = $this->userModel->validateAndHashPassword($password);
+        $operation = $this->getVerifiedOperation($request);
+
+        $password = $request->getPost()['password'] ?? '';
+        $passwordConfirm = $request->getPost()['passwordConfirm'] ?? '';
+        if ($password === $passwordConfirm) {
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             $this->setRoleView->render($request, $passwordHash);
 
             return;
         }
-
         $this->setPasswordView->render($request);
     }
 
@@ -110,6 +132,4 @@ class UserController
         $url = $this->configManager->getShowUserInfoUrl() . '/?' . $postData;
         $this->redirectHandler->redirect($url);
     }
-
-
 }
