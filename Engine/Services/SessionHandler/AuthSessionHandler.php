@@ -16,6 +16,16 @@ class AuthSessionHandler extends SessionHandler implements IAuthSessionHandler
         $this->set('isAuthorized', $bool);
     }
 
+    public function setRole(string $role): void
+    {
+        $this->set('role', $role);
+    }
+
+    public function getRole(): string
+    {
+        return $this->get('role') ?? '';
+    }
+
     public function getDestroyTime(): int
     {
         return $this->get('destroyTime') ?? 0;

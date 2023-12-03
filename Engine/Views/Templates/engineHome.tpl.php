@@ -10,4 +10,8 @@
     <div class="d-grid">
         <a href="/user" class="btn btn-light">Управление пользователями</a>
     </div>
+    <br>
+    <div class="d-grid">
+        <a href="/login" class="btn btn-light">Войти</a>
+    </div>
 </div>

@@ -19,11 +19,6 @@ class UserModel
         $this->connection = $connection;
     }
 
-    public function validateAndHashPassword($password): string
-    {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
-
     public function addUserToDB(WebRequestDTO $request): void
     {
         $connection = $this->connection->getConnection();

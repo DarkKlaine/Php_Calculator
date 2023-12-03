@@ -5,7 +5,7 @@
 <div class="col-12">
     <div class="d-grid">
         <button type="button" class="btn btn-light"
-                onclick="window.location.href='/login'">Войти
+                onclick="window.location.href='/'">На главную
         </button>
     </div>
 </div>

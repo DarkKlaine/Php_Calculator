@@ -57,12 +57,18 @@ return [
         return new AuthSessionHandler();
     },
     IAuth::class => function (Container $container) {
-        $users = require(__DIR__ . '/../../../Config/WebCfg/users.php');
-        $redirectHandler = $container->get(IWebRedirectHandler::class);
-        $authSessionHandler = $container->get(IAuthSessionHandler::class);
-        $configManager = $container->get(IAuthConfigManagerWeb::class);
+        $pageAccessLevels = require(__DIR__ . '/../../../Config/WebCfg/pageAccessLevels.php');
+        $userAccessLevels = require(__DIR__ . '/../../../Config/WebCfg/userAccessLevels.php');
 
-        return new Auth($users, $redirectHandler, $authSessionHandler, $configManager,);
+        return new Auth(
+            $pageAccessLevels,
+            $userAccessLevels,
+            $container->get(IWebRedirectHandler::class),
+            $container->get(IAuthSessionHandler::class),
+            $container->get(IAuthConfigManagerWeb::class),
+            $container->get(LoggerInterface::class),
+            $container->get(IDBConnection::class),
+        );
     },
     IAuthController::class => function (Container $container) {
         $accessDeniedView = $container->get(IAccessDeniedView::class);
