@@ -2,16 +2,15 @@
 
 namespace Modules\User\Views;
 
-use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Engine\Views\IWebTemplateEngine;
 use Modules\User\IUserConfigManagerWeb;
 
-class UserSetRoleView
+class UserDeleteView
 {
-    private string $title = 'Выберите роль';
-    private string $description = 'Может состоять из 2–12 букв или цифр';
+    private string $title = 'Внимание!<br>Вы хотите удалить пользователя';
+    private string $description = 'Эту операцию невозможно отменить';
     private string $indexTplFile = 'index.tpl.php';
-    private string $contentTplFile = 'setRole.tpl.php';
+    private string $contentTplFile = 'userDelete.tpl.php';
     private IWebTemplateEngine $templateEngine;
     private IUserConfigManagerWeb $configManager;
 
@@ -21,18 +20,17 @@ class UserSetRoleView
         $this->configManager = $configManager;
     }
 
-    public function render(WebRequestDTO $request, string $operation, string $passwordHash): void
+    public function render(array $userData): void
     {
-        $username = $request->getPost()['username'] ?? null;
-
         $this->templateEngine->assignVar('Title', $this->title);
         $this->templateEngine->assignVar('Description', $this->description);
 
-        $this->templateEngine->assignVar('Action', $this->configManager->getRecordUserDataUrl());
-        $this->templateEngine->assignVar('Operation', $operation);
-        $this->templateEngine->assignVar('CurrentUsername', $request->getPost()['currentUsername'] ?? '');
-        $this->templateEngine->assignVar('Username', $username);
-        $this->templateEngine->assignVar('Password', $passwordHash);
+        $this->templateEngine->assignVar('Username', $userData['username']);
+        $this->templateEngine->assignVar('Role', $userData['role']);
+        $this->templateEngine->assignVar('Date', $userData['date']);
+
+        $this->templateEngine->assignVar('DeleteUser', $this->configManager->getDeleteUserUrl());
+        $this->templateEngine->assignVar('ShowUsersList', $this->configManager->getShowUserListUrl());
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);

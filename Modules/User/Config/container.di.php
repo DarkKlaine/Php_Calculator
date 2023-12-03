@@ -9,6 +9,7 @@ use Modules\User\Controllers\UserController;
 use Modules\User\IUserConfigManagerWeb;
 use Modules\User\Models\UserModel;
 use Modules\User\Services\ConfigManager\UserConfigManagerWeb;
+use Modules\User\Views\UserDeleteView;
 use Modules\User\Views\UserInfoView;
 use Modules\User\Views\UserListView;
 use Modules\User\Views\UserManagerView;
@@ -34,6 +35,7 @@ return [
             $container->get(UserSetRoleView::class),
             $container->get(UserListView::class),
             $container->get(UserInfoView::class),
+            $container->get(UserDeleteView::class),
             $container->get(UserModel::class),
             $container->get(IUserConfigManagerWeb::class),
             $container->get(IWebRedirectHandler::class),
@@ -71,6 +73,11 @@ return [
     },
     UserInfoView::class => function ($container) {
         return new UserInfoView(
+            $container->get(IWebTemplateEngine::class), $container->get(IUserConfigManagerWeb::class),
+        );
+    },
+    UserDeleteView::class => function ($container) {
+        return new UserDeleteView(
             $container->get(IWebTemplateEngine::class), $container->get(IUserConfigManagerWeb::class),
         );
     },

@@ -15,9 +15,12 @@
 
 <div class="col-12">
     <div class="d-grid">
-        <a href="<?php echo $this->vars['EditUser'] ?>" class="btn btn-light">Редактировать пользователя</a>
-    </div><br>
-    <div class="d-grid">
-        <a href="<?php echo $this->vars['ShowUsersList'] ?>" class="btn btn-light">Список пользователей</a>
+        <form class="row g-0" method="post" action="<?php echo $this->vars['EditUser'] ?>">
+            <input type="hidden" name="currentUsername" value="<?php echo $this->vars['Username'] ?>">
+            <input type="hidden" name="operation" value="Edit">
+            <button type="submit" class="btn btn-light">Редактировать пользователя</button>
+        </form>
+        <br>
+        <a href="<?php echo $this->vars['ShowUsersList'] ?>" class="btn btn-light row g-0">Список пользователей</a>
     </div>
 </div>

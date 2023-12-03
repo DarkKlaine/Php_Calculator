@@ -23,6 +23,10 @@ return [
         'url' => '/user/manage/record',
         'action' => [UserController::class, 'recordUserData'],
     ],
+    'DeleteUser' => [
+        'url' => '/user/manage/delete',
+        'action' => [UserController::class, 'deleteUser'],
+    ],
     'ShowUsersList' => [
         'url' => '/user/list',
         'action' => [UserController::class, 'showUsersList'],

@@ -43,7 +43,7 @@
                                      onclick="document.getElementById('<?php echo $username; ?>_edit').submit();"
                                      style="cursor: pointer;">
                             </form>&nbsp;&nbsp;
-                            <form id="<?php echo $username; ?>_delete" method="post" action="<?php echo $this->vars['Edit']; ?>">
+                            <form id="<?php echo $username; ?>_delete" method="post" action="<?php echo $this->vars['Delete']; ?>">
                                 <input type="hidden" name="username" value="<?php echo $username; ?>">
                                 <button type="submit" style="display: none;"></button>
                                 <img src="/assets/images/delete24.png" alt="Delete" title="Удалить пользователя"

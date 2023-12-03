@@ -35,21 +35,19 @@ class UserSetUsernameView
                 'ErrorMessage',
                 '<br><br><span style="color: red;">Такой пользователь уже существует</span>'
             );
-            $this->templateEngine->assignVar('IsInvalid', 'is-invalid');
+            $this->templateEngine->assignVar('FrameStyle', 'is-invalid');
         }
 
         $this->templateEngine->assignVar('Title', $this->title);
         $this->templateEngine->assignVar('Description', $this->description);
 
-        $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
-
         $this->templateEngine->assignVar('Action', $this->configManager->getSetPasswordUrl());
-        $this->templateEngine->assignVar('Operation', $request->getPost()['operation']);
+        $this->templateEngine->assignVar('Operation', $operation);
         $this->templateEngine->assignVar('CurrentUsername', $request->getPost()['currentUsername'] ?? '');
         $this->templateEngine->assignVar('Required', $required);
 
+        $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
         $this->templateEngine->setTemplatesForInjection($this->registerUsernameTplFile);
-
         $this->templateEngine->display($this->indexTplFile);
     }
 }

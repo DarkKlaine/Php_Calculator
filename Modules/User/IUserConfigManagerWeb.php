@@ -17,4 +17,6 @@ interface IUserConfigManagerWeb
     public function getShowUserInfoUrl(): string;
 
     public function getRecordUserDataUrl(): string;
+
+    public function getDeleteUserUrl(): string;
 }

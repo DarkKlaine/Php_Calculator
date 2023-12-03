@@ -47,11 +47,11 @@ class UserModel
     {
         $connection = $this->connection->getConnection();
         $sqlSelect = "SELECT `username`, `role`, `date` FROM `users` WHERE `username` = '$username'";
+
         $userData = [];
 
         try {
             $result = $connection->query($sqlSelect);
-
 
             if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 $username = $row['username'];
@@ -112,5 +112,53 @@ class UserModel
         $this->connection->closeConnection();
 
         return $userExist;
+    }
+
+    public function EditUserInDB($request): void
+    {
+        $connection = $this->connection->getConnection();
+        $currentUsername = $request->getPost()['currentUsername'] ?? '';
+        $username = $request->getPost()['username'] ?? '';
+
+        $passwordHash = $request->getPost()['password'] ?? '';
+
+        $role = $request->getPost()['role'] ?? '';
+
+        $setUsername = '';
+        if ($username !== '') {
+            $setUsername = "`username` = '$username', ";
+        }
+
+        $setPasswordHash = '';
+        if ($passwordHash !== '') {
+            $setPasswordHash = "`password_hash` = '$passwordHash', ";
+        }
+
+        $sqlUpdate = "UPDATE `users` SET " . $setUsername . $setPasswordHash . "`role` = '$role' WHERE `username` = '$currentUsername'";
+
+        try {
+            $connection->exec($sqlUpdate);
+        } catch (PDOException $e) {
+            echo "Ошибка при обновлении записи: " . $e->getMessage();
+            $this->logger->error("Ошибка при обновлении записи: " . $e->getMessage());
+        }
+
+        $this->connection->closeConnection();
+    }
+
+    public function deleteUserFromDB(string $username): void
+    {
+        $connection = $this->connection->getConnection();
+
+        $sqlDelete = "DELETE FROM `users` WHERE `username` = '$username'";
+
+        try {
+            $connection->exec($sqlDelete);
+        } catch (PDOException $e) {
+            echo "Ошибка при удалении записи: " . $e->getMessage();
+            $this->logger->error("Ошибка при удалении записи: " . $e->getMessage());
+        }
+
+        $this->connection->closeConnection();
     }
 }

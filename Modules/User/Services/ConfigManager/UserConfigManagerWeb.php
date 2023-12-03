@@ -47,4 +47,9 @@ class UserConfigManagerWeb extends BaseConfigManagerWeb implements IUserConfigMa
     {
         return $this->routes['RecordUserData']['url'];
     }
+
+    public function getDeleteUserUrl(): string
+    {
+        return $this->routes['DeleteUser']['url'];
+    }
 }

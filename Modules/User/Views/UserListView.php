@@ -29,7 +29,7 @@ class UserListView
 
         $this->templateEngine->assignVar('Info', $this->configManager->getShowUserInfoUrl());
         $this->templateEngine->assignVar('Edit', $this->configManager->getSetUsernameUrl());
-        $this->templateEngine->assignVar('Delete', $this->configManager->getShowUserListUrl());
+        $this->templateEngine->assignVar('Delete', $this->configManager->getDeleteUserUrl());
 
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);
 
