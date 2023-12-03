@@ -41,32 +41,36 @@ class Auth implements IAuth
 
     public function verifyAuth(string $requestUrl): void
     {
-        $role = $this->authSessionHandler->getRole();
-        if ($this->checkAccessLevel($role, $requestUrl)) {
+        $accessDeniedPage = $this->configManager->getAccessDeniedPage();
+        if ($requestUrl === $accessDeniedPage) {
             return;
-        } else {
-            $this->redirectHandler->redirect($this->configManager->getAccessDeniedPage());
         }
 
-        if (time() > $this->authSessionHandler->getDestroyTime()) {
+        $role = $this->authSessionHandler->getRole();
+        $accessNotGranted = !$this->checkAccess($role, $requestUrl);
+        $isAuthorised = $this->authSessionHandler->getIsAuthorized();
+        $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
+
+        if ($accessNotGranted) {
+            $this->redirectHandler->redirect($accessDeniedPage);
+        }
+
+        if ($isAuthorised && $isSessionExpired) {
             session_destroy();
-            $this->redirectHandler->redirect($this->configManager->getAccessDeniedPage());
+            $this->redirectHandler->redirect($accessDeniedPage);
         }
 
         $this->setDestroyTime();
     }
 
-    public function checkAccessLevel(string $userRole, string $requestUrl): bool
+    public function checkAccess(string $userRole, string $requestUrl): bool
     {
+
         foreach ($this->pageAccessLevels as $pageUrl => $accessLevel) {
             if (fnmatch($pageUrl, $requestUrl)) {
                 $userAccessLevel = $this->userAccessLevels[$userRole] ?? 0;
 
-                if ($userAccessLevel >= $accessLevel) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return $userAccessLevel >= $accessLevel;
             }
         }
 
@@ -80,11 +84,12 @@ class Auth implements IAuth
 
     public function login(WebRequestDTO $request): void
     {
-        $login = $request->getPost()['username'] ?? '';
-        $password = $request->getPost()['password'] ?? '';
-        if ($login !== '' && $password !== '') {
+        $login = $request->getPost()['username'] ?? null;
+        $password = $request->getPost()['password'] ?? null;
+
+        if ($login && $password) {
             $role = $this->verifyLoginAndPassword($login, $password);
-            if ($role !== null) {
+            if ($role) {
                 $this->authSessionHandler->setIsAuthorized(true);
                 $this->authSessionHandler->setRole($role);
                 $this->setDestroyTime();
