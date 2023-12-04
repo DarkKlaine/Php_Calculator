@@ -21,7 +21,6 @@ class UserModel
 
     public function addUserToDB(WebRequestDTO $request): void
     {
-        $connection = $this->connection->getConnection();
         $username = $request->getPost()['username'] ?? '';
         $passwordHash = $request->getPost()['password'] ?? '';
         $role = $request->getPost()['role'] ?? '';
@@ -31,146 +30,101 @@ class UserModel
             VALUES ('$username', '$passwordHash', '$role')
         SQL;
 
-        try {
-            $connection->exec($sqlInsert);
-        } catch (PDOException $e) {
-            echo "Ошибка при создании записи: " . $e->getMessage();
-            $this->logger->error("Ошибка при создании записи: " . $e->getMessage());
-        } finally {
-            $this->connection->closeConnection();
-        }
+        $this->executeQuery($sqlInsert);
     }
+
     public function getUserDataFromDB(string $username): array
     {
-        $connection = $this->connection->getConnection();
-
         $sqlSelect = <<<SQL
             SELECT `username`, `role`, `date`
             FROM `users`
             WHERE `username` = '$username'
         SQL;
 
-        $userData = [];
+        $data = $this->executeQuery($sqlSelect, true);
 
-        try {
-            $result = $connection->query($sqlSelect);
-
-            if ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                $username = $row['username'];
-                $role = $row['role'];
-                $date = $row['date'];
-
-                $userData = ['username' => $username, 'role' => $role, 'date' => $date];
-            }
-        } catch (PDOException $e) {
-            echo "Ошибка при получении записи: " . $e->getMessage();
-            $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
-        } finally {
-            $this->connection->closeConnection();
-        }
-
-        return $userData;
+        return [
+            'username' => $data[0]['username'],
+            'role' => $data[0]['role'],
+            'date' => $data[0]['date']
+        ];
     }
 
     public function getAllUsersDataFromDB(): array
     {
-        $connection = $this->connection->getConnection();
-
-        $sqlSelect =  <<<SQL
+        $sqlSelect = <<<SQL
             SELECT `username`, `role` 
             FROM `users`
         SQL;
 
-        $userData = [];
-
-        try {
-            $result = $connection->query($sqlSelect);
-
-            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                $username = $row['username'];
-                $role = $row['role'];
-
-                $userData[] = ['username' => $username, 'role' => $role];
-            }
-        } catch (PDOException $e) {
-            echo "Ошибка при получении записи: " . $e->getMessage();
-            $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
-        } finally {
-            $this->connection->closeConnection();
-        }
-
-        return $userData;
+        return $this->executeQuery($sqlSelect, true);
     }
 
     public function isUsernameExist(string $username): bool
     {
-        $connection = $this->connection->getConnection();
-
         $sqlSelect = <<<SQL
             SELECT `username` 
             FROM `users` 
             WHERE `username` = '$username'
         SQL;
 
-        $userExist = false;
+        $data = $this->executeQuery($sqlSelect, true);
 
-        try {
-            $result = $connection->query($sqlSelect);
-            $userExist = !empty($result->fetch(PDO::FETCH_ASSOC));
-        } catch (PDOException $e) {
-            echo "Ошибка при получении записи: " . $e->getMessage();
-            $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
-        } finally {
-            $this->connection->closeConnection();
-        }
-
-        return $userExist;
+        return !empty($data);
     }
 
-    public function updateUserInDB($request): void
+    public function updateUserInDB(WebRequestDTO $request): void
     {
-        $connection = $this->connection->getConnection();
-
         $currentUsername = $request->getPost()['currentUsername'] ?? null;
         $username = $request->getPost()['username'] ?? null;
         $passwordHash = $request->getPost()['password'] ?? null;
         $role = $request->getPost()['role'] ?? null;
 
-        $setUsername = $username !== '' ? "`username` = '$username', " : '';
-        $setPasswordHash = $passwordHash !== '' ? "`password_hash` = '$passwordHash', " : '';
+        $newUsername = $username !== '' ? "`username` = '$username', " : '';
+        $newPasswordHash = $passwordHash !== '' ? "`password_hash` = '$passwordHash', " : '';
 
         $sqlUpdate = <<<SQL
             UPDATE `users`
-            SET $setUsername $setPasswordHash `role` = '$role'
+            SET $newUsername $newPasswordHash `role` = '$role'
             WHERE `username` = '$currentUsername'
         SQL;
 
-        try {
-            $connection->exec($sqlUpdate);
-        } catch (PDOException $e) {
-            echo "Ошибка при обновлении записи: " . $e->getMessage();
-            $this->logger->error("Ошибка при обновлении записи: " . $e->getMessage());
-        } finally {
-            $this->connection->closeConnection();
-        }
+        $this->executeQuery($sqlUpdate);
     }
 
     public function deleteUserFromDB(string $username): void
     {
-        $connection = $this->connection->getConnection();
-
         $sqlDelete = <<<SQL
             DELETE FROM `users` 
             WHERE `username` = '$username'
         SQL;
 
+        $this->executeQuery($sqlDelete);
+    }
+
+    private function executeQuery(string $sqlQuery, bool $isSelectQuery = false): ?array
+    {
+        $data = null;
         try {
-            $connection->exec($sqlDelete);
+            $connection = $this->connection->getConnection();
+
+            if ($isSelectQuery) {
+                $result = $connection->query($sqlQuery);
+                $data = [];
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    $data[] = $row;
+                }
+            } else {
+                $connection->exec($sqlQuery);
+            }
         } catch (PDOException $e) {
-            echo "Ошибка при удалении записи: " . $e->getMessage();
-            $this->logger->error("Ошибка при удалении записи: " . $e->getMessage());
+            $message = 'Ошибка во время выполнения запроса к базе данных: ' . $e->getMessage();
+            echo $message;
+            $this->logger->error($message);
         } finally {
             $this->connection->closeConnection();
         }
+
+        return $data;
     }
 }
