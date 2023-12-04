@@ -43,11 +43,7 @@ class UserModel
 
         $data = $this->executeQuery($sqlSelect, true);
 
-        return [
-            'username' => $data[0]['username'],
-            'role' => $data[0]['role'],
-            'date' => $data[0]['date']
-        ];
+        return $data[0];
     }
 
     public function getAllUsersDataFromDB(): array
