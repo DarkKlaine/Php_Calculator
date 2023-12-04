@@ -136,7 +136,7 @@ class UserController
         }
 
         if ($operation === 'Edit') {
-            $this->userModel->EditUserInDB($request);
+            $this->userModel->updateUserInDB($request);
         }
 
         $queryParams = [

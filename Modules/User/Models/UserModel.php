@@ -26,22 +26,29 @@ class UserModel
         $passwordHash = $request->getPost()['password'] ?? '';
         $role = $request->getPost()['role'] ?? '';
 
-        $sqlInsert = "INSERT INTO `users` (`username`, `password_hash`, `role`) VALUES ('$username', '$passwordHash', '$role')";
+        $sqlInsert = <<<SQL
+            INSERT INTO `users` (`username`, `password_hash`, `role`)
+            VALUES ('$username', '$passwordHash', '$role')
+        SQL;
 
         try {
             $connection->exec($sqlInsert);
         } catch (PDOException $e) {
             echo "Ошибка при создании записи: " . $e->getMessage();
             $this->logger->error("Ошибка при создании записи: " . $e->getMessage());
+        } finally {
+            $this->connection->closeConnection();
         }
-
-        $this->connection->closeConnection();
     }
-
     public function getUserDataFromDB(string $username): array
     {
         $connection = $this->connection->getConnection();
-        $sqlSelect = "SELECT `username`, `role`, `date` FROM `users` WHERE `username` = '$username'";
+
+        $sqlSelect = <<<SQL
+            SELECT `username`, `role`, `date`
+            FROM `users`
+            WHERE `username` = '$username'
+        SQL;
 
         $userData = [];
 
@@ -58,9 +65,9 @@ class UserModel
         } catch (PDOException $e) {
             echo "Ошибка при получении записи: " . $e->getMessage();
             $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
+        } finally {
+            $this->connection->closeConnection();
         }
-
-        $this->connection->closeConnection();
 
         return $userData;
     }
@@ -68,7 +75,12 @@ class UserModel
     public function getAllUsersDataFromDB(): array
     {
         $connection = $this->connection->getConnection();
-        $sqlSelect = "SELECT `username`, `role` FROM `users`";
+
+        $sqlSelect =  <<<SQL
+            SELECT `username`, `role` 
+            FROM `users`
+        SQL;
+
         $userData = [];
 
         try {
@@ -83,9 +95,9 @@ class UserModel
         } catch (PDOException $e) {
             echo "Ошибка при получении записи: " . $e->getMessage();
             $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
+        } finally {
+            $this->connection->closeConnection();
         }
-
-        $this->connection->closeConnection();
 
         return $userData;
     }
@@ -93,7 +105,13 @@ class UserModel
     public function isUsernameExist(string $username): bool
     {
         $connection = $this->connection->getConnection();
-        $sqlSelect = "SELECT `username` FROM `users` WHERE `username` = '$username'";
+
+        $sqlSelect = <<<SQL
+            SELECT `username` 
+            FROM `users` 
+            WHERE `username` = '$username'
+        SQL;
+
         $userExist = false;
 
         try {
@@ -102,58 +120,57 @@ class UserModel
         } catch (PDOException $e) {
             echo "Ошибка при получении записи: " . $e->getMessage();
             $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
+        } finally {
+            $this->connection->closeConnection();
         }
-
-        $this->connection->closeConnection();
 
         return $userExist;
     }
 
-    public function EditUserInDB($request): void
+    public function updateUserInDB($request): void
     {
         $connection = $this->connection->getConnection();
-        $currentUsername = $request->getPost()['currentUsername'] ?? '';
-        $username = $request->getPost()['username'] ?? '';
 
-        $passwordHash = $request->getPost()['password'] ?? '';
+        $currentUsername = $request->getPost()['currentUsername'] ?? null;
+        $username = $request->getPost()['username'] ?? null;
+        $passwordHash = $request->getPost()['password'] ?? null;
+        $role = $request->getPost()['role'] ?? null;
 
-        $role = $request->getPost()['role'] ?? '';
+        $setUsername = $username !== '' ? "`username` = '$username', " : '';
+        $setPasswordHash = $passwordHash !== '' ? "`password_hash` = '$passwordHash', " : '';
 
-        $setUsername = '';
-        if ($username !== '') {
-            $setUsername = "`username` = '$username', ";
-        }
-
-        $setPasswordHash = '';
-        if ($passwordHash !== '') {
-            $setPasswordHash = "`password_hash` = '$passwordHash', ";
-        }
-
-        $sqlUpdate = "UPDATE `users` SET " . $setUsername . $setPasswordHash . "`role` = '$role' WHERE `username` = '$currentUsername'";
+        $sqlUpdate = <<<SQL
+            UPDATE `users`
+            SET $setUsername $setPasswordHash `role` = '$role'
+            WHERE `username` = '$currentUsername'
+        SQL;
 
         try {
             $connection->exec($sqlUpdate);
         } catch (PDOException $e) {
             echo "Ошибка при обновлении записи: " . $e->getMessage();
             $this->logger->error("Ошибка при обновлении записи: " . $e->getMessage());
+        } finally {
+            $this->connection->closeConnection();
         }
-
-        $this->connection->closeConnection();
     }
 
     public function deleteUserFromDB(string $username): void
     {
         $connection = $this->connection->getConnection();
 
-        $sqlDelete = "DELETE FROM `users` WHERE `username` = '$username'";
+        $sqlDelete = <<<SQL
+            DELETE FROM `users` 
+            WHERE `username` = '$username'
+        SQL;
 
         try {
             $connection->exec($sqlDelete);
         } catch (PDOException $e) {
             echo "Ошибка при удалении записи: " . $e->getMessage();
             $this->logger->error("Ошибка при удалении записи: " . $e->getMessage());
+        } finally {
+            $this->connection->closeConnection();
         }
-
-        $this->connection->closeConnection();
     }
 }
