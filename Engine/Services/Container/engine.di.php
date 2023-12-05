@@ -89,14 +89,17 @@ return [
     },
     //Web
     IEngineControllerWeb::class => function (Container $container) {
-        $engineHomePageView = $container->get(IEngineHomePageView::class);
+        return new EngineControllerWeb(
+            $container->get(IEngineHomePageView::class),
+            $container->get(IAuthSessionHandler::class),
 
-        return new EngineControllerWeb($engineHomePageView);
+        );
     },
     IEngineHomePageView::class => function ($container) {
-        $templateEngine = $container->get(IWebTemplateEngine::class);
-
-        return new EngineHomePageView($templateEngine);
+        return new EngineHomePageView(
+            $container->get(IWebTemplateEngine::class),
+            $container->get(IAuthSessionHandler::class),
+        );
     },
     IWebRedirectHandler::class => function () {
         return new WebRedirectHandler();
