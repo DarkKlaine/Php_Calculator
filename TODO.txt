@@ -1,38 +1,56 @@
--------- TO DO --------
-- Почистить код - это дейлик. :)
-- DRY - Dont repeat yourself
-- YAGNI - Не добавляй функциональность, в которой нет непосредственной надобности
+<div class="form-body">
+    <form method="post" action="<?php echo $this->vars['Calculate'] ?>">
+        <div class="col-12">
+            <label for="inputExpression" class="form-label"></label>
+            <pre style="font-family: monospace; text-align: center; font-size: 18px;">
+<?php
+if (empty($this->vars['result']) === false || $this->vars['result'] === '0') {
+    echo 'Выражение: ' . $this->vars['input'] . PHP_EOL;
+    //echo 'Результат: ' . $this->vars['result'] . PHP_EOL;
+} else {
+    echo 'Поддерживает следующие функции:' . PHP_EOL;
+    echo '+, -, /, *, pow, sin, cos, tan' . PHP_EOL;
+    echo 'Умеет вычислять сложные выражения' . PHP_EOL;
+}
+?></pre>
+            <input type="text" style="text-align: right" class="form-control" id="inputExpression" name="userInput"
+                   placeholder="<?php echo $this->vars['result'] === '' ? 'Введите выражение' : 'Результат: ' . $this->vars['result']; ?>" required>
+        </div>
+        <br>
+        <div class="col-12">
+            <div class="d-grid">
+                <table>
+                    <tr>
+                        <td>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('1')">1</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('2')">2</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('3')">3</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('4')">4</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('5')">5</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('6')">6</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('7')">7</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('8')">8</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('9')">9</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('0')">0</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('.')">.</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 43px;">
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('+')">+</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('-')">-</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('*')">*</button>
+                        <button style="width: 40px" class="btn btn-light" onclick="appendToInput('/')">/</button>
+                        <button style="width: 58px" class="btn btn-light" onclick="appendToInput('pow')">pow</button>
+                        <button style="width: 58px" class="btn btn-light" onclick="appendToInput('sin')">sin</button>
+                        <button style="width: 58px" class="btn btn-light" onclick="appendToInput('cos')">cos</button>
+                        <button style="width: 57px" class="btn btn-light" onclick="appendToInput('tan')">tan</button>
+                        <button style="width: 57px" class="btn btn-light" onclick="calculate()">=</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-*Сейчас*
-
-- Для сохранения истории (основной и сессионной) используй декоратор (паттерн проектирования).
-          Почитай доку, посмотри примеры.
-- Конфиг должен лежать не в движке, а в приложении. То что касается движка остается в движке.
-  То что касается приложения, разрабатываемого на движке, должно переехать в корень проекта.
-
-9. Замени все выводы типа echo "Какая-то ошибка" на выброс исключений (изучи какие бывают исключения в нативном PHP).
-    Исключения должны где-то обрабатываться в движке и при их обработке уже должны выводиться ошибки пользователю в браузере или консоли.
-    В качестве примера попробуй выбрасывать исключения из контроллеров в случае каких-либо ошибок
-    Error Handler
-
-*Не сейчас*
-- phpUnit почитать
-
-- Работа с базами данных (пользователи и авторизация)
-
-
-*Для общего развития*
-- php code sniffer (phpcs для phpstorm)
-- glob, tags in container
-
-------- ПОЛУ DO --------
-
-- Предлагаю порефакторить роутеры. Попробовать выделить общую часть и разные реализации для веба и консоли.
-* Попробовал, получается нечитаемо.
-* Приходится закидывать в наследуемый (или родительский, в зависимости от реализации) класс методы для одной строчки.
-* Код становится более сложным и менее лаконичным ИМХО. Спросить у Вовы.
-
--------- УЖЕ DO --------
-
-- Завести аккаунт youtrack или любом другом треккере задач.
-  Все имеющиеся у тебя задачи добавить как отдельные задачи и позвать меня на всё готовое.
+    </form>
+</div>

@@ -12,8 +12,8 @@
         <input type="hidden" name="currentUsername" value="<?php echo $this->vars['CurrentUsername'] ?>">
         <div class="col-12">
             <label for="inputUsername" class="form-label"></label>
-            <input type="text" class="form-control <?php echo $this->vars['FrameStyle'] ?? '' ?>" onclick="this.classList.remove('is-invalid')" id="inputUsername" name="username"
-                   placeholder="Имя пользователя" <?php echo $this->vars['Required'] ?>pattern="^[A-Za-z0-9]{2,12}$">
+            <input type="text" class="form-control <?php echo $this->vars['FrameStyle'] ?? '' ?>" onclick="this.select(); this.classList.remove('is-invalid')" id="inputUsername" name="username"
+                   value="<?php echo $this->vars['CurrentUsername'] ?>" placeholder="Имя пользователя" <?php echo $this->vars['Required'] ?>pattern="^[A-Za-z0-9]{2,12}$">
         </div>
         <div class="col-12">
             <div class="d-grid">

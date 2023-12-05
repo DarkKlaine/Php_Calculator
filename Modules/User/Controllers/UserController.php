@@ -79,8 +79,10 @@ class UserController
     {
         $operation = $this->getVerifiedOperation($request);
         $username = $request->getPost()['username'] ?? '';
+        $currentUsername = $request->getPost()['currentUsername'] ?? '';
+        $isUsernameExist = $this->userModel->isUsernameExist($username);
 
-        if ($this->userModel->isUsernameExist($username)) {
+        if ($isUsernameExist && $username !== $currentUsername) {
             $this->setUsernameView->render($request, $operation, true);
 
             return;
