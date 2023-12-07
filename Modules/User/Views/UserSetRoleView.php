@@ -4,6 +4,8 @@ namespace Modules\User\Views;
 
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Engine\Views\IWebTemplateEngine;
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
 use Modules\User\IUserConfigManagerWeb;
 
 class UserSetRoleView
@@ -21,18 +23,16 @@ class UserSetRoleView
         $this->configManager = $configManager;
     }
 
-    public function render(WebRequestDTO $request, string $operation, string $passwordHash): void
+    public function render(?string $username, ?string $usernameOld, string $operation, string $passwordHash): void
     {
-        $username = $request->getPost()['username'] ?? null;
+        $this->templateEngine->assignVar(ViewConst::TITLE, $this->title);
+        $this->templateEngine->assignVar(ViewConst::DESCRIPTION, $this->description);
 
-        $this->templateEngine->assignVar('Title', $this->title);
-        $this->templateEngine->assignVar('Description', $this->description);
-
-        $this->templateEngine->assignVar('Action', $this->configManager->getRecordUserDataUrl());
-        $this->templateEngine->assignVar('Operation', $operation);
-        $this->templateEngine->assignVar('CurrentUsername', $request->getPost()['currentUsername'] ?? '');
-        $this->templateEngine->assignVar('Username', $username);
-        $this->templateEngine->assignVar('Password', $passwordHash);
+        $this->templateEngine->assignVar(ViewConst::ACTION, $this->configManager->getRecordUserDataUrl());
+        $this->templateEngine->assignVar(UserConst::OPERATION, $operation);
+        $this->templateEngine->assignVar(UserConst::USERNAME, $username);
+        $this->templateEngine->assignVar(UserConst::USERNAME_OLD, $usernameOld);
+        $this->templateEngine->assignVar(UserConst::PASSWORD, $passwordHash);
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);

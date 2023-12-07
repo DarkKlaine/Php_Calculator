@@ -61,13 +61,19 @@ class UserController
     {
         $operation = $this->getVerifiedOperation($request);
 
-        $this->setUsernameView->render($request, $operation);
+        $usernameOld = $request->getPost(UserConst::USERNAME_OLD) ?: null;
+
+        $this->setUsernameView->render($usernameOld, $operation);
     }
 
     private function getVerifiedOperation(WebRequestDTO $request): string
     {
-        $operation = $request->getPost()['operation'] ?? '';
-        if ($operation !== 'Create' && $operation !== 'Edit') {
+        $operation = $request->getPost(UserConst::OPERATION);
+        if (
+            $operation !== UserConst::CREATE &&
+            $operation !== UserConst::EDIT &&
+            $operation !== UserConst::DELETE
+        ) {
             $url = $this->configManager->getUserManagerUrl();
             $this->redirectHandler->redirect($url);
         }
@@ -78,35 +84,34 @@ class UserController
     public function setPassword(WebRequestDTO $request): void
     {
         $operation = $this->getVerifiedOperation($request);
-        $username = $request->getPost()['username'] ?? '';
-        $currentUsername = $request->getPost()['currentUsername'] ?? '';
+        $username = $request->getPost(UserConst::USERNAME);
+        $usernameOld = $request->getPost(UserConst::USERNAME_OLD);
         $isUsernameExist = $this->userModel->isUsernameExist($username);
 
-        if ($isUsernameExist && $username !== $currentUsername) {
-            $this->setUsernameView->render($request, $operation, true);
+        if ($isUsernameExist && $username !== $usernameOld) {
+            $this->setUsernameView->render($usernameOld, $operation, true);
 
             return;
         }
-        $this->setPasswordView->render($request, $operation);
+        $this->setPasswordView->render($username, $usernameOld, $operation);
     }
 
     public function setRole(WebRequestDTO $request): void
     {
         $operation = $this->getVerifiedOperation($request);
+        $username = $request->getPost(UserConst::USERNAME);
+        $usernameOld = $request->getPost(UserConst::USERNAME_OLD);
+        $password = $request->getPost(UserConst::PASSWORD);
+        $passwordConfirm = $request->getPost(UserConst::PASSWORD_CONFIRM);
 
-        $password = $request->getPost()['password'] ?? '';
-        $passwordConfirm = $request->getPost()['passwordConfirm'] ?? '';
         if ($password === $passwordConfirm) {
-            $passwordHash = '';
-            if ($password !== '') {
-                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-            }
-            $this->setRoleView->render($request, $operation, $passwordHash);
+            $passwordHash = $password !== '' ? password_hash($password, PASSWORD_DEFAULT) : '';
+            $this->setRoleView->render($username, $usernameOld, $operation, $passwordHash);
 
             return;
         }
 
-        $this->setPasswordView->render($request, $operation, true);
+        $this->setPasswordView->render($username, $usernameOld, $operation, true);
     }
 
     public function showUsersList(): void
@@ -117,8 +122,8 @@ class UserController
 
     public function showUserInfo(WebRequestDTO $request): void
     {
-        $username = $request->getGet()['username'] ?? '';
-        if ($username !== '') {
+        $username = $request->getGet(UserConst::USERNAME);
+        if ($username) {
             $userData = $this->userModel->getUserDataFromDB($username);
             $this->userInfoView->render($userData);
 
@@ -133,28 +138,33 @@ class UserController
     {
         $operation = $this->getVerifiedOperation($request);
 
-        if ($operation === 'Create') {
+        if ($operation === UserConst::CREATE) {
             $this->userModel->addUserToDB($request);
         }
 
-        if ($operation === 'Edit') {
+        if ($operation === UserConst::EDIT) {
             $this->userModel->updateUserInDB($request);
         }
 
+        if (!$username = $request->getPost(UserConst::USERNAME)) {
+            $username = $request->getPost(UserConst::USERNAME_OLD);
+        }
+
         $queryParams = [
-            'username' => $request->getPost()['username'] ?? '',
+            UserConst::USERNAME => $username,
         ];
         $postData = http_build_query($queryParams);
         $url = $this->configManager->getShowUserInfoUrl() . '/?' . $postData;
+
         $this->redirectHandler->redirect($url);
     }
 
     public function deleteUser(WebRequestDTO $request): void
     {
-        $operation = $request->getPost()['operation'] ?? '';
-        $username = $request->getPost()['username'] ?? '';
+        $operation = $this->getVerifiedOperation($request);
+        $username = $request->getPost(UserConst::USERNAME);
 
-        if ($username !== '' && $operation !== 'Delete') {
+        if ($username !== '' && $operation !== UserConst::DELETE) {
             $userData = $this->userModel->getUserDataFromDB($username);
             if ($userData !== []) {
                 $this->userDeleteView->render($userData);
@@ -163,7 +173,7 @@ class UserController
             }
         }
 
-        if ($username !== '' && $operation === 'Delete') {
+        if ($username !== '' && $operation === UserConst::DELETE) {
             $this->userModel->deleteUserFromDB($username);
         }
 

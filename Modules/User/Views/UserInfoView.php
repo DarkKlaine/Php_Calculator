@@ -3,6 +3,8 @@
 namespace Modules\User\Views;
 
 use Engine\Views\IWebTemplateEngine;
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
 use Modules\User\IUserConfigManagerWeb;
 
 class UserInfoView
@@ -21,13 +23,13 @@ class UserInfoView
 
     public function render(array $userData): void
     {
-        $this->templateEngine->assignVar('Title', $this->title);
+        $this->templateEngine->assignVar(ViewConst::TITLE, $this->title);
 
-        $this->templateEngine->assignVar('Username', $userData['username']);
-        $this->templateEngine->assignVar('Role', $userData['role']);
-        $this->templateEngine->assignVar('Date', $userData['date']);
+        $this->templateEngine->assignVar(UserConst::USERNAME, $userData[UserConst::USERNAME]);
+        $this->templateEngine->assignVar(UserConst::ROLE, $userData[UserConst::ROLE]);
+        $this->templateEngine->assignVar(UserConst::DATE, $userData[UserConst::DATE]);
 
-        $this->templateEngine->assignVar('EditUser', $this->configManager->getSetUsernameUrl());
+        $this->templateEngine->assignVar('SetUsername', $this->configManager->getSetUsernameUrl());
         $this->templateEngine->assignVar('ShowUsersList', $this->configManager->getShowUserListUrl());
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');

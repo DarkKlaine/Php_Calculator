@@ -3,6 +3,7 @@
 namespace Modules\User\Views;
 
 use Engine\Views\IWebTemplateEngine;
+use Engine\Views\ViewConst;
 use Modules\User\IUserConfigManagerWeb;
 
 class UserManagerView
@@ -22,14 +23,12 @@ class UserManagerView
 
     public function render(): void
     {
-        $this->templateEngine->assignVar('Title', $this->title);
+        $this->templateEngine->assignVar(ViewConst::TITLE, $this->title);
         $this->templateEngine->assignVar('CreateUser', $this->configManager->getSetUsernameUrl());
         $this->templateEngine->assignVar('ShowUsersList', $this->configManager->getShowUserListUrl());
 
         $this->templateEngine->setModuleTemplatesPath($this->moduleTemplatesPath);
-
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);
-
         $this->templateEngine->display($this->indexTplFile);
     }
 }

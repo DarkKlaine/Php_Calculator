@@ -1,17 +1,19 @@
+<?php
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
+?>
 <div class="text-center">
-    <h3 class="">
-        <?php echo $this->vars['Title'] ?>
-    </h3><br>
+    <h3><?php echo $this->vars[ViewConst::TITLE] ?></h3><br>
 </div>
 
 <div class="form-body">
-    <form class="row g-3" method="post" action="<?php echo $this->vars['Action'] ?>">
+    <form class="row g-3" method="post" action="<?php echo $this->vars[ViewConst::ACTION] ?>">
 
         <div class="col-12">
-            <input type="hidden" name="operation" value="<?php echo $this->vars['Operation'] ?>">
-            <input type="hidden" name="currentUsername" value="<?php echo $this->vars['CurrentUsername'] ?>">
-            <input type="hidden" name="username" value="<?php echo $this->vars['Username'] ?>">
-            <input type="hidden" name="password" value="<?php echo $this->vars['Password'] ?>">
+            <input type="hidden" name="<?php echo UserConst::OPERATION ?>" value="<?php echo $this->vars[UserConst::OPERATION] ?>">
+            <input type="hidden" name="<?php echo UserConst::USERNAME ?>" value="<?php echo $this->vars[UserConst::USERNAME] ?>">
+            <input type="hidden" name="<?php echo UserConst::USERNAME_OLD ?>" value="<?php echo $this->vars[UserConst::USERNAME_OLD] ?>">
+            <input type="hidden" name="<?php echo UserConst::PASSWORD ?>" value="<?php echo $this->vars[UserConst::PASSWORD] ?>">
             <select class="form-select mb-3" aria-label="Select role" name="role">
                 <option selected value="Счетовод">Счетовод</option>
                 <option value="Администратор">Администратор</option>

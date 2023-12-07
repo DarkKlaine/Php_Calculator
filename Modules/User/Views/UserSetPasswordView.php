@@ -4,12 +4,15 @@ namespace Modules\User\Views;
 
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Engine\Views\IWebTemplateEngine;
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
 use Modules\User\IUserConfigManagerWeb;
 
 class UserSetPasswordView
 {
     private string $title = 'Придумайте пароль';
     private string $description = 'Может состоять из 2–12 букв или цифр';
+    private string $errorMsg = '<br><br><span style="color: red;">Пароли не совпадают</span>';
     private string $indexTplFile = 'index.tpl.php';
     private string $contentTplFile = 'setPassword.tpl.php';
     private string $pswScriptTplFile = 'psw.script.tpl.php';
@@ -22,33 +25,22 @@ class UserSetPasswordView
         $this->configManager = $configManager;
     }
 
-    public function render(WebRequestDTO $request, string $operation, bool $passwordMismatch = false): void
+    public function render(?string $username, ?string $usernameOld, string $operation, bool $passwordMismatch = false): void
     {
-        $required = '';
-        if ($operation === 'Create') {
-            $required = 'required ';
-        }
+        $required = $operation === UserConst::CREATE ? ViewConst::REQUIRED : '';
+        $errorMsg = $passwordMismatch ? $this->errorMsg : '';
+        $frameStyle = $passwordMismatch ? 'is-invalid' : 'border-end-0';
 
-        $frameStyle = 'border-end-0';
-        if ($passwordMismatch) {
-            $this->templateEngine->assignVar(
-                'ErrorMessage',
-                '<br><br><span style="color: red;">Пароли не совпадают</span>'
-            );
-            $frameStyle = 'is-invalid';
-        }
+        $this->templateEngine->assignVar(ViewConst::TITLE, $this->title);
+        $this->templateEngine->assignVar(ViewConst::DESCRIPTION, $this->description);
+        $this->templateEngine->assignVar(ViewConst::ERROR_MSG, $errorMsg);
 
-        $username = $request->getPost()['username'] ?? '';
-
-        $this->templateEngine->assignVar('Title', $this->title);
-        $this->templateEngine->assignVar('Description', $this->description);
-
-        $this->templateEngine->assignVar('Action', $this->configManager->getSetRoleUrl());
-        $this->templateEngine->assignVar('Username', $username);
-        $this->templateEngine->assignVar('Operation', $operation);
-        $this->templateEngine->assignVar('CurrentUsername', $request->getPost()['currentUsername'] ?? '');
-        $this->templateEngine->assignVar('FrameStyle', $frameStyle);
-        $this->templateEngine->assignVar('Required', $required);
+        $this->templateEngine->assignVar(ViewConst::ACTION, $this->configManager->getSetRoleUrl());
+        $this->templateEngine->assignVar(UserConst::OPERATION, $operation);
+        $this->templateEngine->assignVar(UserConst::USERNAME, $username);
+        $this->templateEngine->assignVar(UserConst::USERNAME_OLD, $usernameOld);
+        $this->templateEngine->assignVar(ViewConst::FRAME_STYLE, $frameStyle);
+        $this->templateEngine->assignVar(ViewConst::REQUIRED, $required);
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile, scriptTpl: $this->pswScriptTplFile);

@@ -3,6 +3,8 @@
 namespace Modules\User\Views;
 
 use Engine\Views\IWebTemplateEngine;
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
 use Modules\User\IUserConfigManagerWeb;
 
 class UserDeleteView
@@ -22,12 +24,12 @@ class UserDeleteView
 
     public function render(array $userData): void
     {
-        $this->templateEngine->assignVar('Title', $this->title);
-        $this->templateEngine->assignVar('Description', $this->description);
+        $this->templateEngine->assignVar(ViewConst::TITLE, $this->title);
+        $this->templateEngine->assignVar(ViewConst::DESCRIPTION, $this->description);
 
-        $this->templateEngine->assignVar('Username', $userData['username']);
-        $this->templateEngine->assignVar('Role', $userData['role']);
-        $this->templateEngine->assignVar('Date', $userData['date']);
+        $this->templateEngine->assignVar(UserConst::USERNAME, $userData[UserConst::USERNAME]);
+        $this->templateEngine->assignVar(UserConst::ROLE, $userData[UserConst::ROLE]);
+        $this->templateEngine->assignVar(UserConst::DATE, $userData[UserConst::DATE]);
 
         $this->templateEngine->assignVar('DeleteUser', $this->configManager->getDeleteUserUrl());
         $this->templateEngine->assignVar('ShowUsersList', $this->configManager->getShowUserListUrl());

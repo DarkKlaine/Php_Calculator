@@ -3,6 +3,8 @@
 namespace Modules\User\Views;
 
 use Engine\Views\IWebTemplateEngine;
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
 use Modules\User\IUserConfigManagerWeb;
 
 class UserListView
@@ -21,15 +23,15 @@ class UserListView
 
     public function render(array $usersData): void
     {
-        $this->templateEngine->assignVar('Title', $this->title);
+        $this->templateEngine->assignVar(ViewConst::TITLE, $this->title);
 
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
         $this->templateEngine->assignVar('UsersData', $usersData);
 
-        $this->templateEngine->assignVar('Info', $this->configManager->getShowUserInfoUrl());
-        $this->templateEngine->assignVar('Edit', $this->configManager->getSetUsernameUrl());
-        $this->templateEngine->assignVar('Delete', $this->configManager->getDeleteUserUrl());
+        $this->templateEngine->assignVar('ShowUserInfo', $this->configManager->getShowUserInfoUrl());
+        $this->templateEngine->assignVar('SetUsername', $this->configManager->getSetUsernameUrl());
+        $this->templateEngine->assignVar('DeleteUser', $this->configManager->getDeleteUserUrl());
 
         $this->templateEngine->setTemplatesForInjection($this->contentTplFile);
 

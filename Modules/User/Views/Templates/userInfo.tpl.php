@@ -1,23 +1,19 @@
+<?php
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
+?>
 <div class="text-center">
-    <h3 class="">
-        <?php echo $this->vars['Title'] ?>
-    </h3><br>
-    <h4 class="">
-        <?php echo $this->vars['Username'] ?>
-    </h4>
-    <h6 class="">
-        Роль: <?php echo $this->vars['Role'] ?>
-    </h6>
-    <h6 class="">
-        Зарегистрирован: <?php echo $this->vars['Date'] ?>
-    </h6><br>
+    <h3><?php echo $this->vars[ViewConst::TITLE] ?></h3><br>
+    <h4><?php echo $this->vars[UserConst::USERNAME] ?></h4>
+    <h6><?php echo 'Роль: ' . $this->vars[UserConst::ROLE] ?></h6>
+    <h6><?php echo 'Зарегистрирован: ' . $this->vars[UserConst::DATE] ?></h6><br>
 </div>
 
 <div class="col-12">
     <div class="d-grid">
-        <form class="row g-0" method="post" action="<?php echo $this->vars['EditUser'] ?>">
-            <input type="hidden" name="currentUsername" value="<?php echo $this->vars['Username'] ?>">
-            <input type="hidden" name="operation" value="Edit">
+        <form class="row g-0" method="post" action="<?php echo $this->vars['SetUsername'] ?>">
+            <input type="hidden" name="<?php echo UserConst::USERNAME_OLD ?>" value="<?php echo $this->vars[UserConst::USERNAME] ?>">
+            <input type="hidden" name="<?php echo UserConst::OPERATION ?>" value="<?php echo UserConst::EDIT ?>">
             <button type="submit" class="btn btn-light">Редактировать пользователя</button>
         </form>
         <br>

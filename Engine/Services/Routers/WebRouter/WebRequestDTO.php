@@ -13,13 +13,33 @@ class WebRequestDTO
         $this->get = $get;
     }
 
-    public function getPost(): ?array
+    public function getPost(?string ...$keys): mixed
     {
-        return $this->post ?? null;
+        $value = $this->post;
+
+        foreach ($keys as $key) {
+            $value = $value[$key] ?? null;
+
+            if ($value === null) {
+                break;
+            }
+        }
+
+        return $value;
     }
 
-    public function getGet(): ?array
+    public function getGet(?string ...$keys): mixed
     {
-        return $this->get ?? null;
+        $value = $this->get;
+
+        foreach ($keys as $key) {
+            $value = $value[$key] ?? null;
+
+            if ($value === null) {
+                break;
+            }
+        }
+
+        return $value;
     }
 }

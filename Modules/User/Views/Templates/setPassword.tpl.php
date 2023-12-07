@@ -1,31 +1,42 @@
+<?php
+use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
+?>
 <div class="text-center">
-    <h3 class="">
-        <?php echo $this->vars['Title'] ?>
-    </h3>
-    <?php echo $this->vars['Description'] ?>
-    <?php echo $this->vars['ErrorMessage'] ?? '' ?>
+    <h3><?php echo $this->vars[ViewConst::TITLE] ?></h3>
+    <?php echo $this->vars[ViewConst::DESCRIPTION] ?>
+    <?php echo $this->vars[ViewConst::ERROR_MSG] ?>
 </div>
 
 <div class="form-body">
-    <form class="row g-3" method="post" action="<?php echo $this->vars['Action'] ?>">
+    <form class="row g-3" method="post" action="<?php echo $this->vars[ViewConst::ACTION] ?>">
         <div class="col-12">
-            <input type="hidden" name="operation" value="<?php echo $this->vars['Operation'] ?>">
-            <input type="hidden" name="currentUsername" value="<?php echo $this->vars['CurrentUsername'] ?>">
-            <input type="hidden" name="username" value="<?php echo $this->vars['Username'] ?>">
-            <label for="inputPassword" class="form-label"></label>
+            <input type="hidden" name="<?php echo UserConst::OPERATION ?>" value="<?php echo $this->vars[UserConst::OPERATION] ?>">
+            <input type="hidden" name="<?php echo UserConst::USERNAME ?>" value="<?php echo $this->vars[UserConst::USERNAME] ?>">
+            <input type="hidden" name="<?php echo UserConst::USERNAME_OLD ?>" value="<?php echo $this->vars[UserConst::USERNAME_OLD] ?>">
+
+            <label for="inputPassword"></label>
             <div class="input-group" id="password">
-                <input type="password" class="form-control
-                <?php echo $this->vars['FrameStyle'] ?? '' ?>" onclick="this.classList.replace('is-invalid', 'border-end-0')"
-                       id="inputPassword" name="password"
-                       placeholder="Пароль" <?php echo $this->vars['Required'] ?> pattern="^[A-Za-z0-9]{2,12}$">
+                <input type="password"
+                       class="form-control <?php echo $this->vars[ViewConst::FRAME_STYLE] ?>"
+                       onclick="this.classList.replace('is-invalid', 'border-end-0')"
+                       id="inputPassword"
+                       name="<?php echo UserConst::PASSWORD ?>"
+                       placeholder="Пароль"
+                       <?php echo $this->vars[ViewConst::REQUIRED] ?>
+                       pattern="^[A-Za-z0-9]{2,12}$">
                 <a href="javascript:" class="input-group-text"><i class='bx bx-hide'></i></a>
             </div>
-            <label for="confirmPassword" class="form-label"></label>
+            <label for="confirmPassword"></label>
             <div class="input-group" id="confirm_password">
-                <input type="password" class="form-control
-                <?php echo $this->vars['FrameStyle'] ?? '' ?>" onclick="this.classList.replace('is-invalid', 'border-end-0')"
-                       id="confirmPassword" name="passwordConfirm"
-                       placeholder="Повторите пароль" <?php echo $this->vars['Required'] ?> pattern="^[A-Za-z0-9]{2,12}$">
+                <input type="password"
+                       class="form-control <?php echo $this->vars[ViewConst::FRAME_STYLE] ?>"
+                       onclick="this.classList.replace('is-invalid', 'border-end-0')"
+                       id="confirmPassword"
+                       name="<?php echo UserConst::PASSWORD_CONFIRM ?>"
+                       placeholder="Повторите пароль"
+                       <?php echo $this->vars[ViewConst::REQUIRED] ?>
+                       pattern="^[A-Za-z0-9]{2,12}$">
                 <a href="javascript:" class="input-group-text"><i class='bx bx-hide'></i></a>
             </div>
         </div>
