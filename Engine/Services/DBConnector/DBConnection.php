@@ -26,7 +26,7 @@ class DBConnection implements IDBConnection
             $this->connection = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $e) {
             $logger->error("Ошибка подключения: " . $e->getMessage());
-            die();
+            throw $e;
         }
     }
 

@@ -14,7 +14,7 @@ use Modules\User\Controllers\UserConst;
     <div class="d-grid">
         <form class="row g-0" method="post" action="<?php echo $this->vars['DeleteUser'] ?>">
             <input type="hidden" name="<?php echo UserConst::USERNAME ?>" value="<?php echo $this->vars[UserConst::USERNAME] ?>">
-            <input type="hidden" name="<?php echo UserConst::OPERATION ?>" value="<?php echo $this->vars[UserConst::DELETE] ?>">
+            <input type="hidden" name="<?php echo UserConst::OPERATION ?>" value="<?php echo UserConst::DELETE ?>">
             <button type="submit" class="btn btn-light"><span style="color: red;">У Д А Л И Т Ь</span></button>
         </form>
         <br>
