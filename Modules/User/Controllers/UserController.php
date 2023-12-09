@@ -2,11 +2,11 @@
 
 namespace Modules\User\Controllers;
 
+use App\UserProvider;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
 use Modules\User\IUserConfigManagerWeb;
-use Modules\User\Models\UserModel;
 use Modules\User\Views\UserDeleteView;
 use Modules\User\Views\UserInfoView;
 use Modules\User\Views\UserListView;
@@ -23,7 +23,7 @@ class UserController
     private UserSetRoleView $setRoleView;
     private UserListView $userListView;
     private UserInfoView $userInfoView;
-    private UserModel $userModel;
+    private UserProvider $userProvider;
     private IWebRedirectHandler $redirectHandler;
     private IUserConfigManagerWeb $configManager;
     private UserDeleteView $userDeleteView;
@@ -36,7 +36,7 @@ class UserController
         UserListView $userListView,
         UserInfoView $userInfoView,
         UserDeleteView $userDeleteView,
-        UserModel $userModel,
+        UserProvider $userProvider,
         IUserConfigManagerWeb $configManager,
         IWebRedirectHandler $redirectHandler,
     ) {
@@ -46,7 +46,7 @@ class UserController
         $this->setRoleView = $setRoleView;
         $this->userListView = $userListView;
         $this->userInfoView = $userInfoView;
-        $this->userModel = $userModel;
+        $this->userProvider = $userProvider;
         $this->redirectHandler = $redirectHandler;
         $this->configManager = $configManager;
         $this->userDeleteView = $userDeleteView;
@@ -69,16 +69,18 @@ class UserController
     private function getVerifiedOperation(WebRequestDTO $request): string
     {
         $operation = $request->getPost(UserConst::OPERATION);
-        if (
-            $operation !== UserConst::CREATE &&
-            $operation !== UserConst::EDIT &&
-            $operation !== UserConst::DELETE
-        ) {
-            $url = $this->configManager->getUserManagerUrl();
-            $this->redirectHandler->redirect($url);
+        $allowedOperations = [
+            UserConst::CREATE,
+            UserConst::EDIT,
+        ];
+
+        if (in_array($operation, $allowedOperations)) {
+            return $operation;
         }
 
-        return $operation;
+        $url = $this->configManager->getUserManagerUrl();
+        $this->redirectHandler->redirect($url);
+        return '';
     }
 
     public function setPassword(WebRequestDTO $request): void
@@ -86,7 +88,7 @@ class UserController
         $operation = $this->getVerifiedOperation($request);
         $username = $request->getPost(UserConst::USERNAME);
         $usernameOld = $request->getPost(UserConst::USERNAME_OLD);
-        $isUsernameExist = $this->userModel->isUsernameExist($username);
+        $isUsernameExist = $this->userProvider->isUserExist($username);
 
         if ($isUsernameExist && $username !== $usernameOld) {
             $this->setUsernameView->render($usernameOld, $operation, true);
@@ -116,7 +118,7 @@ class UserController
 
     public function showUsersList(): void
     {
-        $usersData = $this->userModel->getAllUsersDataFromDB();
+        $usersData = $this->userProvider->getAllUsers();
         $this->userListView->render($usersData);
     }
 
@@ -124,10 +126,13 @@ class UserController
     {
         $username = $request->getGet(UserConst::USERNAME);
         if ($username) {
-            $userData = $this->userModel->getUserDataFromDB($username);
-            $this->userInfoView->render($userData);
+            $userData = $this->userProvider->getUser($username);
 
-            return;
+            if ($userData) {
+                $this->userInfoView->render($userData);
+
+                return;
+            }
         }
 
         $url = $this->configManager->getShowUserListUrl();
@@ -138,12 +143,27 @@ class UserController
     {
         $operation = $this->getVerifiedOperation($request);
 
+        $oldUsername = $request->getPost(UserConst::USERNAME_OLD) ?? '';
+        $username = $request->getPost(UserConst::USERNAME) ?? '';
+        $passwordHash = $request->getPost(UserConst::PASSWORD) ?? '';
+        $role = $request->getPost(UserConst::ROLE) ?? '';
+
         if ($operation === UserConst::CREATE) {
-            $this->userModel->addUserToDB($request);
+            if ($username !== '' && $passwordHash !== '' && $role !== '') {
+                $this->userProvider->addUser($username, $passwordHash, $role);
+            } else {
+                $url = $this->configManager->getUserManagerUrl();
+                $this->redirectHandler->redirect($url);
+            }
         }
 
         if ($operation === UserConst::EDIT) {
-            $this->userModel->updateUserInDB($request);
+            if ($oldUsername !== '' && $role !== '') {
+                $this->userProvider->updateUser($oldUsername, $username, $passwordHash, $role);
+            } else {
+                $url = $this->configManager->getUserManagerUrl();
+                $this->redirectHandler->redirect($url);
+            }
         }
 
         if (!$username = $request->getPost(UserConst::USERNAME)) {
@@ -161,11 +181,11 @@ class UserController
 
     public function deleteUser(WebRequestDTO $request): void
     {
-        $operation = $this->getVerifiedOperation($request);
+        $operation = $request->getPost(UserConst::OPERATION);
         $username = $request->getPost(UserConst::USERNAME);
 
         if ($username !== '' && $operation !== UserConst::DELETE) {
-            $userData = $this->userModel->getUserDataFromDB($username);
+            $userData = $this->userProvider->getUser($username);
             if ($userData !== []) {
                 $this->userDeleteView->render($userData);
 
@@ -174,7 +194,7 @@ class UserController
         }
 
         if ($username !== '' && $operation === UserConst::DELETE) {
-            $this->userModel->deleteUserFromDB($username);
+            $this->userProvider->deleteUser($username);
         }
 
         $url = $this->configManager->getShowUserListUrl();
