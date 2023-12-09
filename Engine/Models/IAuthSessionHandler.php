@@ -12,10 +12,6 @@ interface IAuthSessionHandler
 
     public function setDestroyTime(int $time): void;
 
-    public function setRole(string $role): void;
-
-    public function getRole(): string;
-
     public function setUsername(string $username): void;
 
     public function getUsername(): string;

@@ -4,13 +4,10 @@ namespace Engine\Models;
 
 use App\IUserProvider;
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
-use Engine\Services\DBConnector\IDBConnection;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\IAuth;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
-use PDO;
-use PDOException;
-use Psr\Log\LoggerInterface;
+use Modules\User\Controllers\UserConst;
 
 class Auth implements IAuth
 {
@@ -46,7 +43,7 @@ class Auth implements IAuth
 
         $username = $this->authSessionHandler->getUsername();
         $user = $this->userProvider->getUser($username);
-        $role = $user['role'] ?? '';
+        $role = $user[UserConst::ROLE] ?? '';
         $accessNotGranted = !$this->checkAccess($role, $requestUrl);
         $isAuthorised = $this->authSessionHandler->getIsAuthorized();
         $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
@@ -83,15 +80,13 @@ class Auth implements IAuth
 
     public function login(WebRequestDTO $request): void
     {
-        $username = $request->getPost()['username'] ?? null;
-        $password = $request->getPost()['password'] ?? null;
+        $username = $request->getPost(UserConst::USERNAME);
+        $password = $request->getPost(UserConst::PASSWORD);
 
         if ($username && $password) {
-            $role = $this->verifyLoginData($username, $password);
-            if ($role) {
+            if ($this->verifyLoginData($username, $password)) {
                 $this->authSessionHandler->setIsAuthorized(true);
                 $this->authSessionHandler->setUsername($username);
-                $this->authSessionHandler->setRole($role);
                 $this->setDestroyTime();
                 $this->redirectHandler->redirect($this->configManager->getHomeUrl());
             }
@@ -99,18 +94,13 @@ class Auth implements IAuth
         }
     }
 
-    private function verifyLoginData(string $username, string $password): ?string
+    private function verifyLoginData(string $username, string $password): bool
     {
-        // Соединение с БД
-        $user = $this->userProvider->getUser($username);
-        // Верификация пароля
-        $passwordHash = $user['password_hash'];
-        // Если верификация пройдена получаем Роль
-        if (password_verify($password, $passwordHash)) {
-            return $user['role'] ?? null;
+        if ($user = $this->userProvider->getUser($username)) {
+            return password_verify($password, $user['password_hash']);
         }
 
-        return null;
+        return false;
     }
 }
 
