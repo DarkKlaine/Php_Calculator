@@ -35,4 +35,14 @@ class AuthSessionHandler extends SessionHandler implements IAuthSessionHandler
     {
         $this->set('destroyTime', $time);
     }
+
+    public function setUsername(string $username): void
+    {
+        $this->set('username', $username);
+    }
+
+    public function getUsername(): string
+    {
+        return $this->get('username') ?? '';
+    }
 }

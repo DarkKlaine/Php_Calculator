@@ -15,4 +15,8 @@ interface IAuthSessionHandler
     public function setRole(string $role): void;
 
     public function getRole(): string;
+
+    public function setUsername(string $username): void;
+
+    public function getUsername(): string;
 }

@@ -7,7 +7,7 @@ use PDO;
 use PDOException;
 use Psr\Log\LoggerInterface;
 
-class UserProvider
+class UserProvider implements IUserProvider
 {
     private LoggerInterface $logger;
     private IDBConnection $connection;
@@ -74,7 +74,7 @@ class UserProvider
             $pdo = $this->connection->getConnection();
 
             $sqlSelect = <<<SQL
-                SELECT `username`, `role`, `date`
+                SELECT `username`, `password_hash`, `role`, `date`
                 FROM `users`
                 WHERE `username` = :username
             SQL;

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\IUserProvider;
 use App\UserProvider;
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\IDBConnection;
@@ -36,12 +37,12 @@ return [
             $container->get(UserListView::class),
             $container->get(UserInfoView::class),
             $container->get(UserDeleteView::class),
-            $container->get(UserProvider::class),
+            $container->get(IUserProvider::class),
             $container->get(IUserConfigManagerWeb::class),
             $container->get(IWebRedirectHandler::class),
         );
     },
-    UserProvider::class => function (Container $container) {
+    IUserProvider::class => function (Container $container) {
         return new UserProvider(
             $container->get(LoggerInterface::class), $container->get(IDBConnection::class),
         );

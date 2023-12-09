@@ -1,5 +1,6 @@
 <?php
 
+use App\IUserProvider;
 use Engine\Controllers\AuthControllerWeb;
 use Engine\Controllers\EngineControllerWeb;
 use Engine\Controllers\IAccessDeniedView;
@@ -66,8 +67,7 @@ return [
             $container->get(IWebRedirectHandler::class),
             $container->get(IAuthSessionHandler::class),
             $container->get(IAuthConfigManagerWeb::class),
-            $container->get(LoggerInterface::class),
-            $container->get(IDBConnection::class),
+            $container->get(IUserProvider::class),
         );
     },
     IAuthController::class => function (Container $container) {

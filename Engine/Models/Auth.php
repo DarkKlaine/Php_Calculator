@@ -2,6 +2,7 @@
 
 namespace Engine\Models;
 
+use App\IUserProvider;
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\DBConnector\IDBConnection;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
@@ -18,8 +19,7 @@ class Auth implements IAuth
     private IAuthSessionHandler $authSessionHandler;
     private IWebRedirectHandler $redirectHandler;
     private IAuthConfigManagerWeb $configManager;
-    private LoggerInterface $logger;
-    private IDBConnection $connection;
+    private IUserProvider $userProvider;
 
     public function __construct(
         array $pageAccessLevels,
@@ -27,16 +27,14 @@ class Auth implements IAuth
         IWebRedirectHandler $redirectHandler,
         IAuthSessionHandler $authSessionHandler,
         IAuthConfigManagerWeb $configManager,
-        LoggerInterface $logger,
-        IDBConnection $connection,
+        IUserProvider $userProvider,
     ) {
         $this->redirectHandler = $redirectHandler;
         $this->authSessionHandler = $authSessionHandler;
         $this->configManager = $configManager;
         $this->pageAccessLevels = $pageAccessLevels;
         $this->userAccessLevels = $userAccessLevels;
-        $this->logger = $logger;
-        $this->connection = $connection;
+        $this->userProvider = $userProvider;
     }
 
     public function verifyAuth(string $requestUrl): void
@@ -46,7 +44,9 @@ class Auth implements IAuth
             return;
         }
 
-        $role = $this->authSessionHandler->getRole();
+        $username = $this->authSessionHandler->getUsername();
+        $user = $this->userProvider->getUser($username);
+        $role = $user['role'] ?? '';
         $accessNotGranted = !$this->checkAccess($role, $requestUrl);
         $isAuthorised = $this->authSessionHandler->getIsAuthorized();
         $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
@@ -65,7 +65,6 @@ class Auth implements IAuth
 
     public function checkAccess(string $userRole, string $requestUrl): bool
     {
-
         foreach ($this->pageAccessLevels as $pageUrl => $accessLevel) {
             if (fnmatch($pageUrl, $requestUrl)) {
                 $userAccessLevel = $this->userAccessLevels[$userRole] ?? 0;
@@ -84,13 +83,14 @@ class Auth implements IAuth
 
     public function login(WebRequestDTO $request): void
     {
-        $login = $request->getPost()['username'] ?? null;
+        $username = $request->getPost()['username'] ?? null;
         $password = $request->getPost()['password'] ?? null;
 
-        if ($login && $password) {
-            $role = $this->verifyLoginAndPassword($login, $password);
+        if ($username && $password) {
+            $role = $this->verifyLoginData($username, $password);
             if ($role) {
                 $this->authSessionHandler->setIsAuthorized(true);
+                $this->authSessionHandler->setUsername($username);
                 $this->authSessionHandler->setRole($role);
                 $this->setDestroyTime();
                 $this->redirectHandler->redirect($this->configManager->getHomeUrl());
@@ -99,27 +99,18 @@ class Auth implements IAuth
         }
     }
 
-    private function verifyLoginAndPassword(string $login, string $password): ?string
+    private function verifyLoginData(string $username, string $password): ?string
     {
-        $connection = $this->connection->getConnection();
-
-        $sqlSelect = "SELECT `username`, `password_hash`, `role` FROM `users` WHERE `username` = '$login'";
-        $role = null;
-
-        try {
-            $result = $connection->query($sqlSelect);
-            $row = $result->fetch(PDO::FETCH_ASSOC);
-            $passwordHash = $row['password_hash'];
-            if (password_verify($password, $passwordHash)) {
-                $role = $row['role'] ?? null;
-            }
-        } catch (PDOException $e) {
-            echo "Ошибка при получении записи: " . $e->getMessage();
-            $this->logger->error("Ошибка при получении записи: " . $e->getMessage());
+        // Соединение с БД
+        $user = $this->userProvider->getUser($username);
+        // Верификация пароля
+        $passwordHash = $user['password_hash'];
+        // Если верификация пройдена получаем Роль
+        if (password_verify($password, $passwordHash)) {
+            return $user['role'] ?? null;
         }
 
-        $this->connection->closeConnection();
-
-        return $role;
+        return null;
     }
 }
+

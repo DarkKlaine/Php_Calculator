@@ -2,7 +2,7 @@
 
 namespace Modules\User\Controllers;
 
-use App\UserProvider;
+use App\IUserProvider;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
@@ -23,7 +23,7 @@ class UserController
     private UserSetRoleView $setRoleView;
     private UserListView $userListView;
     private UserInfoView $userInfoView;
-    private UserProvider $userProvider;
+    private IUserProvider $userProvider;
     private IWebRedirectHandler $redirectHandler;
     private IUserConfigManagerWeb $configManager;
     private UserDeleteView $userDeleteView;
@@ -36,7 +36,7 @@ class UserController
         UserListView $userListView,
         UserInfoView $userInfoView,
         UserDeleteView $userDeleteView,
-        UserProvider $userProvider,
+        IUserProvider $userProvider,
         IUserConfigManagerWeb $configManager,
         IWebRedirectHandler $redirectHandler,
     ) {
