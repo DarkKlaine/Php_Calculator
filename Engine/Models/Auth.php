@@ -17,6 +17,7 @@ class Auth implements IAuth
     private IWebRedirectHandler $redirectHandler;
     private IAuthConfigManagerWeb $configManager;
     private IUserProvider $userProvider;
+    private const GUEST = 'guest';
 
     public function __construct(
         array $pageAccessLevels,
@@ -42,8 +43,16 @@ class Auth implements IAuth
         }
 
         $username = $this->authSessionHandler->getUsername();
-        $user = $this->userProvider->getUser($username);
-        $role = $user[UserConst::ROLE] ?? '';
+        $role = '';
+        if ($username === '') {
+            $this->authSessionHandler->setUsername(self::GUEST);
+        }
+
+        if ($username !== self::GUEST) {
+            $user = $this->userProvider->getUser($username);
+            $role = $user[UserConst::ROLE] ?? '';
+        }
+
         $accessNotGranted = !$this->checkAccess($role, $requestUrl);
         $isAuthorised = $this->authSessionHandler->getIsAuthorized();
         $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
