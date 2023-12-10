@@ -10,10 +10,9 @@ class WebHistoryController implements IWebHistoryController
     private IHistoryModel $historyModel;
 
     public function __construct(
-        IWebHistoryView     $historyView,
-        IHistoryModel       $webHistoryDecorator,
-    )
-    {
+        IWebHistoryView $historyView,
+        IHistoryModel $webHistoryDecorator,
+    ) {
         $this->historyView = $historyView;
         $this->historyModel = $webHistoryDecorator;
     }

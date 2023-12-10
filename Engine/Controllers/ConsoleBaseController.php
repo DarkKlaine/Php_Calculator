@@ -10,9 +10,8 @@ abstract class ConsoleBaseController
     protected LoggerInterface $logger;
 
     public function __construct(
-        LoggerInterface     $logger,
-    )
-    {
+        LoggerInterface $logger,
+    ) {
         $this->logger = $logger;
     }
 

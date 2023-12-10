@@ -8,7 +8,8 @@ abstract class AbstractApp
 {
     protected Container $container;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->container = new Container(require __DIR__ . '/../Config/containerConfig.php');
     }
 

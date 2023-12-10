@@ -12,9 +12,8 @@ abstract class AbstractRouter
 
     public function __construct(
         LoggerInterface $logger,
-        Container       $container,
-    )
-    {
+        Container $container,
+    ) {
         $this->logger = $logger;
         $this->container = $container;
     }

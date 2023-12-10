@@ -2,7 +2,7 @@
 
 namespace Modules\Calculator\Controllers\WebControllers;
 
-use Engine\Services\Routers\WebRouter\IWebRedirectHandler;
+use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Modules\Calculator\Controllers\ICalculatorModel;
 use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;
@@ -18,12 +18,11 @@ class WebCalculatorController implements IWebCalculatorController
 
     public function __construct(
         IWebRedirectHandler $redirectHandler,
-        ICalculatorConfigManagerWeb   $configManager,
-        ICalculatorModel    $calculatorModel,
-        IHistoryDecorator   $webHistoryDecorator,
-        IWebCalculatorView  $calculatorView,
-    )
-    {
+        ICalculatorConfigManagerWeb $configManager,
+        ICalculatorModel $calculatorModel,
+        IHistoryDecorator $webHistoryDecorator,
+        IWebCalculatorView $calculatorView,
+    ) {
         $this->webHistoryModel = $webHistoryDecorator;
         $this->calculatorModel = $calculatorModel;
         $this->calculatorView = $calculatorView;

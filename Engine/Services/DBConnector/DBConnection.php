@@ -16,8 +16,7 @@ class DBConnection implements IDBConnection
         string $username,
         string $password,
         string $dbname
-    )
-    {
+    ) {
         $dsn = "mysql:host={$host};dbname={$dbname}";
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -27,7 +26,7 @@ class DBConnection implements IDBConnection
             $this->connection = new PDO($dsn, $username, $password, $options);
         } catch (PDOException $e) {
             $logger->error("Ошибка подключения: " . $e->getMessage());
-            die();
+            throw $e;
         }
     }
 

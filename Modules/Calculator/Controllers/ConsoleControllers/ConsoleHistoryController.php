@@ -12,11 +12,10 @@ class ConsoleHistoryController extends ConsoleBaseController implements IConsole
     private IHistoryModel $historyModel;
 
     public function __construct(
-        LoggerInterface     $logger,
-        IHistoryModel       $historyModel,
+        LoggerInterface $logger,
+        IHistoryModel $historyModel,
         IConsoleHistoryView $consoleHistoryView,
-    )
-    {
+    ) {
         parent::__construct($logger);
         $this->historyView = $consoleHistoryView;
         $this->historyModel = $historyModel;

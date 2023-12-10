@@ -12,23 +12,28 @@ class CalculatorConfigManagerWeb extends BaseConfigManagerWeb implements ICalcul
         parent::__construct($appConfig);
     }
 
-    public function getCalculatorUrl(): string {
+    public function getCalculatorUrl(): string
+    {
         return $this->routes['Calculator']['url'];
     }
 
-    public function getCalculateUrl(): string {
+    public function getCalculateUrl(): string
+    {
         return $this->routes['Calculate']['url'];
     }
 
-    public function getGlobalHistoryUrl(): string {
+    public function getGlobalHistoryUrl(): string
+    {
         return $this->routes['GlobalHistory']['url'];
     }
 
-    public function getSessionHistoryUrl(): string {
+    public function getSessionHistoryUrl(): string
+    {
         return $this->routes['SessionHistory']['url'];
     }
 
-    public function getDataBaseHistoryUrl(): string {
+    public function getDataBaseHistoryUrl(): string
+    {
         return $this->routes['DataBaseHistory']['url'];
     }
 }

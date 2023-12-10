@@ -21,6 +21,7 @@ class WebCalculatorView implements IWebCalculatorView
         $this->templateEngine = $templateEngine;
         $this->configManager = $configManager;
     }
+
     public function render(string $input, string $result): void
     {
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
@@ -37,7 +38,7 @@ class WebCalculatorView implements IWebCalculatorView
         $this->templateEngine->assignVar('SessionHistory', $this->configManager->getSessionHistoryUrl());
         $this->templateEngine->assignVar('DataBaseHistory', $this->configManager->getDataBaseHistoryUrl());
 
-        $this->templateEngine->setInjectTplFile($this->calculatorTplFile, $this->menuTplFile);
+        $this->templateEngine->setTemplatesForInjection($this->calculatorTplFile, $this->menuTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }

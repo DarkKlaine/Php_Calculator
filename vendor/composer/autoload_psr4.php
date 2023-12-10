@@ -10,4 +10,5 @@ return array(
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'Modules\\' => array($baseDir . '/Modules'),
     'Engine\\' => array($baseDir . '/Engine'),
+    'App\\' => array($baseDir . '/App'),
 );

@@ -13,11 +13,10 @@ class ConsoleRouter extends AbstractRouter implements IRouter
     private IConsoleConfigManager $configManager;
 
     public function __construct(
-        LoggerInterface   $logger,
+        LoggerInterface $logger,
         IConsoleConfigManager $configManager,
-        Container         $container,
-    )
-    {
+        Container $container,
+    ) {
         parent::__construct($logger, $container);
         $this->configManager = $configManager;
     }

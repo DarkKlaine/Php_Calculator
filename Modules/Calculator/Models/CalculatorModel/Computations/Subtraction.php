@@ -11,6 +11,7 @@ class Subtraction extends Computation implements ISubtraction
     {
         $result = $value1 - $value2;
         $this->logger->info("Операция вычитания: $value1 - $value2 = $result");
+
         return $result;
     }
 }

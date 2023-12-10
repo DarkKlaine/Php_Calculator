@@ -37,7 +37,7 @@ class WebHistoryView implements IWebHistoryView
         $this->templateEngine->assignVar('SessionHistory', $this->configManager->getSessionHistoryUrl());
         $this->templateEngine->assignVar('DataBaseHistory', $this->configManager->getDataBaseHistoryUrl());
 
-        $this->templateEngine->setInjectTplFile($this->historyTplFile, $this->menuTplFile);
+        $this->templateEngine->setTemplatesForInjection($this->historyTplFile, $this->menuTplFile);
 
         $this->templateEngine->display($this->indexTplFile);
     }

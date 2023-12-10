@@ -11,6 +11,7 @@ class Multiply extends Computation implements IMultiply
     {
         $result = $value1 * $value2;
         $this->logger->info("Операция умножения: $value1 * $value2 = $result");
+
         return $result;
     }
 }
