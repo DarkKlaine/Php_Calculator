@@ -2,12 +2,14 @@
 
 namespace App;
 
+use Engine\Models\IAuthStorage;
 use Engine\Services\DBConnector\IDBConnection;
+use Modules\User\Controllers\IUserStorage;
 use PDO;
 use PDOException;
 use Psr\Log\LoggerInterface;
 
-class UserProvider implements IUserProvider
+class UserStorage implements IAuthStorage, IUserStorage
 {
     private LoggerInterface $logger;
     private IDBConnection $connection;

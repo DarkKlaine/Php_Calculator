@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace Modules\User\Controllers;
 
-interface IUserProvider
+interface IUserStorage
 {
     public function addUser(string $username, string $passwordHash, string $role): void;
 

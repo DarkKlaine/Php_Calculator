@@ -3,10 +3,11 @@
 namespace App;
 
 use Engine\Services\DBConnector\IDBConnection;
+use Modules\Calculator\Models\HistoryModel\IHistoryStorage;
 use PDOException;
 use Psr\Log\LoggerInterface;
 
-class HistoryProvider implements IHistoryProvider
+class HistoryStorage implements IHistoryStorage
 {
     private LoggerInterface $logger;
     private IDBConnection $connection;
@@ -22,12 +23,12 @@ class HistoryProvider implements IHistoryProvider
         try {
             $pdo = $this->connection->getConnection();
             $insertSql = <<<SQL
-                INSERT INTO `history` (`username`, `expression`, `date`) 
-                VALUES (':username', ':expression', CURRENT_TIMESTAMP)
+                INSERT INTO `history` (`user_id`, `expression`, `date`) 
+                VALUES (':userID', ':expression', CURRENT_TIMESTAMP)
             SQL;
 
             $insertStmt = $pdo->prepare($insertSql);
-            $insertStmt->bindParam(':username', $username);
+            $insertStmt->bindParam(':userID', $username);
             $insertStmt->bindParam(':expression', $expression);
             $insertStmt->execute();
 

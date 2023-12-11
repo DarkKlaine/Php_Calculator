@@ -2,11 +2,11 @@
 
 namespace Engine\Models;
 
-use App\IUserProvider;
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\IAuth;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
+use Modules\User\Controllers\IUserStorage;
 use Modules\User\Controllers\UserConst;
 
 class Auth implements IAuth
@@ -16,7 +16,7 @@ class Auth implements IAuth
     private IAuthSessionHandler $authSessionHandler;
     private IWebRedirectHandler $redirectHandler;
     private IAuthConfigManagerWeb $configManager;
-    private IUserProvider $userProvider;
+    private IUserStorage $userProvider;
     private const GUEST = 'guest';
 
     public function __construct(
@@ -25,7 +25,7 @@ class Auth implements IAuth
         IWebRedirectHandler $redirectHandler,
         IAuthSessionHandler $authSessionHandler,
         IAuthConfigManagerWeb $configManager,
-        IUserProvider $userProvider,
+        IUserStorage $userProvider,
     ) {
         $this->redirectHandler = $redirectHandler;
         $this->authSessionHandler = $authSessionHandler;

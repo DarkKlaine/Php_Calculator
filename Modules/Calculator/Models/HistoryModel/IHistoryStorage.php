@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace Modules\Calculator\Models\HistoryModel;
 
-interface IHistoryProvider
+interface IHistoryStorage
 {
     public function addHistory(string $expression, string $username): void;
 

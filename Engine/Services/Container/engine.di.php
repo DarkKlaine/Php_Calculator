@@ -1,12 +1,13 @@
 <?php
 
-use App\IUserProvider;
+use App\UserStorage;
 use Engine\Controllers\AuthControllerWeb;
 use Engine\Controllers\EngineControllerWeb;
 use Engine\Controllers\IAccessDeniedView;
 use Engine\Controllers\IEngineControllerWeb;
 use Engine\Controllers\ILoginView;
 use Engine\Models\Auth;
+use Engine\Models\IAuthStorage;
 use Engine\Models\IAuthSessionHandler;
 use Engine\Services\ConfigManagers\AuthConfigManagerWeb;
 use Engine\Services\ConfigManagers\BaseConfigManagerConsole;
@@ -57,6 +58,11 @@ return [
     IAuthSessionHandler::class => function () {
         return new AuthSessionHandler();
     },
+    IAuthStorage::class => function (Container $container) {
+        return new UserStorage(
+            $container->get(LoggerInterface::class), $container->get(IDBConnection::class),
+        );
+    },
     IAuth::class => function (Container $container) {
         $pageAccessLevels = require(__DIR__ . '/../../../Config/WebCfg/pageAccessLevels.php');
         $userAccessLevels = require(__DIR__ . '/../../../Config/WebCfg/userAccessLevels.php');
@@ -67,7 +73,7 @@ return [
             $container->get(IWebRedirectHandler::class),
             $container->get(IAuthSessionHandler::class),
             $container->get(IAuthConfigManagerWeb::class),
-            $container->get(IUserProvider::class),
+            $container->get(IAuthStorage::class),
         );
     },
     IAuthController::class => function (Container $container) {
