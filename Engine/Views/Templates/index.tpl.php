@@ -10,8 +10,8 @@
     <!--plugins-->
     <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
     <link href="/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet"/>
-    <link href="/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
-    <link href="/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet"/>
+    <link href="/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <!-- Bootstrap CSS -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/app.css" rel="stylesheet">
@@ -68,7 +68,7 @@
 <script src="/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
 <script src="/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#example').DataTable({
             "columns": [{
                 "orderable": true
@@ -78,7 +78,7 @@
                 "orderable": false
             }]
         });
-    } );
+    });
 </script>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ НАЧАЛО -->
 <?php $this->injectScriptTpl() ?>

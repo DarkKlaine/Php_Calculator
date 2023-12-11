@@ -14,8 +14,7 @@ class EngineControllerWeb implements IEngineControllerWeb
     public function __construct(
         EngineHomePageView $engineHomePageView,
         IAuthSessionHandler $authSessionHandler,
-    )
-    {
+    ) {
         $this->engineHomePageView = $engineHomePageView;
         $this->authSessionHandler = $authSessionHandler;
     }
