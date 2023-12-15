@@ -23,7 +23,8 @@ class EngineControllerWeb implements IEngineControllerWeb
     {
         if ($request->getPost()['operation'] ?? '' === 'Logout') {
             $this->authSessionHandler->setIsAuthorized(false);
-            session_destroy();
+            $this->authSessionHandler->setUsername('Гость');
+            $this->authSessionHandler->sessionDestroy();
         }
         $this->engineHomePageView->render();
     }

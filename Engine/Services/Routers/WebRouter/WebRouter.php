@@ -5,8 +5,10 @@ namespace Engine\Services\Routers\WebRouter;
 use Engine\IRouter;
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\Container\Container;
+use Engine\Services\ErrorHandler\ErrorHandler;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\AbstractRouter;
+use Exception;
 use Psr\Log\LoggerInterface;
 
 class WebRouter extends AbstractRouter implements IRouter
@@ -14,6 +16,7 @@ class WebRouter extends AbstractRouter implements IRouter
     private IAuth $auth;
     private IAuthConfigManagerWeb $configManager;
     private IWebRedirectHandler $redirectHandler;
+    private ErrorHandler $errorHandler;
 
     public function __construct(
         LoggerInterface $logger,
@@ -21,14 +24,28 @@ class WebRouter extends AbstractRouter implements IRouter
         IAuth $auth,
         Container $container,
         IWebRedirectHandler $redirectHandler,
+        ErrorHandler $errorHandler
     ) {
         parent::__construct($logger, $container);
         $this->configManager = $configManager;
         $this->auth = $auth;
         $this->redirectHandler = $redirectHandler;
+        $this->errorHandler = $errorHandler;
     }
 
-    public function handleRequest(): void
+    public function run(): void
+    {
+        try {
+            $this->handleRequest();
+        } catch (Exception $e) {
+            $this->errorHandler->handleException($e);
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function handleRequest(): void
     {
         $requestUri = $_SERVER['REQUEST_URI'];
         if (str_contains($requestUri, '/?')) {
@@ -43,6 +60,10 @@ class WebRouter extends AbstractRouter implements IRouter
                 $route = $value;
                 break;
             }
+        }
+
+        if ($route === []) {
+            throw new Exception(code: '404');
         }
 
         if ($this->configManager->isAuthEnabled()) {

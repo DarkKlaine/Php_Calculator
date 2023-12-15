@@ -4,5 +4,5 @@ namespace Engine;
 
 interface IRouter
 {
-    public function handleRequest(): void;
+    public function run(): void;
 }

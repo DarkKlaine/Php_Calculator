@@ -9,6 +9,6 @@ class WebApp extends AbstractApp
     public function run(): void
     {
         $router = $this->container->get(WebRouter::class);
-        $router->handleRequest();
+        $router->run();
     }
 }

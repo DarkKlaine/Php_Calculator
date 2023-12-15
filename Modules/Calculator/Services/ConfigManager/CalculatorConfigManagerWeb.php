@@ -24,12 +24,12 @@ class CalculatorConfigManagerWeb extends BaseConfigManagerWeb implements ICalcul
 
     public function getGlobalHistoryUrl(): string
     {
-        return $this->routes['GlobalHistory']['url'];
+        return $this->routes['AllHistory']['url'];
     }
 
     public function getSessionHistoryUrl(): string
     {
-        return $this->routes['SessionHistory']['url'];
+        return $this->routes['UserHistory']['url'];
     }
 
     public function getDataBaseHistoryUrl(): string

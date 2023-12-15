@@ -5,15 +5,16 @@ namespace Engine\Controllers;
 use Engine\Services\Routers\WebRouter\IAuth;
 use Engine\Services\Routers\WebRouter\IAuthController;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
+use Engine\Views\Page403View;
 
 class AuthControllerWeb implements IAuthController
 {
-    private IAccessDeniedView $accessDeniedView;
+    private Page403View $accessDeniedView;
     private IAuth $auth;
     private ILoginView $loginView;
 
     public function __construct(
-        IAccessDeniedView $accessDeniedView,
+        Page403View $accessDeniedView,
         IAuth $auth,
         ILoginView $loginView,
     ) {

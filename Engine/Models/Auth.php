@@ -17,7 +17,6 @@ class Auth implements IAuth
     private IWebRedirectHandler $redirectHandler;
     private IAuthConfigManagerWeb $configManager;
     private IUserStorage $userProvider;
-    private const GUEST = 'guest';
 
     public function __construct(
         array $pageAccessLevels,
@@ -42,14 +41,12 @@ class Auth implements IAuth
             return;
         }
 
-        $username = $this->authSessionHandler->getUsername();
+        $userId = $this->authSessionHandler->getUserID();
         $role = '';
-        if ($username === '') {
-            $this->authSessionHandler->setUsername(self::GUEST);
-        }
 
-        if ($username !== self::GUEST) {
-            $user = $this->userProvider->getUser($username);
+        if ($userId) {
+            $user = $this->userProvider->getUserByID($userId);
+            $this->authSessionHandler->setUsername($user[UserConst::USERNAME]);
             $role = $user[UserConst::ROLE] ?? '';
         }
 
@@ -62,7 +59,7 @@ class Auth implements IAuth
         }
 
         if ($isAuthorised && $isSessionExpired) {
-            session_destroy();
+            $this->authSessionHandler->sessionDestroy();
             $this->redirectHandler->redirect($accessDeniedPage);
         }
 
@@ -93,8 +90,9 @@ class Auth implements IAuth
         $password = $request->getPost(UserConst::PASSWORD);
 
         if ($username && $password) {
-            if ($this->verifyLoginData($username, $password)) {
+            if ($user = $this->verifyLoginData($username, $password)) {
                 $this->authSessionHandler->setIsAuthorized(true);
+                $this->authSessionHandler->setUserID($user[UserConst::USER_ID]);
                 $this->authSessionHandler->setUsername($username);
                 $this->setDestroyTime();
                 $this->redirectHandler->redirect($this->configManager->getHomeUrl());
@@ -103,13 +101,14 @@ class Auth implements IAuth
         }
     }
 
-    private function verifyLoginData(string $username, string $password): bool
+    private function verifyLoginData(string $username, string $password): ?array
     {
-        if ($user = $this->userProvider->getUser($username)) {
-            return password_verify($password, $user['password_hash']);
+
+        if ($user = $this->userProvider->getUserByName($username)) {
+            return password_verify($password, $user[UserConst::PASSWORD_HASH]) ? $user : null;
         }
 
-        return false;
+        return null;
     }
 }
 

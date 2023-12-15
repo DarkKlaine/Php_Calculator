@@ -1,7 +1,7 @@
 <?php
 
 use Modules\Calculator\Controllers\WebControllers\IWebCalculatorController;
-use Modules\Calculator\Controllers\WebControllers\IWebHistoryController;
+use Modules\Calculator\Controllers\WebControllers\WebHistoryController;
 
 return [
     'Calculator' => [
@@ -12,16 +12,24 @@ return [
         'url' => '/calculator/calculate',
         'action' => [IWebCalculatorController::class, 'calculate']
     ],
+    'AllHistory' => [
+        'url' => '/calculator/history',
+        'action' => [WebHistoryController::class, 'showHistory']
+    ],
+    'UserHistory' => [
+        'url' => '/calculator/history/user',
+        'action' => [WebHistoryController::class, 'showUserHistory']
+    ],
     'GlobalHistory' => [
         'url' => '/calculator/history/global',
-        'action' => [IWebHistoryController::class, 'showGeneral']
+        'action' => [WebHistoryController::class, 'showGeneral']
     ],
     'SessionHistory' => [
         'url' => '/calculator/history/session',
-        'action' => [IWebHistoryController::class, 'showPersonal']
+        'action' => [WebHistoryController::class, 'showPersonal']
     ],
     'DataBaseHistory' => [
         'url' => '/calculator/history/database',
-        'action' => [IWebHistoryController::class, 'showDB']
+        'action' => [WebHistoryController::class, 'showDB']
     ],
 ];

@@ -70,19 +70,48 @@ class UserStorage implements IAuthStorage, IUserStorage
         }
     }
 
-    public function getUser(string $username): ?array
+    public function getUserByName(string $username): ?array
     {
         try {
             $pdo = $this->connection->getConnection();
 
             $sqlSelect = <<<SQL
-                SELECT `username`, `password_hash`, `role`, `date`
+                SELECT *
                 FROM `users`
                 WHERE `username` = :username
             SQL;
 
             $stmt = $pdo->prepare($sqlSelect);
             $stmt->bindParam(':username', $username);
+            $stmt->execute();
+
+            $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $user[0] ?? null;
+        } catch (PDOException $e) {
+            $error = 'Ошибка во время выполнения запроса к базе данных: ' . $e->getMessage();
+            $this->logger->error($error);
+        } finally {
+            $stmt = null;
+            $this->connection->closeConnection();
+        }
+
+        return null;
+    }
+
+    public function getUserByID(string $userId): ?array
+    {
+        try {
+            $pdo = $this->connection->getConnection();
+
+            $sqlSelect = <<<SQL
+                SELECT *
+                FROM `users`
+                WHERE `id` = :userId
+            SQL;
+
+            $stmt = $pdo->prepare($sqlSelect);
+            $stmt->bindParam(':userId', $userId);
             $stmt->execute();
 
             $user = $stmt->fetchAll(PDO::FETCH_ASSOC);

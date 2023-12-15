@@ -4,7 +4,7 @@ namespace Engine\Views;
 
 use Engine\Models\IAuthSessionHandler;
 
-class EngineHomePageView implements IEngineHomePageView
+class EngineHomePageView
 {
     private string $title = 'DK Engine';
     private string $indexTplFile = 'index.tpl.php';

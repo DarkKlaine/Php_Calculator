@@ -6,7 +6,7 @@ interface IUserStorage
 {
     public function addUser(string $username, string $passwordHash, string $role): void;
 
-    public function getUser(string $username): ?array;
+    public function getUserByName(string $username): ?array;
 
     public function getAllUsers(): array;
 

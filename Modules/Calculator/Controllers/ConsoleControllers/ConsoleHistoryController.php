@@ -3,17 +3,17 @@
 namespace Modules\Calculator\Controllers\ConsoleControllers;
 
 use Engine\Controllers\ConsoleBaseController;
-use Modules\Calculator\Controllers\IHistoryModel;
+use Modules\Calculator\Models\HistoryModel\HistoryModel;
 use Psr\Log\LoggerInterface;
 
 class ConsoleHistoryController extends ConsoleBaseController implements IConsoleHistoryController
 {
     private IConsoleHistoryView $historyView;
-    private IHistoryModel $historyModel;
+    private HistoryModel $historyModel;
 
     public function __construct(
         LoggerInterface $logger,
-        IHistoryModel $historyModel,
+        HistoryModel $historyModel,
         IConsoleHistoryView $consoleHistoryView,
     ) {
         parent::__construct($logger);

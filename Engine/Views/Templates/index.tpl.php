@@ -26,7 +26,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light rounded fixed-top rounded-0 shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <h4 class="logo-text">DK Engine</h4>
+                    <h4 class="logo-text">DK Engine (<?php echo $_SESSION['username'] ?? 'Гость' ?>)</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
                 <?php $this->injectMenuTpl() ?>
@@ -77,6 +77,31 @@
             }, {
                 "orderable": false
             }]
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#history').DataTable({
+            "order": [[2, "desc"]],
+            "columns": [{
+                "orderable": true
+            }, {
+                "orderable": false
+            }, {
+                "orderable": true
+            }]
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#userhistory').DataTable({
+            "order": [[1, "desc"]],
+            "columns": [
+                { "orderable": false },
+                { "orderable": true }
+            ]
         });
     });
 </script>

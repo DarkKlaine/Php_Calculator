@@ -1,7 +1,7 @@
 <div class="text-center">
-    <h3 class="">Доступ запрещен</h3><br>
+    <img src="/assets/images/500.png">
 </div>
-
+<br>
 <div class="col-12">
     <div class="d-grid">
         <button type="button" class="btn btn-light"

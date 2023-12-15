@@ -4,5 +4,6 @@ namespace Engine\Models;
 
 interface IAuthStorage
 {
-    public function getUser(string $username): ?array;
+    public function getUserByName(string $username): ?array;
+    public function getUserByID(string $userId): ?array;
 }
