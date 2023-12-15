@@ -6,15 +6,15 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\WebControllers\IWebHistoryView;
+use Engine\Views\ViewConst;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
-class WebHistoryView implements IWebHistoryView
+class WebDBUserHistoryView
 {
-    private string $title = 'PHP_Calculator';
+    private string $title = 'История пользователя';
     private string $indexTplFile = 'index.tpl.php';
     private string $menuTplFile = 'menu.tpl.php';
-    private string $historyTplFile = 'history.tpl.php';
+    private string $historyTplFile = 'historyUser.tpl.php';
     private IWebTemplateEngine $templateEngine;
     private ICalculatorConfigManagerWeb $configManager;
 
@@ -24,13 +24,13 @@ class WebHistoryView implements IWebHistoryView
         $this->configManager = $configManager;
     }
 
-    public function render(string|array $history): void
+    public function render(array $history): void
     {
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
-        $this->templateEngine->assignVar('title', $this->title);
+        $this->templateEngine->assignVar(ViewConst::TITLE, $this->title);
 
-        $this->templateEngine->assignVar('history', $history);
+        $this->templateEngine->assignVar('HistoryData', $history);
 
         $this->templateEngine->assignVar('Calculator', $this->configManager->getCalculatorUrl());
         $this->templateEngine->assignVar('GlobalHistory', $this->configManager->getGlobalHistoryUrl());

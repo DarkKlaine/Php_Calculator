@@ -3,23 +3,24 @@
 namespace Modules\Calculator\Models\HistoryModel;
 
 use Engine\Services\DBConnector\IDBConnection;
-use Modules\Calculator\Controllers\IHistoryModel;
 use PDO;
 use PDOException;
 use Psr\Log\LoggerInterface;
 
-class HistoryModel implements IHistoryModel
+class HistoryModel
 {
     private string $logDir = __DIR__ . '/../../../../Log';
     private string $logFile = __DIR__ . '/../../../../Log/History.Log';
     private int $maxLogSize = 10;
     private IDBConnection $dbConnection;
     private LoggerInterface $logger;
+    private IHistoryStorage $historyStorage;
 
-    public function __construct(IDBConnection $dbConnection, LoggerInterface $logger)
+    public function __construct(IDBConnection $dbConnection, LoggerInterface $logger, IHistoryStorage $historyStorage)
     {
         $this->dbConnection = $dbConnection;
         $this->logger = $logger;
+        $this->historyStorage = $historyStorage;
     }
 
     public function addToHistory(string $input, string $result, bool $needSessionHistory): void
@@ -31,11 +32,11 @@ class HistoryModel implements IHistoryModel
         // Формирование строки для логирования
         $input = str_replace(' ', '', $input);
         $stringForLogging = $input . ' = ' . $result . ' | ' . date('Y-m-d H:i:s') . PHP_EOL;
-
+        $id = $_SESSION['userID'] ?? '0';
         // Добавление строки в глобальный лог
         $this->addToGlobalHistory($stringForLogging);
         // Добавление строки в базу данных
-        $this->addToDBHistory($input . ' = ' . $result);
+        $this->historyStorage->addHistory($input . ' = ' . $result, $id);
         // Добавление строки в лог сессии (если необходимо)
         if ($needSessionHistory) {
             $this->addToSessionHistory($stringForLogging);
@@ -92,20 +93,6 @@ class HistoryModel implements IHistoryModel
         unset($value);
 
         return $logArray;
-    }
-
-    private function addToDBHistory(string $stringForLogging): void
-    {
-        $connection = $this->dbConnection->getConnection();
-        $sqlInsert = "INSERT INTO `history` (`expression`, `date`) VALUES ('$stringForLogging', CURRENT_TIMESTAMP)";
-
-        try {
-            $connection->exec($sqlInsert);
-        } catch (PDOException $e) {
-            $this->logger->error("Ошибка при создании записи: " . $e->getMessage());
-        }
-
-        $this->dbConnection->closeConnection();
     }
 
     private function addToSessionHistory(string $stringForLogging): void
@@ -165,5 +152,16 @@ class HistoryModel implements IHistoryModel
         $logArray = $this->numberingAndPadding($logArray);
 
         return $this->generateHistoryString($logArray, $isForWeb);
+    }
+
+    public function getAllHistory(): array
+    {
+        return $this->historyStorage->getAllHistory();
+    }
+
+    public function getUserHistory(): array
+    {
+        $id = $_SESSION['userID'] ?? 0;
+        return $this->historyStorage->getUserHistory($id);
     }
 }

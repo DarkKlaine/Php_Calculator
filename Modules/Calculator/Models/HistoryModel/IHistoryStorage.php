@@ -4,9 +4,9 @@ namespace Modules\Calculator\Models\HistoryModel;
 
 interface IHistoryStorage
 {
-    public function addHistory(string $expression, string $username): void;
+    public function addHistory(string $expression, string $userId): void;
 
-    public function getUserHistory(string $username): ?array;
+    public function getUserHistory(int $userId): array;
 
     public function getAllHistory(): array;
 }
