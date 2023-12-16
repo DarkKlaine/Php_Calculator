@@ -52,7 +52,7 @@ class Auth implements IAuth
 
         $accessNotGranted = !$this->checkAccess($role, $requestUrl);
         $isAuthorised = $this->authSessionHandler->getAuthStatus();
-        $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
+        $isSessionExpired = time() >= $this->authSessionHandler->getDestroyTime();
 
         if ($accessNotGranted) {
             $this->redirectHandler->redirect($page403Url);
@@ -89,21 +89,26 @@ class Auth implements IAuth
         $username = $request->getPost(UserConst::USERNAME);
         $password = $request->getPost(UserConst::PASSWORD);
 
-        if ($username && $password) {
-            if ($user = $this->verifyLoginData($username, $password)) {
-                $this->authSessionHandler->setAuthStatus(true);
-                $this->authSessionHandler->setUserID($user[UserConst::USER_ID]);
-                $this->authSessionHandler->setUsername($username);
-                $this->setDestroyTime();
-                $this->redirectHandler->redirect($this->configManager->getHomeUrl());
-            }
+        if (!$username || !$password) {
+            return;
+        }
+
+        $user = $this->verifyLoginData($username, $password);
+
+        if ($user === null) {
+            // TODO: Собрать страницу с сообщением о неправильном логине или пароле
             $this->redirectHandler->redirect($this->configManager->get403PageUrl());
         }
+
+        $this->authSessionHandler->setAuthStatus(true);
+        $this->authSessionHandler->setUserID($user[UserConst::USER_ID]);
+        $this->authSessionHandler->setUsername($username);
+        $this->setDestroyTime();
+        $this->redirectHandler->redirect($this->configManager->getHomeUrl());
     }
 
     private function verifyLoginData(string $username, string $password): ?array
     {
-
         if ($user = $this->userProvider->getUserByName($username)) {
             return password_verify($password, $user[UserConst::PASSWORD_HASH]) ? $user : null;
         }

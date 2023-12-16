@@ -13,7 +13,6 @@ use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorView;
 use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryController;
 use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryView;
 use Modules\Calculator\Controllers\ICalculatorModel;
-use Modules\Calculator\Controllers\WebControllers\IWebCalculatorController;
 use Modules\Calculator\Controllers\WebControllers\IWebCalculatorView;
 use Modules\Calculator\Controllers\WebControllers\IWebHistoryView;
 use Modules\Calculator\Controllers\WebControllers\WebCalculatorController;
@@ -93,7 +92,7 @@ return [
 
         return new CalculatorConfigManagerWeb($appConfig);
     },
-    IWebCalculatorController::class => function (Container $container) {
+    WebCalculatorController::class => function (Container $container) {
         return new WebCalculatorController(
             $container->get(IWebRedirectHandler::class),
             $container->get(ICalculatorConfigManagerWeb::class),

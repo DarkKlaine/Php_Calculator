@@ -13,6 +13,6 @@ class ConsoleHistoryDecorator implements IHistoryDecorator
 
     public function addToHistory(string $input, string $result): void
     {
-        $this->historyModel->addToHistory($input, $result, false);
+        $this->historyModel->addToHistory($input, $result);
     }
 }

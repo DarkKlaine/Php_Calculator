@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <!-- Required meta tags -->
@@ -26,7 +26,11 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light rounded fixed-top rounded-0 shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <h4 class="logo-text">DK Engine (<?php echo $_SESSION['username'] ?? 'Гость' ?>)</h4>
+                    <h4 class="logo-text">DK Engine (<?php
+
+                        use Modules\User\Controllers\UserConst;
+
+                        echo $_SESSION['username'] ?? UserConst::GUEST_NAME ?>)</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
                 <?php $this->injectMenuTpl() ?>
@@ -35,7 +39,8 @@
         </nav>
     </header>
     <div class="section-calculator d-flex align-items-center justify-content-center my-5 my-lg-4">
-        <div class="container-fluid col-md-auto" style="min-width: 500px; max-width: 1800px; min-height: 100px; max-height: 750px;">
+        <div class="container-fluid col-md-auto"
+             style="min-width: 500px; max-width: 1800px; min-height: 100px; max-height: 750px;">
             <div class=" row row-cols-1 row-cols-lg-1 row-cols-xl-1
         ">
                 <div class="col mx-auto">
@@ -99,8 +104,8 @@
         $('#userhistory').DataTable({
             "order": [[1, "desc"]],
             "columns": [
-                { "orderable": false },
-                { "orderable": true }
+                {"orderable": false},
+                {"orderable": true}
             ]
         });
     });

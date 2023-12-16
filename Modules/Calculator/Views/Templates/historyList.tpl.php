@@ -20,7 +20,7 @@ use Modules\User\Controllers\UserConst;
                 <tbody>
                 <?php foreach ($this->vars['HistoryData'] as $historyData) { ?>
                 <tr>
-                    <td><?php echo $historyData['username'] ?? 'Гость'; ?></td>
+                    <td><?php echo $historyData['username'] ?? UserConst::GUEST_NAME; ?></td>
                     <td style="text-align: center"><?php echo $historyData['expression']; ?></td>
                     <td><?php echo $historyData['date']; ?></td>
                     <?php } ?>

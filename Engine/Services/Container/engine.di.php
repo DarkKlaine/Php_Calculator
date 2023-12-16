@@ -66,12 +66,11 @@ return [
         );
     },
     IAuth::class => function (Container $container) {
-        $pageAccessLevels = require(__DIR__ . '/../../../Config/WebCfg/pageAccessLevels.php');
-        $userAccessLevels = require(__DIR__ . '/../../../Config/WebCfg/userAccessLevels.php');
+        $accessLevels = require(__DIR__ . '/../../../Config/WebCfg/accessLevels.php');
 
         return new Auth(
-            $pageAccessLevels,
-            $userAccessLevels,
+            $accessLevels['pageAccessLevels'],
+            $accessLevels['roleAccessLevels'],
             $container->get(IWebRedirectHandler::class),
             $container->get(IAuthSessionHandler::class),
             $container->get(IAuthConfigManagerWeb::class),

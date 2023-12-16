@@ -22,12 +22,6 @@ class WebHistoryController
         $this->webDBUserHistoryView = $webDBUserHistoryView;
     }
 
-    public function showDB(): void
-    {
-        // TODO Проверка обработчика ошибок. Удалить.
-        getNotExistMethod();
-    }
-
     public function showHistory(): void
     {
         $this->webDBHistoryView->render($this->historyModel->getAllHistory());

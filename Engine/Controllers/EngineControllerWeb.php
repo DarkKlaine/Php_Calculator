@@ -5,6 +5,7 @@ namespace Engine\Controllers;
 use Engine\Models\IAuthSessionHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Engine\Views\EngineHomePageView;
+use Modules\User\Controllers\UserConst;
 
 class EngineControllerWeb implements IEngineControllerWeb
 {
@@ -21,9 +22,9 @@ class EngineControllerWeb implements IEngineControllerWeb
 
     public function engineHomePage(WebRequestDTO $request): void
     {
-        if ($request->getPost()['operation'] ?? '' === 'Logout') {
+        if ($request->getPost(UserConst::OPERATION) === UserConst::LOGOUT) {
             $this->authSessionHandler->setAuthStatus(false);
-            $this->authSessionHandler->setUsername('Гость');
+            $this->authSessionHandler->setUsername(UserConst::GUEST_NAME);
             $this->authSessionHandler->sessionDestroy();
         }
         $this->engineHomePageView->render();

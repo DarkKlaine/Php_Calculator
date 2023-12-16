@@ -8,7 +8,7 @@ use Modules\Calculator\Controllers\ICalculatorModel;
 use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
-class WebCalculatorController implements IWebCalculatorController
+class WebCalculatorController
 {
     private IHistoryDecorator $webHistoryModel;
     private ICalculatorModel $calculatorModel;

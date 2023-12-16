@@ -1,9 +1,14 @@
 <?php
+
 use Engine\Views\ViewConst;
+use Modules\User\Controllers\UserConst;
+
 ?>
 <div class="text-center">
-    <h3><?php echo $this->vars[ViewConst::TITLE] ?></h3>
-    <h3><?php echo $this->vars['HistoryData'][0]['username'] ?? 'Гость'; ?></h3>
+    <h3><?php
+        echo $this->vars[ViewConst::TITLE] ?></h3>
+    <h3><?php
+        echo $this->vars['HistoryData'][0]['username'] ?? UserConst::GUEST_NAME; ?></h3>
 </div>
 
 <div class="card">
@@ -17,13 +22,17 @@ use Engine\Views\ViewConst;
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($this->vars['HistoryData'] as $historyData) { ?>
-                <tr>
-                    <td style="text-align: center"><?php echo $historyData['expression']; ?></td>
-                    <td><?php echo $historyData['date']; ?></td>
+                <?php
+                foreach ($this->vars['HistoryData'] as $historyData) { ?>
+                    <tr>
+                        <td style="text-align: center"><?php
+                            echo $historyData['expression']; ?></td>
+                        <td><?php
+                            echo $historyData['date']; ?></td>
 
-                </tr>
-                <?php } ?>
+                    </tr>
+                <?php
+                } ?>
                 </tbody>
                 <tfoot>
                 <tr>
