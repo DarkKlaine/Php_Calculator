@@ -3,6 +3,7 @@
 namespace Modules\Calculator\Services\ConfigManager;
 
 use Engine\Services\ConfigManagers\BaseConfigManagerWeb;
+use Modules\Calculator\Views\ICalculatorConfigManagerWeb;
 
 class CalculatorConfigManagerWeb extends BaseConfigManagerWeb implements ICalculatorConfigManagerWeb
 {

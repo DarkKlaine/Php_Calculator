@@ -7,7 +7,6 @@ namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
 use Engine\Views\ViewConst;
-use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
 class WebDBHistoryView
 {

@@ -3,7 +3,6 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
 class WebCalculatorView
 {

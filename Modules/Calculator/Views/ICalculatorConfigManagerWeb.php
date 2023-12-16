@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Calculator\Services\ConfigManager;
+namespace Modules\Calculator\Views;
 
 interface ICalculatorConfigManagerWeb
 {

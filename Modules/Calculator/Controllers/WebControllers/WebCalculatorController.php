@@ -6,7 +6,7 @@ use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Modules\Calculator\Models\CalculatorModel\CalculatorModel;
 use Modules\Calculator\Models\HistoryModel\HistoryModel;
-use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
+use Modules\Calculator\Views\ICalculatorConfigManagerWeb;
 use Modules\Calculator\Views\WebCalculatorView;
 
 class WebCalculatorController
