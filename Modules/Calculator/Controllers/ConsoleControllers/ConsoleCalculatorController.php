@@ -5,19 +5,19 @@ namespace Modules\Calculator\Controllers\ConsoleControllers;
 use Engine\Controllers\ConsoleBaseController;
 use Engine\Services\Routers\ConsoleRouter\ConsoleRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
-use Modules\Calculator\Controllers\ICalculatorModel;
+use Modules\Calculator\Models\CalculatorModel\CalculatorModel;
 use Modules\Calculator\Models\HistoryModel\HistoryModel;
 use Psr\Log\LoggerInterface;
 
 class ConsoleCalculatorController extends ConsoleBaseController implements IConsoleCalculatorController
 {
-    private ICalculatorModel $calculatorModel;
+    private CalculatorModel $calculatorModel;
     private HistoryModel $historyModel;
     private IConsoleCalculatorView $consoleCalculatorView;
 
     public function __construct(
         LoggerInterface $logger,
-        ICalculatorModel $calculatorModel,
+        CalculatorModel $calculatorModel,
         HistoryModel $historyModel,
         IConsoleCalculatorView $consoleCalculatorView,
     ) {

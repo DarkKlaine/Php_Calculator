@@ -4,14 +4,14 @@ namespace Modules\Calculator\Controllers\WebControllers;
 
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
-use Modules\Calculator\Controllers\ICalculatorModel;
+use Modules\Calculator\Models\CalculatorModel\CalculatorModel;
 use Modules\Calculator\Models\HistoryModel\HistoryModel;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
 class WebCalculatorController
 {
     private HistoryModel $historyModel;
-    private ICalculatorModel $calculatorModel;
+    private CalculatorModel $calculatorModel;
     private IWebCalculatorView $calculatorView;
     private string $calculatorUrl;
     private IWebRedirectHandler $redirectHandler;
@@ -19,7 +19,7 @@ class WebCalculatorController
     public function __construct(
         IWebRedirectHandler $redirectHandler,
         ICalculatorConfigManagerWeb $configManager,
-        ICalculatorModel $calculatorModel,
+        CalculatorModel $calculatorModel,
         HistoryModel $historyModel,
         IWebCalculatorView $calculatorView,
     ) {

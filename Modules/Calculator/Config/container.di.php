@@ -12,7 +12,6 @@ use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorControll
 use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorView;
 use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryController;
 use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryView;
-use Modules\Calculator\Controllers\ICalculatorModel;
 use Modules\Calculator\Controllers\WebControllers\IWebCalculatorView;
 use Modules\Calculator\Controllers\WebControllers\IWebHistoryView;
 use Modules\Calculator\Controllers\WebControllers\WebCalculatorController;
@@ -56,7 +55,7 @@ return [
     SinCosTan::class => function (Container $container) {
         return new SinCosTan($container->get(LoggerInterface::class));
     },
-    ICalculatorModel::class => function (Container $container) {
+    CalculatorModel::class => function (Container $container) {
         return new CalculatorModel(
             $container->get(LoggerInterface::class),
             $container->get(Addition::class),
@@ -88,7 +87,7 @@ return [
         return new WebCalculatorController(
             $container->get(IWebRedirectHandler::class),
             $container->get(ICalculatorConfigManagerWeb::class),
-            $container->get(ICalculatorModel::class),
+            $container->get(CalculatorModel::class),
             $container->get(HistoryModel::class),
             $container->get(IWebCalculatorView::class)
         );
@@ -127,7 +126,7 @@ return [
     //Console
     IConsoleCalculatorController::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
-        $calculatorModel = $container->get(ICalculatorModel::class);
+        $calculatorModel = $container->get(CalculatorModel::class);
         $historyModel = $container->get(HistoryModel::class);
         $consoleCalculatorView = $container->get(IConsoleCalculatorView::class);
 
