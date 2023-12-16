@@ -19,7 +19,7 @@ class HistoryStorage implements IHistoryStorage
         $this->connection = $connection;
     }
 
-    public function addHistory(string $expression, string $userId): void
+    public function addToHistory(string $expression, string $userId): void
     {
         try {
             $pdo = $this->connection->getConnection();

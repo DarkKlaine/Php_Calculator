@@ -22,7 +22,7 @@ class EngineControllerWeb implements IEngineControllerWeb
     public function engineHomePage(WebRequestDTO $request): void
     {
         if ($request->getPost()['operation'] ?? '' === 'Logout') {
-            $this->authSessionHandler->setIsAuthorized(false);
+            $this->authSessionHandler->setAuthStatus(false);
             $this->authSessionHandler->setUsername('Гость');
             $this->authSessionHandler->sessionDestroy();
         }

@@ -6,9 +6,9 @@ interface IAuthSessionHandler
 {
     public function sessionDestroy(): void;
 
-    public function getIsAuthorized(): bool;
+    public function getAuthStatus(): bool;
 
-    public function setIsAuthorized(bool $bool): void;
+    public function setAuthStatus(bool $bool): void;
 
     public function getDestroyTime(): int;
 
@@ -18,9 +18,9 @@ interface IAuthSessionHandler
 
     public function getUsername(): string;
 
-    public function setUserID(string $userID): void;
+    public function setUserID(int $userID): void;
 
-    public function getUserID(): string;
+    public function getUserID(): int;
 
     public function setRole(string $role): void;
 

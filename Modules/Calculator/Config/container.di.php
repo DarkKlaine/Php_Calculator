@@ -1,6 +1,7 @@
 <?php
 
 use App\HistoryStorage;
+use Engine\Models\IAuthSessionHandler;
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\IDBConnection;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
@@ -77,8 +78,7 @@ return [
     },
     HistoryModel::class => function (Container $container) {
         return new HistoryModel(
-            $container->get(IDBConnection::class),
-            $container->get(LoggerInterface::class),
+            $container->get(IAuthSessionHandler::class),
             $container->get(IHistoryStorage::class)
         );
     },

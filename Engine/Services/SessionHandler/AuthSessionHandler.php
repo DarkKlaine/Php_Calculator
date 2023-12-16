@@ -17,12 +17,12 @@ class AuthSessionHandler extends SessionHandler implements IAuthSessionHandler
         session_destroy();
     }
 
-    public function getIsAuthorized(): bool
+    public function getAuthStatus(): bool
     {
         return $this->get(self::IS_AUTHORIZED) ?? false;
     }
 
-    public function setIsAuthorized(bool $bool): void
+    public function setAuthStatus(bool $bool): void
     {
         $this->set(self::IS_AUTHORIZED, $bool);
     }
@@ -47,14 +47,14 @@ class AuthSessionHandler extends SessionHandler implements IAuthSessionHandler
         return $this->get(self::USERNAME) ?? '';
     }
 
-    public function setUserID(string $userID): void
+    public function setUserID(int $userID): void
     {
         $this->set(self::USER_ID, $userID);
     }
 
-    public function getUserID(): string
+    public function getUserID(): int
     {
-        return $this->get(self::USER_ID) ?? '';
+        return $this->get(self::USER_ID) ?? 0;
     }
 
     public function setRole(string $role): void

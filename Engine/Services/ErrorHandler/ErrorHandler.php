@@ -5,31 +5,34 @@ namespace Engine\Services\ErrorHandler;
 use Engine\Views\Page403View;
 use Engine\Views\Page404View;
 use Engine\Views\Page500View;
+use Error;
 use Exception;
 use Psr\Log\LoggerInterface;
 
 class ErrorHandler
 {
     private LoggerInterface $logger;
-    private Page403View $accessDeniedPageView;
+    private Page403View $page403View;
     private Page404View $page404View;
     private Page500View $page500View;
 
     public function __construct(
         LoggerInterface $logger,
-        Page403View $accessDeniedPageView,
+        Page403View $page403View,
         Page404View $page404View,
         Page500View $page500View,
     ) {
         $this->logger = $logger;
-        $this->accessDeniedPageView = $accessDeniedPageView;
+        $this->page403View = $page403View;
         $this->page404View = $page404View;
         $this->page500View = $page500View;
     }
 
-    public function handleException(Exception $e): void
+    public function handleE(Error | Exception $e): void
     {
         $errorCode = $e->getCode();
+
+        $this->logger->error($e->getMessage());
 
         switch ($errorCode) {
             case 404:

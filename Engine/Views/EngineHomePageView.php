@@ -22,7 +22,7 @@ class EngineHomePageView
     {
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->assignVar('IsAuthorized', $this->authSessionHandler->getIsAuthorized());
+        $this->templateEngine->assignVar('IsAuthorized', $this->authSessionHandler->getAuthStatus());
 
         $this->templateEngine->setTemplatesForInjection($this->engineHomeTplFile);
 

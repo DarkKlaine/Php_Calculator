@@ -51,7 +51,7 @@ class Auth implements IAuth
         }
 
         $accessNotGranted = !$this->checkAccess($role, $requestUrl);
-        $isAuthorised = $this->authSessionHandler->getIsAuthorized();
+        $isAuthorised = $this->authSessionHandler->getAuthStatus();
         $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
 
         if ($accessNotGranted) {
@@ -91,7 +91,7 @@ class Auth implements IAuth
 
         if ($username && $password) {
             if ($user = $this->verifyLoginData($username, $password)) {
-                $this->authSessionHandler->setIsAuthorized(true);
+                $this->authSessionHandler->setAuthStatus(true);
                 $this->authSessionHandler->setUserID($user[UserConst::USER_ID]);
                 $this->authSessionHandler->setUsername($username);
                 $this->setDestroyTime();
