@@ -8,18 +8,15 @@ use Modules\Calculator\Views\WebDBUserHistoryView;
 
 class WebHistoryController
 {
-    private IWebHistoryView $historyView;
     private HistoryModel $historyModel;
     private WebDBHistoryView $webDBHistoryView;
     private WebDBUserHistoryView $webDBUserHistoryView;
 
     public function __construct(
-        IWebHistoryView $historyView,
         HistoryModel $webHistoryDecorator,
         WebDBHistoryView $webDBHistoryView,
         WebDBUserHistoryView $webDBUserHistoryView
     ) {
-        $this->historyView = $historyView;
         $this->historyModel = $webHistoryDecorator;
         $this->webDBHistoryView = $webDBHistoryView;
         $this->webDBUserHistoryView = $webDBUserHistoryView;
@@ -27,7 +24,8 @@ class WebHistoryController
 
     public function showDB(): void
     {
-        $this->historyView->render($this->historyModel->getDBHistoryString(true));
+        // TODO Проверка обработчика ошибок. Удалить.
+        getNotExistMethod();
     }
 
     public function showHistory(): void

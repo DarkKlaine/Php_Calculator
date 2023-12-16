@@ -36,8 +36,8 @@ class Auth implements IAuth
 
     public function verifyAuth(string $requestUrl): void
     {
-        $accessDeniedPage = $this->configManager->getAccessDeniedPage();
-        if ($requestUrl === $accessDeniedPage) {
+        $page403Url = $this->configManager->get403PageUrl();
+        if ($requestUrl === $page403Url) {
             return;
         }
 
@@ -55,12 +55,12 @@ class Auth implements IAuth
         $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
 
         if ($accessNotGranted) {
-            $this->redirectHandler->redirect($accessDeniedPage);
+            $this->redirectHandler->redirect($page403Url);
         }
 
         if ($isAuthorised && $isSessionExpired) {
             $this->authSessionHandler->sessionDestroy();
-            $this->redirectHandler->redirect($accessDeniedPage);
+            $this->redirectHandler->redirect($page403Url);
         }
 
         $this->setDestroyTime();
@@ -97,7 +97,7 @@ class Auth implements IAuth
                 $this->setDestroyTime();
                 $this->redirectHandler->redirect($this->configManager->getHomeUrl());
             }
-            $this->redirectHandler->redirect($this->configManager->getAccessDeniedPage());
+            $this->redirectHandler->redirect($this->configManager->get403PageUrl());
         }
     }
 

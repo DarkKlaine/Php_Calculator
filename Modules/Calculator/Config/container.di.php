@@ -104,7 +104,6 @@ return [
     },
     WebHistoryController::class => function (Container $container) {
         return new WebHistoryController(
-            $container->get(IWebHistoryView::class),
             $container->get(HistoryModel::class),
             $container->get(WebDBHistoryView::class),
             $container->get(WebDBUserHistoryView::class)
