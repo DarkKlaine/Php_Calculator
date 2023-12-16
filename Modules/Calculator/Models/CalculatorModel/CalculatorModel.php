@@ -3,27 +3,33 @@
 namespace Modules\Calculator\Models\CalculatorModel;
 
 use Modules\Calculator\Controllers\ICalculatorModel;
+use Modules\Calculator\Models\CalculatorModel\Computations\Addition;
+use Modules\Calculator\Models\CalculatorModel\Computations\Divide;
+use Modules\Calculator\Models\CalculatorModel\Computations\Exponentiation;
+use Modules\Calculator\Models\CalculatorModel\Computations\Multiply;
+use Modules\Calculator\Models\CalculatorModel\Computations\SinCosTan;
+use Modules\Calculator\Models\CalculatorModel\Computations\Subtraction;
 use Psr\Log\LoggerInterface;
 
 class CalculatorModel implements ICalculatorModel
 {
-    private IAddition $addition;
-    private ISubtraction $subtraction;
-    private IMultiply $multiply;
-    private IDivide $divide;
-    private IExponentiation $exponentiation;
-    private ISinCosTan $sinCosTan;
+    private Addition $addition;
+    private Subtraction $subtraction;
+    private Multiply $multiply;
+    private Divide $divide;
+    private Exponentiation $exponentiation;
+    private SinCosTan $sinCosTan;
     private LoggerInterface $logger;
 
 
     public function __construct(
         LoggerInterface $logger,
-        IAddition $addition,
-        ISubtraction $subtraction,
-        IMultiply $multiply,
-        IDivide $divide,
-        IExponentiation $exponentiation,
-        ISinCosTan $sinCosTan
+        Addition $addition,
+        Subtraction $subtraction,
+        Multiply $multiply,
+        Divide $divide,
+        Exponentiation $exponentiation,
+        SinCosTan $sinCosTan
     ) {
         $this->addition = $addition;
         $this->subtraction = $subtraction;
@@ -127,7 +133,7 @@ class CalculatorModel implements ICalculatorModel
 
     private function processTrigonometry(string $expression): string
     {
-        $pattern = '/(())(sin|cos|tan)(-?\d+(\.\d+)?)/';
+        $pattern = '/(())(?<!\d)(?<!\.)(sin|cos|tan)(-?\d+(\.\d+)?)/';
 
         return $this->recursiveProcessExpression($expression, $pattern);
     }
