@@ -5,12 +5,12 @@ namespace Modules\Calculator\Controllers\WebControllers;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Modules\Calculator\Controllers\ICalculatorModel;
-use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;
+use Modules\Calculator\Models\HistoryModel\HistoryModel;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
 class WebCalculatorController
 {
-    private IHistoryDecorator $webHistoryModel;
+    private HistoryModel $historyModel;
     private ICalculatorModel $calculatorModel;
     private IWebCalculatorView $calculatorView;
     private string $calculatorUrl;
@@ -20,10 +20,10 @@ class WebCalculatorController
         IWebRedirectHandler $redirectHandler,
         ICalculatorConfigManagerWeb $configManager,
         ICalculatorModel $calculatorModel,
-        IHistoryDecorator $webHistoryDecorator,
+        HistoryModel $historyModel,
         IWebCalculatorView $calculatorView,
     ) {
-        $this->webHistoryModel = $webHistoryDecorator;
+        $this->historyModel = $historyModel;
         $this->calculatorModel = $calculatorModel;
         $this->calculatorView = $calculatorView;
         $this->calculatorUrl = $configManager->getCalculatorUrl();
@@ -51,7 +51,7 @@ class WebCalculatorController
 
         $result = $this->calculatorModel->getResult($inputDataString);
 
-        $this->webHistoryModel->addToHistory($inputDataString, $result);
+        $this->historyModel->addToHistory($inputDataString, $result);
 
         $queryParams = [
             'input' => $inputDataString,

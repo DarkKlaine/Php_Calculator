@@ -13,11 +13,11 @@ class WebHistoryController
     private WebDBUserHistoryView $webDBUserHistoryView;
 
     public function __construct(
-        HistoryModel $webHistoryDecorator,
+        HistoryModel $historyModel,
         WebDBHistoryView $webDBHistoryView,
         WebDBUserHistoryView $webDBUserHistoryView
     ) {
-        $this->historyModel = $webHistoryDecorator;
+        $this->historyModel = $historyModel;
         $this->webDBHistoryView = $webDBHistoryView;
         $this->webDBUserHistoryView = $webDBUserHistoryView;
     }

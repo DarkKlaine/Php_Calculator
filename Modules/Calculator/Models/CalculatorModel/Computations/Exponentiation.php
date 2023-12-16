@@ -3,9 +3,8 @@
 namespace Modules\Calculator\Models\CalculatorModel\Computations;
 
 use Modules\Calculator\Models\CalculatorModel\Computation;
-use Modules\Calculator\Models\CalculatorModel\IExponentiation;
 
-class Exponentiation extends Computation implements IExponentiation
+class Exponentiation extends Computation
 {
     public function getResult(string $value1, string $action, string $value2 = ''): string
     {

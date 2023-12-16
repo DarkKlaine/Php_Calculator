@@ -11,6 +11,4 @@ interface ICalculatorConfigManagerWeb
     public function getGlobalHistoryUrl(): string;
 
     public function getSessionHistoryUrl(): string;
-
-    public function getDataBaseHistoryUrl(): string;
 }

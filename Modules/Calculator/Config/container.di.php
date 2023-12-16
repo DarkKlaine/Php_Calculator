@@ -24,16 +24,8 @@ use Modules\Calculator\Models\CalculatorModel\Computations\Exponentiation;
 use Modules\Calculator\Models\CalculatorModel\Computations\Multiply;
 use Modules\Calculator\Models\CalculatorModel\Computations\SinCosTan;
 use Modules\Calculator\Models\CalculatorModel\Computations\Subtraction;
-use Modules\Calculator\Models\CalculatorModel\IAddition;
-use Modules\Calculator\Models\CalculatorModel\IDivide;
-use Modules\Calculator\Models\CalculatorModel\IExponentiation;
-use Modules\Calculator\Models\CalculatorModel\IMultiply;
-use Modules\Calculator\Models\CalculatorModel\ISinCosTan;
-use Modules\Calculator\Models\CalculatorModel\ISubtraction;
-use Modules\Calculator\Models\HistoryModel\ConsoleHistoryDecorator;
 use Modules\Calculator\Models\HistoryModel\HistoryModel;
 use Modules\Calculator\Models\HistoryModel\IHistoryStorage;
-use Modules\Calculator\Models\HistoryModel\WebHistoryDecorator;
 use Modules\Calculator\Services\ConfigManager\CalculatorConfigManagerWeb;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 use Modules\Calculator\Views\ConsoleCalculatorView;
@@ -46,33 +38,33 @@ use Psr\Log\LoggerInterface;
 
 return [
     //Shared
-    IAddition::class => function (Container $container) {
+    Addition::class => function (Container $container) {
         return new Addition($container->get(LoggerInterface::class));
     },
-    ISubtraction::class => function (Container $container) {
+    Subtraction::class => function (Container $container) {
         return new Subtraction($container->get(LoggerInterface::class));
     },
-    IMultiply::class => function (Container $container) {
+    Multiply::class => function (Container $container) {
         return new Multiply($container->get(LoggerInterface::class));
     },
-    IDivide::class => function (Container $container) {
+    Divide::class => function (Container $container) {
         return new Divide($container->get(LoggerInterface::class));
     },
-    IExponentiation::class => function (Container $container) {
+    Exponentiation::class => function (Container $container) {
         return new Exponentiation($container->get(LoggerInterface::class));
     },
-    ISinCosTan::class => function (Container $container) {
+    SinCosTan::class => function (Container $container) {
         return new SinCosTan($container->get(LoggerInterface::class));
     },
     ICalculatorModel::class => function (Container $container) {
         return new CalculatorModel(
             $container->get(LoggerInterface::class),
-            $container->get(IAddition::class),
-            $container->get(ISubtraction::class),
-            $container->get(IMultiply::class),
-            $container->get(IDivide::class),
-            $container->get(IExponentiation::class),
-            $container->get(ISinCosTan::class)
+            $container->get(Addition::class),
+            $container->get(Subtraction::class),
+            $container->get(Multiply::class),
+            $container->get(Divide::class),
+            $container->get(Exponentiation::class),
+            $container->get(SinCosTan::class)
         );
     },
     HistoryModel::class => function (Container $container) {
@@ -97,7 +89,7 @@ return [
             $container->get(IWebRedirectHandler::class),
             $container->get(ICalculatorConfigManagerWeb::class),
             $container->get(ICalculatorModel::class),
-            $container->get(WebHistoryDecorator::class),
+            $container->get(HistoryModel::class),
             $container->get(IWebCalculatorView::class)
         );
     },
@@ -107,9 +99,6 @@ return [
             $container->get(WebDBHistoryView::class),
             $container->get(WebDBUserHistoryView::class)
         );
-    },
-    WebHistoryDecorator::class => function (Container $container) {
-        return new WebHistoryDecorator($container->get(HistoryModel::class));
     },
     IWebCalculatorView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
@@ -139,10 +128,10 @@ return [
     IConsoleCalculatorController::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
         $calculatorModel = $container->get(ICalculatorModel::class);
-        $historyDecorator = $container->get(ConsoleHistoryDecorator::class);
+        $historyModel = $container->get(HistoryModel::class);
         $consoleCalculatorView = $container->get(IConsoleCalculatorView::class);
 
-        return new ConsoleCalculatorController($logger, $calculatorModel, $historyDecorator, $consoleCalculatorView);
+        return new ConsoleCalculatorController($logger, $calculatorModel, $historyModel, $consoleCalculatorView);
     },
     IConsoleHistoryController::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
@@ -150,11 +139,6 @@ return [
         $historyView = $container->get(IConsoleHistoryView::class);
 
         return new ConsoleHistoryController($logger, $historyModel, $historyView);
-    },
-    ConsoleHistoryDecorator::class => function (Container $container) {
-        $historyModel = $container->get(HistoryModel::class);
-
-        return new ConsoleHistoryDecorator($historyModel);
     },
     IConsoleCalculatorView::class => function () {
         return new ConsoleCalculatorView();

@@ -3,9 +3,8 @@
 namespace Modules\Calculator\Models\CalculatorModel\Computations;
 
 use Modules\Calculator\Models\CalculatorModel\Computation;
-use Modules\Calculator\Models\CalculatorModel\ISubtraction;
 
-class Subtraction extends Computation implements ISubtraction
+class Subtraction extends Computation
 {
     public function getResult(string $value1, string $action, string $value2 = ''): string
     {

@@ -31,9 +31,4 @@ class CalculatorConfigManagerWeb extends BaseConfigManagerWeb implements ICalcul
     {
         return $this->routes['UserHistory']['url'];
     }
-
-    public function getDataBaseHistoryUrl(): string
-    {
-        return $this->routes['DataBaseHistory']['url'];
-    }
 }
