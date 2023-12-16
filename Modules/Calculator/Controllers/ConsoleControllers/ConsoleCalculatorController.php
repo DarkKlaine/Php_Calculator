@@ -7,19 +7,20 @@ use Engine\Services\Routers\ConsoleRouter\ConsoleRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
 use Modules\Calculator\Models\CalculatorModel\CalculatorModel;
 use Modules\Calculator\Models\HistoryModel\HistoryModel;
+use Modules\Calculator\Views\ConsoleCalculatorView;
 use Psr\Log\LoggerInterface;
 
-class ConsoleCalculatorController extends ConsoleBaseController implements IConsoleCalculatorController
+class ConsoleCalculatorController extends ConsoleBaseController
 {
     private CalculatorModel $calculatorModel;
     private HistoryModel $historyModel;
-    private IConsoleCalculatorView $consoleCalculatorView;
+    private ConsoleCalculatorView $consoleCalculatorView;
 
     public function __construct(
         LoggerInterface $logger,
         CalculatorModel $calculatorModel,
         HistoryModel $historyModel,
-        IConsoleCalculatorView $consoleCalculatorView,
+        ConsoleCalculatorView $consoleCalculatorView,
     ) {
         parent::__construct($logger);
         $this->calculatorModel = $calculatorModel;

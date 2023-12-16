@@ -2,7 +2,6 @@
 
 namespace Engine\Services\Routers\WebRouter;
 
-use Engine\IRouter;
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\Container\Container;
 use Engine\Services\ErrorHandler\ErrorHandler;
@@ -12,7 +11,7 @@ use Error;
 use Exception;
 use Psr\Log\LoggerInterface;
 
-class WebRouter extends AbstractRouter implements IRouter
+class WebRouter extends AbstractRouter
 {
     private IAuth $auth;
     private IAuthConfigManagerWeb $configManager;

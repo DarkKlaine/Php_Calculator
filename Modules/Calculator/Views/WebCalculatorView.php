@@ -3,10 +3,9 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\WebControllers\IWebCalculatorView;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
-class WebCalculatorView implements IWebCalculatorView
+class WebCalculatorView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';

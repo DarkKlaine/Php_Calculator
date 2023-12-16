@@ -1,10 +1,10 @@
 <?php
 
-use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorController;
-use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryController;
+use Modules\Calculator\Controllers\ConsoleControllers\ConsoleCalculatorController;
+use Modules\Calculator\Controllers\ConsoleControllers\ConsoleHistoryController;
 
 return [
-    'calculate' => ['controller' => IConsoleCalculatorController::class, 'action' => 'calculate', 'minArgs' => 2],
-    'history' => ['controller' => IConsoleHistoryController::class, 'action' => 'showGeneralHistory', 'minArgs' => 0],
-    'dbhistory' => ['controller' => IConsoleHistoryController::class, 'action' => 'showDBHistory', 'minArgs' => 0],
+    'calculate' => ['controller' => ConsoleCalculatorController::class, 'action' => 'calculate', 'minArgs' => 2],
+    'history' => ['controller' => ConsoleHistoryController::class, 'action' => 'showGeneralHistory', 'minArgs' => 0],
+    'dbhistory' => ['controller' => ConsoleHistoryController::class, 'action' => 'showDBHistory', 'minArgs' => 0],
 ];

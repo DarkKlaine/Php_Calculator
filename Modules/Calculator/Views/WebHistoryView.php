@@ -6,10 +6,9 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\WebControllers\IWebHistoryView;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
-class WebHistoryView implements IWebHistoryView
+class WebHistoryView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';

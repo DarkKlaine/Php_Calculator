@@ -2,9 +2,7 @@
 
 namespace Modules\Calculator\Views;
 
-use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorView;
-
-class ConsoleCalculatorView implements IConsoleCalculatorView
+class ConsoleCalculatorView
 {
     public function display(string $input, string $result): void
     {

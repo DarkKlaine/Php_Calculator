@@ -3,12 +3,11 @@
 namespace Engine\Services\Routers\ConsoleRouter;
 
 use Engine\Controllers\ConsoleBaseController;
-use Engine\IRouter;
 use Engine\Services\Container\Container;
 use Engine\Services\Routers\AbstractRouter;
 use Psr\Log\LoggerInterface;
 
-class ConsoleRouter extends AbstractRouter implements IRouter
+class ConsoleRouter extends AbstractRouter
 {
     private IConsoleConfigManager $configManager;
 
@@ -50,5 +49,10 @@ class ConsoleRouter extends AbstractRouter implements IRouter
             echo "Ошибка! Неправильный action";
             exit;
         }
+    }
+
+    public function run(): void
+    {
+        // TODO: Implement run() method.
     }
 }

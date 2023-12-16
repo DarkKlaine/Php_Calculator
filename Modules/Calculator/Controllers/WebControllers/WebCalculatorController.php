@@ -7,12 +7,13 @@ use Engine\Services\Routers\WebRouter\WebRequestDTO;
 use Modules\Calculator\Models\CalculatorModel\CalculatorModel;
 use Modules\Calculator\Models\HistoryModel\HistoryModel;
 use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
+use Modules\Calculator\Views\WebCalculatorView;
 
 class WebCalculatorController
 {
     private HistoryModel $historyModel;
     private CalculatorModel $calculatorModel;
-    private IWebCalculatorView $calculatorView;
+    private WebCalculatorView $calculatorView;
     private string $calculatorUrl;
     private IWebRedirectHandler $redirectHandler;
 
@@ -21,7 +22,7 @@ class WebCalculatorController
         ICalculatorConfigManagerWeb $configManager,
         CalculatorModel $calculatorModel,
         HistoryModel $historyModel,
-        IWebCalculatorView $calculatorView,
+        WebCalculatorView $calculatorView,
     ) {
         $this->historyModel = $historyModel;
         $this->calculatorModel = $calculatorModel;

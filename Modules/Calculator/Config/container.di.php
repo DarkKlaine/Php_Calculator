@@ -8,12 +8,6 @@ use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
 use Modules\Calculator\Controllers\ConsoleControllers\ConsoleCalculatorController;
 use Modules\Calculator\Controllers\ConsoleControllers\ConsoleHistoryController;
-use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorController;
-use Modules\Calculator\Controllers\ConsoleControllers\IConsoleCalculatorView;
-use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryController;
-use Modules\Calculator\Controllers\ConsoleControllers\IConsoleHistoryView;
-use Modules\Calculator\Controllers\WebControllers\IWebCalculatorView;
-use Modules\Calculator\Controllers\WebControllers\IWebHistoryView;
 use Modules\Calculator\Controllers\WebControllers\WebCalculatorController;
 use Modules\Calculator\Controllers\WebControllers\WebHistoryController;
 use Modules\Calculator\Models\CalculatorModel\CalculatorModel;
@@ -89,7 +83,7 @@ return [
             $container->get(ICalculatorConfigManagerWeb::class),
             $container->get(CalculatorModel::class),
             $container->get(HistoryModel::class),
-            $container->get(IWebCalculatorView::class)
+            $container->get(WebCalculatorView::class)
         );
     },
     WebHistoryController::class => function (Container $container) {
@@ -99,13 +93,13 @@ return [
             $container->get(WebDBUserHistoryView::class)
         );
     },
-    IWebCalculatorView::class => function (Container $container) {
+    WebCalculatorView::class => function (Container $container) {
         $templateEngine = $container->get(IWebTemplateEngine::class);
         $configManager = $container->get(ICalculatorConfigManagerWeb::class);
 
         return new WebCalculatorView($templateEngine, $configManager);
     },
-    IWebHistoryView::class => function (Container $container) {
+    WebHistoryView::class => function (Container $container) {
         return new WebHistoryView(
             $container->get(IWebTemplateEngine::class),
             $container->get(ICalculatorConfigManagerWeb::class),
@@ -124,25 +118,25 @@ return [
         );
     },
     //Console
-    IConsoleCalculatorController::class => function (Container $container) {
+    ConsoleCalculatorController::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
         $calculatorModel = $container->get(CalculatorModel::class);
         $historyModel = $container->get(HistoryModel::class);
-        $consoleCalculatorView = $container->get(IConsoleCalculatorView::class);
+        $consoleCalculatorView = $container->get(ConsoleCalculatorView::class);
 
         return new ConsoleCalculatorController($logger, $calculatorModel, $historyModel, $consoleCalculatorView);
     },
-    IConsoleHistoryController::class => function (Container $container) {
+    ConsoleHistoryController::class => function (Container $container) {
         $logger = $container->get(LoggerInterface::class);
         $historyModel = $container->get(HistoryModel::class);
-        $historyView = $container->get(IConsoleHistoryView::class);
+        $historyView = $container->get(ConsoleHistoryView::class);
 
         return new ConsoleHistoryController($logger, $historyModel, $historyView);
     },
-    IConsoleCalculatorView::class => function () {
+    ConsoleCalculatorView::class => function () {
         return new ConsoleCalculatorView();
     },
-    IConsoleHistoryView::class => function () {
+    ConsoleHistoryView::class => function () {
         return new ConsoleHistoryView();
     },
 ];
