@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'host' => 'localhost',
+    'host' => 'mysql',
     'username' => 'root',
-    'password' => 'pass',
+    'password' => 'root',
     'dbname' => 'dkdb'
 ];
