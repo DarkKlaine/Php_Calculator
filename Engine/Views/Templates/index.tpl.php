@@ -110,6 +110,14 @@
         });
     });
 </script>
+<script>
+    function addText(buttonId) {
+        var input = document.getElementById("inputExpression");
+        var button = document.getElementById(buttonId);
+        var text = button.getAttribute("data-text");
+        input.value += text;
+    }
+</script>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ НАЧАЛО -->
 <?php $this->injectScriptTpl() ?>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ КОНЕЦ -->
