@@ -4,7 +4,7 @@ namespace Engine\Services\ConfigManagers;
 
 interface IAuthConfigManagerWeb
 {
-    public function getAccessDeniedPage(): string;
+    public function get403PageUrl(): string;
 
     public function getAuthSessionLifeTime(): int;
 

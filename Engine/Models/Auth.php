@@ -2,11 +2,11 @@
 
 namespace Engine\Models;
 
-use App\IUserProvider;
 use Engine\Services\ConfigManagers\IAuthConfigManagerWeb;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Services\Routers\WebRouter\IAuth;
 use Engine\Services\Routers\WebRouter\WebRequestDTO;
+use Modules\User\Controllers\IUserStorage;
 use Modules\User\Controllers\UserConst;
 
 class Auth implements IAuth
@@ -16,8 +16,7 @@ class Auth implements IAuth
     private IAuthSessionHandler $authSessionHandler;
     private IWebRedirectHandler $redirectHandler;
     private IAuthConfigManagerWeb $configManager;
-    private IUserProvider $userProvider;
-    private const GUEST = 'guest';
+    private IUserStorage $userProvider;
 
     public function __construct(
         array $pageAccessLevels,
@@ -25,7 +24,7 @@ class Auth implements IAuth
         IWebRedirectHandler $redirectHandler,
         IAuthSessionHandler $authSessionHandler,
         IAuthConfigManagerWeb $configManager,
-        IUserProvider $userProvider,
+        IUserStorage $userProvider,
     ) {
         $this->redirectHandler = $redirectHandler;
         $this->authSessionHandler = $authSessionHandler;
@@ -37,33 +36,31 @@ class Auth implements IAuth
 
     public function verifyAuth(string $requestUrl): void
     {
-        $accessDeniedPage = $this->configManager->getAccessDeniedPage();
-        if ($requestUrl === $accessDeniedPage) {
+        $page403Url = $this->configManager->get403PageUrl();
+        if ($requestUrl === $page403Url) {
             return;
         }
 
-        $username = $this->authSessionHandler->getUsername();
+        $userId = $this->authSessionHandler->getUserID();
         $role = '';
-        if ($username === '') {
-            $this->authSessionHandler->setUsername(self::GUEST);
-        }
 
-        if ($username !== self::GUEST) {
-            $user = $this->userProvider->getUser($username);
+        if ($userId) {
+            $user = $this->userProvider->getUserByID($userId);
+            $this->authSessionHandler->setUsername($user[UserConst::USERNAME]);
             $role = $user[UserConst::ROLE] ?? '';
         }
 
         $accessNotGranted = !$this->checkAccess($role, $requestUrl);
-        $isAuthorised = $this->authSessionHandler->getIsAuthorized();
-        $isSessionExpired = time() > $this->authSessionHandler->getDestroyTime();
+        $isAuthorised = $this->authSessionHandler->getAuthStatus();
+        $isSessionExpired = time() >= $this->authSessionHandler->getDestroyTime();
 
         if ($accessNotGranted) {
-            $this->redirectHandler->redirect($accessDeniedPage);
+            $this->redirectHandler->redirect($page403Url);
         }
 
         if ($isAuthorised && $isSessionExpired) {
-            session_destroy();
-            $this->redirectHandler->redirect($accessDeniedPage);
+            $this->authSessionHandler->sessionDestroy();
+            $this->redirectHandler->redirect($page403Url);
         }
 
         $this->setDestroyTime();
@@ -92,24 +89,31 @@ class Auth implements IAuth
         $username = $request->getPost(UserConst::USERNAME);
         $password = $request->getPost(UserConst::PASSWORD);
 
-        if ($username && $password) {
-            if ($this->verifyLoginData($username, $password)) {
-                $this->authSessionHandler->setIsAuthorized(true);
-                $this->authSessionHandler->setUsername($username);
-                $this->setDestroyTime();
-                $this->redirectHandler->redirect($this->configManager->getHomeUrl());
-            }
-            $this->redirectHandler->redirect($this->configManager->getAccessDeniedPage());
+        if (!$username || !$password) {
+            return;
         }
+
+        $user = $this->verifyLoginData($username, $password);
+
+        if ($user === null) {
+            // TODO: Собрать страницу с сообщением о неправильном логине или пароле
+            $this->redirectHandler->redirect($this->configManager->get403PageUrl());
+        }
+
+        $this->authSessionHandler->setAuthStatus(true);
+        $this->authSessionHandler->setUserID($user[UserConst::USER_ID]);
+        $this->authSessionHandler->setUsername($username);
+        $this->setDestroyTime();
+        $this->redirectHandler->redirect($this->configManager->getHomeUrl());
     }
 
-    private function verifyLoginData(string $username, string $password): bool
+    private function verifyLoginData(string $username, string $password): ?array
     {
-        if ($user = $this->userProvider->getUser($username)) {
-            return password_verify($password, $user['password_hash']);
+        if ($user = $this->userProvider->getUserByName($username)) {
+            return password_verify($password, $user[UserConst::PASSWORD_HASH]) ? $user : null;
         }
 
-        return false;
+        return null;
     }
 }
 

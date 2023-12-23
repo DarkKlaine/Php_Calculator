@@ -1,12 +1,11 @@
 <?php
 
-
-use App\IUserProvider;
-use App\UserProvider;
+use App\UserStorage;
 use Engine\Services\Container\Container;
 use Engine\Services\DBConnector\IDBConnection;
 use Engine\Services\RedirectHandler\IWebRedirectHandler;
 use Engine\Views\IWebTemplateEngine;
+use Modules\User\Controllers\IUserStorage;
 use Modules\User\Controllers\UserController;
 use Modules\User\IUserConfigManagerWeb;
 use Modules\User\Services\ConfigManager\UserConfigManagerWeb;
@@ -37,13 +36,13 @@ return [
             $container->get(UserListView::class),
             $container->get(UserInfoView::class),
             $container->get(UserDeleteView::class),
-            $container->get(IUserProvider::class),
+            $container->get(IUserStorage::class),
             $container->get(IUserConfigManagerWeb::class),
             $container->get(IWebRedirectHandler::class),
         );
     },
-    IUserProvider::class => function (Container $container) {
-        return new UserProvider(
+    IUserStorage::class => function (Container $container) {
+        return new UserStorage(
             $container->get(LoggerInterface::class), $container->get(IDBConnection::class),
         );
     },

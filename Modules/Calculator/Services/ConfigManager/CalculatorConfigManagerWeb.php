@@ -3,6 +3,7 @@
 namespace Modules\Calculator\Services\ConfigManager;
 
 use Engine\Services\ConfigManagers\BaseConfigManagerWeb;
+use Modules\Calculator\Views\ICalculatorConfigManagerWeb;
 
 class CalculatorConfigManagerWeb extends BaseConfigManagerWeb implements ICalculatorConfigManagerWeb
 {
@@ -24,16 +25,11 @@ class CalculatorConfigManagerWeb extends BaseConfigManagerWeb implements ICalcul
 
     public function getGlobalHistoryUrl(): string
     {
-        return $this->routes['GlobalHistory']['url'];
+        return $this->routes['AllHistory']['url'];
     }
 
     public function getSessionHistoryUrl(): string
     {
-        return $this->routes['SessionHistory']['url'];
-    }
-
-    public function getDataBaseHistoryUrl(): string
-    {
-        return $this->routes['DataBaseHistory']['url'];
+        return $this->routes['UserHistory']['url'];
     }
 }

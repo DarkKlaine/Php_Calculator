@@ -2,33 +2,33 @@
 
 namespace Modules\Calculator\Controllers\WebControllers;
 
-use Modules\Calculator\Controllers\IHistoryModel;
+use Modules\Calculator\Models\HistoryModel\HistoryModel;
+use Modules\Calculator\Views\WebDBHistoryView;
+use Modules\Calculator\Views\WebDBUserHistoryView;
 
-class WebHistoryController implements IWebHistoryController
+class WebHistoryController
 {
-    private IWebHistoryView $historyView;
-    private IHistoryModel $historyModel;
+    private HistoryModel $historyModel;
+    private WebDBHistoryView $webDBHistoryView;
+    private WebDBUserHistoryView $webDBUserHistoryView;
 
     public function __construct(
-        IWebHistoryView $historyView,
-        IHistoryModel $webHistoryDecorator,
+        HistoryModel $historyModel,
+        WebDBHistoryView $webDBHistoryView,
+        WebDBUserHistoryView $webDBUserHistoryView
     ) {
-        $this->historyView = $historyView;
-        $this->historyModel = $webHistoryDecorator;
+        $this->historyModel = $historyModel;
+        $this->webDBHistoryView = $webDBHistoryView;
+        $this->webDBUserHistoryView = $webDBUserHistoryView;
     }
 
-    public function showGeneral(): void
+    public function showHistory(): void
     {
-        $this->historyView->render($this->historyModel->getGeneralHistoryString(true));
+        $this->webDBHistoryView->render($this->historyModel->getAllHistory());
     }
 
-    public function showPersonal(): void
+    public function showUserHistory(): void
     {
-        $this->historyView->render($this->historyModel->getSessionHistoryString(true));
-    }
-
-    public function showDB(): void
-    {
-        $this->historyView->render($this->historyModel->getDBHistoryString(true));
+        $this->webDBUserHistoryView->render($this->historyModel->getUserHistory());
     }
 }

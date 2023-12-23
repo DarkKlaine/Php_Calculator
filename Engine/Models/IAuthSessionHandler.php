@@ -4,9 +4,11 @@ namespace Engine\Models;
 
 interface IAuthSessionHandler
 {
-    public function getIsAuthorized(): bool;
+    public function sessionDestroy(): void;
 
-    public function setIsAuthorized(bool $bool): void;
+    public function getAuthStatus(): bool;
+
+    public function setAuthStatus(bool $bool): void;
 
     public function getDestroyTime(): int;
 
@@ -15,4 +17,12 @@ interface IAuthSessionHandler
     public function setUsername(string $username): void;
 
     public function getUsername(): string;
+
+    public function setUserID(int $userID): void;
+
+    public function getUserID(): int;
+
+    public function setRole(string $role): void;
+
+    public function getRole(): string;
 }

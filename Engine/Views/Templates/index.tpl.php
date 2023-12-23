@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <!-- Required meta tags -->
@@ -10,8 +10,8 @@
     <!--plugins-->
     <link href="/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
     <link href="/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet"/>
-    <link href="/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
-    <link href="/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet"/>
+    <link href="/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet"/>
     <!-- Bootstrap CSS -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/app.css" rel="stylesheet">
@@ -26,7 +26,11 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light rounded fixed-top rounded-0 shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <h4 class="logo-text">DK Engine</h4>
+                    <h4 class="logo-text">DK Engine (<?php
+
+                        use Modules\User\Controllers\UserConst;
+
+                        echo $_SESSION['username'] ?? UserConst::GUEST_NAME ?>)</h4>
                 </a>
                 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН ССЫЛОК НАЧАЛО -->
                 <?php $this->injectMenuTpl() ?>
@@ -35,7 +39,8 @@
         </nav>
     </header>
     <div class="section-calculator d-flex align-items-center justify-content-center my-5 my-lg-4">
-        <div class="container-fluid col-md-auto" style="min-width: 500px; max-width: 1800px; min-height: 100px; max-height: 750px;">
+        <div class="container-fluid col-md-auto"
+             style="min-width: 500px; max-width: 1800px; min-height: 100px; max-height: 750px;">
             <div class=" row row-cols-1 row-cols-lg-1 row-cols-xl-1
         ">
                 <div class="col mx-auto">
@@ -68,7 +73,7 @@
 <script src="/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
 <script src="/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#example').DataTable({
             "columns": [{
                 "orderable": true
@@ -78,7 +83,40 @@
                 "orderable": false
             }]
         });
-    } );
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#history').DataTable({
+            "order": [[2, "desc"]],
+            "columns": [{
+                "orderable": true
+            }, {
+                "orderable": false
+            }, {
+                "orderable": true
+            }]
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#userhistory').DataTable({
+            "order": [[1, "desc"]],
+            "columns": [
+                {"orderable": false},
+                {"orderable": true}
+            ]
+        });
+    });
+</script>
+<script>
+    function addText(buttonId) {
+        var input = document.getElementById("inputExpression");
+        var button = document.getElementById(buttonId);
+        var text = button.getAttribute("data-text");
+        input.value += text;
+    }
 </script>
 <!--ТУТ ВСТАВЛЯТЬ ШАБЛОН СКРИПТА ПАРОЛЕЙ НАЧАЛО -->
 <?php $this->injectScriptTpl() ?>

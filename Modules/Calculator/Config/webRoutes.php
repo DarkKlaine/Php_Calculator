@@ -1,27 +1,23 @@
 <?php
 
-use Modules\Calculator\Controllers\WebControllers\IWebCalculatorController;
-use Modules\Calculator\Controllers\WebControllers\IWebHistoryController;
+use Modules\Calculator\Controllers\WebControllers\WebCalculatorController;
+use Modules\Calculator\Controllers\WebControllers\WebHistoryController;
 
 return [
     'Calculator' => [
         'url' => '/calculator',
-        'action' => [IWebCalculatorController::class, 'showForm']
+        'action' => [WebCalculatorController::class, 'showForm']
     ],
     'Calculate' => [
         'url' => '/calculator/calculate',
-        'action' => [IWebCalculatorController::class, 'calculate']
+        'action' => [WebCalculatorController::class, 'calculate']
     ],
-    'GlobalHistory' => [
-        'url' => '/calculator/history/global',
-        'action' => [IWebHistoryController::class, 'showGeneral']
+    'AllHistory' => [
+        'url' => '/calculator/history',
+        'action' => [WebHistoryController::class, 'showHistory']
     ],
-    'SessionHistory' => [
-        'url' => '/calculator/history/session',
-        'action' => [IWebHistoryController::class, 'showPersonal']
-    ],
-    'DataBaseHistory' => [
-        'url' => '/calculator/history/database',
-        'action' => [IWebHistoryController::class, 'showDB']
+    'UserHistory' => [
+        'url' => '/calculator/history/user',
+        'action' => [WebHistoryController::class, 'showUserHistory']
     ],
 ];

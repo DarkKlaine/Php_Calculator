@@ -2,28 +2,33 @@
 
 namespace Modules\Calculator\Models\CalculatorModel;
 
-use Modules\Calculator\Controllers\ICalculatorModel;
+use Modules\Calculator\Models\CalculatorModel\Computations\Addition;
+use Modules\Calculator\Models\CalculatorModel\Computations\Divide;
+use Modules\Calculator\Models\CalculatorModel\Computations\Exponentiation;
+use Modules\Calculator\Models\CalculatorModel\Computations\Multiply;
+use Modules\Calculator\Models\CalculatorModel\Computations\SinCosTan;
+use Modules\Calculator\Models\CalculatorModel\Computations\Subtraction;
 use Psr\Log\LoggerInterface;
 
-class CalculatorModel implements ICalculatorModel
+class CalculatorModel
 {
-    private IAddition $addition;
-    private ISubtraction $subtraction;
-    private IMultiply $multiply;
-    private IDivide $divide;
-    private IExponentiation $exponentiation;
-    private ISinCosTan $sinCosTan;
+    private Addition $addition;
+    private Subtraction $subtraction;
+    private Multiply $multiply;
+    private Divide $divide;
+    private Exponentiation $exponentiation;
+    private SinCosTan $sinCosTan;
     private LoggerInterface $logger;
 
 
     public function __construct(
         LoggerInterface $logger,
-        IAddition $addition,
-        ISubtraction $subtraction,
-        IMultiply $multiply,
-        IDivide $divide,
-        IExponentiation $exponentiation,
-        ISinCosTan $sinCosTan
+        Addition $addition,
+        Subtraction $subtraction,
+        Multiply $multiply,
+        Divide $divide,
+        Exponentiation $exponentiation,
+        SinCosTan $sinCosTan
     ) {
         $this->addition = $addition;
         $this->subtraction = $subtraction;
@@ -79,25 +84,25 @@ class CalculatorModel implements ICalculatorModel
         return $this->processPlusAndMinus($expression);
     }
 
-    private function recursiveProcessExpression(string $expression, string $pattern): string
+    private function recursiveProcessExpression(string $expression, string $pattern, bool $isTrigonometry = false): string
     {
         if (preg_match($pattern, $expression, $matches)) {
             $subExpression = $matches[0];
-            $result = $this->calculateSimpleExpression($subExpression, $pattern);
+            $result = $this->calculateSimpleExpression($subExpression, $pattern, $isTrigonometry);
             $expression = str_replace($subExpression, $result, $expression);
 
-            return $this->recursiveProcessExpression($expression, $pattern);
+            return $this->recursiveProcessExpression($expression, $pattern, $isTrigonometry);
         }
 
         return $expression;
     }
 
-    private function calculateSimpleExpression(string $expression, string $pattern): string
+    private function calculateSimpleExpression(string $expression, string $pattern, bool $isTrigonometry): string
     {
         preg_match($pattern, $expression, $matches);
         $value1 = $matches[1] ?? '';
-        $operator = $matches[3] ?? '';
-        $value2 = $matches[4] ?? '';
+        $operator = $isTrigonometry ? $matches[1] : $matches[3];
+        $value2 = $isTrigonometry ? $matches[2] : $matches[4];
 
         // Массив с операциями
         $operations = [
@@ -127,9 +132,9 @@ class CalculatorModel implements ICalculatorModel
 
     private function processTrigonometry(string $expression): string
     {
-        $pattern = '/(())(sin|cos|tan)(-?\d+(\.\d+)?)/';
+        $pattern = '/(?<!\d)(?<!\.)(sin|cos|tan)(-?\d+(\.\d+)?)/';
 
-        return $this->recursiveProcessExpression($expression, $pattern);
+        return $this->recursiveProcessExpression($expression, $pattern, true);
     }
 
     private function processExponentiation(string $expression): string

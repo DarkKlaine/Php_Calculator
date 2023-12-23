@@ -18,6 +18,6 @@ abstract class AbstractRouter
         $this->container = $container;
     }
 
-    abstract public function handleRequest(): void;
+    abstract public function run(): void;
 
 }

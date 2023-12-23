@@ -18,7 +18,7 @@ class AuthConfigManagerWeb extends BaseConfigManagerWeb implements IAuthConfigMa
         $this->authWhitelist = $appConfig['authWhitelist'];
     }
 
-    public function getAccessDeniedPage(): string
+    public function get403PageUrl(): string
     {
         return $this->accessDeniedPage;
     }

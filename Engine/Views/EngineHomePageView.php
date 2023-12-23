@@ -4,7 +4,7 @@ namespace Engine\Views;
 
 use Engine\Models\IAuthSessionHandler;
 
-class EngineHomePageView implements IEngineHomePageView
+class EngineHomePageView
 {
     private string $title = 'DK Engine';
     private string $indexTplFile = 'index.tpl.php';
@@ -22,7 +22,7 @@ class EngineHomePageView implements IEngineHomePageView
     {
         $this->templateEngine->assignVar('title', $this->title);
 
-        $this->templateEngine->assignVar('IsAuthorized', $this->authSessionHandler->getIsAuthorized());
+        $this->templateEngine->assignVar('IsAuthorized', $this->authSessionHandler->getAuthStatus());
 
         $this->templateEngine->setTemplatesForInjection($this->engineHomeTplFile);
 

@@ -5,25 +5,26 @@ namespace Modules\Calculator\Controllers\ConsoleControllers;
 use Engine\Controllers\ConsoleBaseController;
 use Engine\Services\Routers\ConsoleRouter\ConsoleRequestDTO;
 use JetBrains\PhpStorm\NoReturn;
-use Modules\Calculator\Controllers\ICalculatorModel;
-use Modules\Calculator\Models\HistoryModel\IHistoryDecorator;
+use Modules\Calculator\Models\CalculatorModel\CalculatorModel;
+use Modules\Calculator\Models\HistoryModel\HistoryModel;
+use Modules\Calculator\Views\ConsoleCalculatorView;
 use Psr\Log\LoggerInterface;
 
-class ConsoleCalculatorController extends ConsoleBaseController implements IConsoleCalculatorController
+class ConsoleCalculatorController extends ConsoleBaseController
 {
-    private ICalculatorModel $calculatorModel;
-    private IHistoryDecorator $consoleHistoryModel;
-    private IConsoleCalculatorView $consoleCalculatorView;
+    private CalculatorModel $calculatorModel;
+    private HistoryModel $historyModel;
+    private ConsoleCalculatorView $consoleCalculatorView;
 
     public function __construct(
         LoggerInterface $logger,
-        ICalculatorModel $calculatorModel,
-        IHistoryDecorator $consoleHistoryDecorator,
-        IConsoleCalculatorView $consoleCalculatorView,
+        CalculatorModel $calculatorModel,
+        HistoryModel $historyModel,
+        ConsoleCalculatorView $consoleCalculatorView,
     ) {
         parent::__construct($logger);
         $this->calculatorModel = $calculatorModel;
-        $this->consoleHistoryModel = $consoleHistoryDecorator;
+        $this->historyModel = $historyModel;
         $this->consoleCalculatorView = $consoleCalculatorView;
     }
 
@@ -32,7 +33,7 @@ class ConsoleCalculatorController extends ConsoleBaseController implements ICons
         $inputData = $request->getInputData();
         $inputDataToString = implode('', $inputData);
         $result = $this->calculatorModel->getResult($inputDataToString);
-        $this->consoleHistoryModel->addToHistory($inputDataToString, $result);
+        $this->historyModel->addToHistory($inputDataToString, $result);
         $this->consoleCalculatorView->display($inputDataToString, $result);
     }
 }

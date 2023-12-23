@@ -8,13 +8,10 @@
             echo $this->vars['Calculator'] ?>"><i class='bx bx-category-alt me-1'></i>Калькулятор</a>
         </li>
         <li class="nav-item"><a class="nav-link text-white" href="<?php
-            echo $this->vars['GlobalHistory'] ?>"><i class='bx bx-category-alt me-1'></i>История общая</a>
+            echo $this->vars['GlobalHistory'] ?>"><i class='bx bx-category-alt me-1'></i>Вся история</a>
         </li>
         <li class="nav-item"><a class="nav-link text-white" href="<?php
-            echo $this->vars['SessionHistory'] ?>"><i class='bx bx-category-alt me-1'></i>История личная</a>
-        </li>
-        <li class="nav-item"><a class="nav-link text-white" href="<?php
-            echo $this->vars['DataBaseHistory'] ?>"><i class='bx bx-category-alt me-1'></i>История из базы данных</a>
+            echo $this->vars['SessionHistory'] ?>"><i class='bx bx-category-alt me-1'></i>Моя история</a>
         </li>
     </ul>
 </div>

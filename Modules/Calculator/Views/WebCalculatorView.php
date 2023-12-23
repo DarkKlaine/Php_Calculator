@@ -3,10 +3,8 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\WebControllers\IWebCalculatorView;
-use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
-class WebCalculatorView implements IWebCalculatorView
+class WebCalculatorView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
@@ -36,7 +34,6 @@ class WebCalculatorView implements IWebCalculatorView
         $this->templateEngine->assignVar('Calculate', $this->configManager->getCalculateUrl());
         $this->templateEngine->assignVar('GlobalHistory', $this->configManager->getGlobalHistoryUrl());
         $this->templateEngine->assignVar('SessionHistory', $this->configManager->getSessionHistoryUrl());
-        $this->templateEngine->assignVar('DataBaseHistory', $this->configManager->getDataBaseHistoryUrl());
 
         $this->templateEngine->setTemplatesForInjection($this->calculatorTplFile, $this->menuTplFile);
 

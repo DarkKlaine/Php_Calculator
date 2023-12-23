@@ -6,10 +6,8 @@
 namespace Modules\Calculator\Views;
 
 use Engine\Views\IWebTemplateEngine;
-use Modules\Calculator\Controllers\WebControllers\IWebHistoryView;
-use Modules\Calculator\Services\ConfigManager\ICalculatorConfigManagerWeb;
 
-class WebHistoryView implements IWebHistoryView
+class WebHistoryView
 {
     private string $title = 'PHP_Calculator';
     private string $indexTplFile = 'index.tpl.php';
@@ -24,7 +22,7 @@ class WebHistoryView implements IWebHistoryView
         $this->configManager = $configManager;
     }
 
-    public function render(string $history): void
+    public function render(string|array $history): void
     {
         $this->templateEngine->setModuleTemplatesPath(__DIR__ . '/Templates/');
 
@@ -35,7 +33,6 @@ class WebHistoryView implements IWebHistoryView
         $this->templateEngine->assignVar('Calculator', $this->configManager->getCalculatorUrl());
         $this->templateEngine->assignVar('GlobalHistory', $this->configManager->getGlobalHistoryUrl());
         $this->templateEngine->assignVar('SessionHistory', $this->configManager->getSessionHistoryUrl());
-        $this->templateEngine->assignVar('DataBaseHistory', $this->configManager->getDataBaseHistoryUrl());
 
         $this->templateEngine->setTemplatesForInjection($this->historyTplFile, $this->menuTplFile);
 
