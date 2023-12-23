@@ -13,7 +13,7 @@ try {
     // Создание бд
     $sql = "CREATE DATABASE IF NOT EXISTS $database";
     $connection->exec($sql);
-    echo "База данных успешно создана";
+    echo "Создание бд - успех";
 
     // Подключение к созданной базе данных
     $connection = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
@@ -29,18 +29,18 @@ try {
         UNIQUE (username)
     )";
     $connection->exec($sql);
-    echo "Таблица 'users' успешно создана";
+    echo "Создание users - успех";
 
     // Создание history
     $sql = "CREATE TABLE IF NOT EXISTS history (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         user_id INT(6) UNSIGNED,
-        expression VARCHAR(255) NOT NULL,
+        expression TEXT(255) NOT NULL,
         date DATETIME default CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id)
     )";
     $connection->exec($sql);
-    echo "Таблица 'history' успешно создана";
+    echo "Создание history - успех";
 
     // Создание пользователя
     $username = 'admin';
@@ -48,7 +48,7 @@ try {
     $role = "Администратор";
     $sql = "INSERT IGNORE INTO users (username, role, password_hash) VALUES ('$username', '$role', '$hashedPassword')";
     $connection->exec($sql);
-    echo "Пользователь 'admin' успешно создан";
+    echo "Создание пользователя - успех";
 
 } catch(PDOException $e) {
     echo "Ошибка: " . $e->getMessage();
